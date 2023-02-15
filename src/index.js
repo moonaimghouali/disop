@@ -1,17 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import  ReactDOM  from "react-dom";
+import { registerLicense } from '@syncfusion/ej2-base';
+import "./assets/styles/index.css"
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+import App  from "./App";
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// Registering Syncfusion license key
+registerLicense('Mgo+DSMBaFt/QHRqVVhkVFpFdEBBXHxAd1p/VWJYdVt5flBPcDwsT3RfQF5jS35Ud0BiXnpdd3NTRA==;Mgo+DSMBPh8sVXJ0S0J+XE9AflRDX3xKf0x/TGpQb19xflBPallYVBYiSV9jS31TdEVkWHpfd3FWQWlfUw==;ORg4AjUWIQA/Gnt2VVhkQlFacldJXGFWfVJpTGpQdk5xdV9DaVZUTWY/P1ZhSXxQdkdjXn5bcXNQRWhcWEY=;MTA4MjkxMkAzMjMwMmUzNDJlMzBoSkVKWmpxRGMxNEM3MjlmajIrNThYeDFLUzRrSXFXRVdQSCsxS1djVUdJPQ==;MTA4MjkxM0AzMjMwMmUzNDJlMzBIWWxzd1hTSFFldEVmczJoaVNkMU1WTCtESFhUMGNGbGZmREJBdFZBSDhjPQ==;NRAiBiAaIQQuGjN/V0Z+WE9EaFtKVmJLYVB3WmpQdldgdVRMZVVbQX9PIiBoS35RdUVhWXhfdXVSQ2NUWUx1;MTA4MjkxNUAzMjMwMmUzNDJlMzBNRkZhOGdkaGxaRnVFbTN4V0UvSXdmbXlPSDdoWGtqVlBOVzl4NUdMZXBFPQ==;MTA4MjkxNkAzMjMwMmUzNDJlMzBJaDI5QnozYklzY0xLWmhQQ2VHc090aHA5UUlQd25FdWRwTDYxWjhQYW5BPQ==;Mgo+DSMBMAY9C3t2VVhkQlFacldJXGFWfVJpTGpQdk5xdV9DaVZUTWY/P1ZhSXxQdkdjXn5bcXNQRWlaV0c=;MTA4MjkxOEAzMjMwMmUzNDJlMzBqWGZUSGUwcGxad093eTUzWEFYVEtHeksxMlUwWCtHWDk3ejZyM0t3SEN3PQ==;MTA4MjkxOUAzMjMwMmUzNDJlMzBjaHZrUy9vMlM1cEJ1MlR1dmlyRFZzeTVHdkQ4Ri9SYUErVksxVER1alpBPQ==;MTA4MjkyMEAzMjMwMmUzNDJlMzBNRkZhOGdkaGxaRnVFbTN4V0UvSXdmbXlPSDdoWGtqVlBOVzl4NUdMZXBFPQ==');
+
+ReactDOM.render(<App/>, document.getElementById("root"))
