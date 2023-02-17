@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.2",
     "@syncfusion/ej2": "^20.4.48",
     "@syncfusion/ej2-react-buttons": "^20.4.49",
     "@syncfusion/ej2-react-calendars": "^20.4.48",
@@ -16,8 +17,10 @@
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.43.1",
     "react-icons": "^4.3.1",
+    "react-redux": "^8.0.5",
     "react-router-dom": "^6.2.1",
-    "react-scripts": "5.0.0"
+    "react-scripts": "5.0.0",
+    "redux": "^4.2.1"
   },
   "scripts": {
     "start": "react-scripts start",

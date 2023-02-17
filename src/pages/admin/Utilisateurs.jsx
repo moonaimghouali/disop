@@ -8,7 +8,7 @@ const Utilisateurs = () => {
   return (
     <div>
       <div className='rounded-sm pl-8 py-4 bg-gray-100 w-full h-screen'>
-      <PageHeader className="mb-10" pageName="Utilisateurs"/>  
+      <PageHeader className="mb-10" subTitle="Gestion des" pageName="Utilisateurs"/>  
 
         <div className="w-2/3 mt-10">
         <GridComponent dataSource={utilisateurs} allowPaging={true}  allowSorting={true}  allowFiltering={false} pageSettings={{pageSize:10}} >

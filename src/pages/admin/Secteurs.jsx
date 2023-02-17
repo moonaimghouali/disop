@@ -8,7 +8,7 @@ import {secteurs} from '../../data/secteursData'
 const Secteurs = () => {
   return (
     <div className='rounded-sm pl-8 py-4 bg-gray-100 w-full h-screen'>
-      <PageHeader className="mb-10" pageName="Secteurs"/>  
+      <PageHeader className="mb-10" subTitle="Gestion des" pageName="Secteurs"/>  
     
      <div className="w-2/3 mt-10">
      <GridComponent dataSource={secteurs} allowPaging={true}  allowSorting={true}  allowFiltering={false} pageSettings={{pageSize:10}} >
