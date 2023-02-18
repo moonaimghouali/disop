@@ -9,6 +9,8 @@ module.exports = {
     extend: {
       fontSize: {
         12: '12px',
+        10 : '10px',
+        17 : '17px'
       },
       backgroundColor: {
         'main-bg': '#FAFBFB',

@@ -11,6 +11,7 @@
     "@syncfusion/ej2-react-dropdowns": "^20.4.48",
     "@syncfusion/ej2-react-grids": "^20.4.48",
     "@syncfusion/ej2-react-inputs": "^20.4.48",
+    "@syncfusion/ej2-react-popups": "^20.4.49",
     "@syncfusion/ej2-react-treegrid": "^20.4.49",
     "dotenv": "^16.0.3",
     "react": "^17.0.2",
