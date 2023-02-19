@@ -13,7 +13,7 @@ const CommentaireDetail = () => {
             <div className='text-10 font-medium text-gray-400 mr-2'>16 fev</div>
             {/* divider */}
             <div className='w-px h-4 bg-gray-300 mr-2'></div>
-            <div className='text-lg font-semibold text-gray-800 flex-1'>Panne Electrique</div>
+            <div className='text-lg font-semibold text-gray-800 flex-1'>Panne Electrique </div>
             <button className='p-1 rounded hover:shadow-md hover:bg-orange-50'><MdEdit size={18}/></button>
         </div>
 

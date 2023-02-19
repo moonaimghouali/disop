@@ -1,6 +1,7 @@
 import { FiUsers} from 'react-icons/fi'
 import {GiOilRig, GiOilPump} from 'react-icons/gi'
 import { TbBuildingFactory} from 'react-icons/tb'
+import { MdOutlineModeComment } from 'react-icons/md'
 
 export const adminLinks = [
     {
@@ -77,6 +78,6 @@ export const adminLinks = [
     {
       name: 'Commentaires',
       path : "p/unite/commentaires",
-      icon: <GiOilPump size={18}/>,
+      icon: <MdOutlineModeComment size={18}/>,
     },
   ]

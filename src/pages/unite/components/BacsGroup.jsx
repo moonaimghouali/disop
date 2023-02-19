@@ -2,10 +2,13 @@ import React from 'react'
 import BacDetail from './BacDetail'
 
 const BacsGroup = ({onSpec}) => {
+  var style = "-rotate-90 whitespace-nowrap text-xl font-semibold";
+  var style2 = onSpec? (style+= " text-green-600") : (style+= " text-red-600")
+
   return (
     <div className='h-full w-full flex flex-cols '>
           <div className='h-full w-16 bg-white shadow-sm border-r-1 border-gray-200 flex justify-center items-center mr-4'>
-            <span className='-rotate-90 whitespace-nowrap text-xl font-medium'>Bacs {onSpec ? ("On") : ("Off")}-Spec </span>
+            <span className={style2}>Bacs {onSpec ? ("On") : ("Off")}-Spec </span>
           </div>
 
             {/* bacs de stockage */}

@@ -12,6 +12,7 @@
     "@syncfusion/ej2-react-grids": "^20.4.48",
     "@syncfusion/ej2-react-inputs": "^20.4.48",
     "@syncfusion/ej2-react-popups": "^20.4.49",
+    "@syncfusion/ej2-react-richtexteditor": "^20.4.50",
     "@syncfusion/ej2-react-treegrid": "^20.4.49",
     "dotenv": "^16.0.3",
     "react": "^17.0.2",
@@ -21,7 +22,8 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
-    "redux": "^4.2.1"
+    "redux": "^4.2.1",
+    "save": "^2.9.0"
   },
   "scripts": {
     "start": "react-scripts start",
