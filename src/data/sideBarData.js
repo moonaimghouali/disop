@@ -1,7 +1,10 @@
 import { FiUsers} from 'react-icons/fi'
-import {GiOilRig, GiOilPump} from 'react-icons/gi'
+import { BsArrowLeftRight } from 'react-icons/bs'
+import {GiOilRig, GiOilPump, GiWaterDrop} from 'react-icons/gi'
+import { BiDroplet } from 'react-icons/bi'
 import { TbBuildingFactory} from 'react-icons/tb'
 import { MdOutlineModeComment } from 'react-icons/md'
+
 
 export const adminLinks = [
     {
@@ -63,12 +66,12 @@ export const adminLinks = [
     {
       name: 'Mouvements',
       path : "p/unite/mouvements",
-      icon: <FiUsers size={18}/>,
+      icon: <BsArrowLeftRight size={18}/>,
     },
     {
       name: 'Production',
       path : "p/unite/production",
-      icon: <FiUsers size={18}/>,
+      icon: <BiDroplet size={18}/>,
     },
     {
       name: 'Stockage',

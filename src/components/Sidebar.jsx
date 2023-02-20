@@ -7,6 +7,8 @@ import {adminLinks, dpLinks, uniteLinks} from '../data/sideBarData'
 import { useSelector } from 'react-redux';
 
 const Sidebar = () => {
+  const inActiveStyle = "flex flex-row items-center px-2 py-2 rounded hover:bg-gray-100"
+  const activeStyle = "flex flex-row items-center px-2 py-2 rounded bg-orange-50 hover:bg-orange-100 text-orange-600"
 
   const { isSignedIn, isAdmin, isManager, isUnite, isRespUnite} = useSelector((state)=> state.user);
   var Links = []
@@ -30,7 +32,8 @@ const Sidebar = () => {
         <div className='mt-5 w-36'>
             {Links.map( (item) => (
                 <div key={item.name} >
-                     <NavLink className="flex flex-row items-center px-2 py-2 rounded hover:bg-gray-100"
+                     <NavLink 
+                     className= {({isActive}) => isActive? activeStyle : inActiveStyle}
                      to={item.path}
                      key={item.name}>
                         {item.icon}
@@ -45,10 +48,10 @@ const Sidebar = () => {
 
         {/* Footer */}
         <div className='absolute bottom-6 flex flex-col items-center pt-5 '>
-            <div className='flex flex-row px-4 py-2 items-center rounded-xl hover:bg-gray-50 hover:cursor-pointer'>
+            <NavLink to="/profile" className='flex flex-row px-4 py-2 items-center rounded hover:bg-orange-50 hover:cursor-pointer'>
               <AiOutlineUser size={18} />
               <p className='capitalize ml-1 font-semibold'>Mouhammed</p>  
-            </div>
+            </NavLink>
             <button className="text-2xl mt-2" >
              <BiLogOut color='#333333'/>
             </button>

@@ -1,9 +1,9 @@
 import './assets/styles/App.css';
 import {BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { Error,Login } from './pages/common';
+import { Error,Login, Profile } from './pages/common';
 import { Utilisateurs, Regions, Secteurs, Perimetres, Unites } from './pages/admin';
 import { Dashboard, DpProduction, Kpi, Map, Reporting } from "./pages/dp";
-import{ Mouvements, Production, Stockage, Commentaires} from './pages/unite'
+import{ Mouvements, Production, Stockage, Commentaires, MouvementBac} from './pages/unite'
 import { Sidebar } from './components';
 import { useSelector } from 'react-redux';
 
@@ -25,6 +25,7 @@ function App() {
           (isAdmin && (<Navigate to="/p/admin/utilisateurs" replace={true}/>) )))}/>
 
           <Route path="/" element={<Navigate to="/login" replace/>} />
+          <Route path='/profile' element={isSignedIn?  (<Profile/> ) : (<Navigate to="/login" replace/>)}/>
 
           <Route path='*' element = {!isSignedIn ? (<Navigate to="/login" replace/>) : (<Error/>)}/>
 
@@ -37,6 +38,7 @@ function App() {
 
           {/* Unite Routes */}
           <Route path='p/unite/mouvements' element={isSignedIn? ((isUnite || isRespUnite) ? <Mouvements/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
+          <Route path='p/unite/mouvement' element={isSignedIn? ((isUnite || isRespUnite) ? <MouvementBac/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/unite/production' element={isSignedIn? ((isUnite || isRespUnite) ? <Production/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/unite/stock' element={isSignedIn? ((isUnite || isRespUnite) ? <Stockage/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/unite/commentaires' element={isSignedIn? ((isUnite || isRespUnite) ? <Commentaires/> : <Error/>) : (<Navigate to="/login" replace/>)}/>

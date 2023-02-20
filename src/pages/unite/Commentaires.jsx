@@ -8,10 +8,11 @@ const Commentaires = () => {
     <div className="flex flex-col h-screen w-screen bg-gray-100 px-8 py-8">
       <PageHeader subTitle="Saisi de" pageName="Commentaires"/>
 
-      <div className="w-full h-full my-8 flex flex-row gap-6">
+      <div className="w-full h-full my-8 flex flex-row gap-10">
         <CommentairesForm/>
         {/* divider */}
-        <div className='w-px h-full bg-gray-200'></div>
+        {/* <div className='w-px h-full bg-gray-200'></div> */}
+
         <CommentairesList/>
 
         
