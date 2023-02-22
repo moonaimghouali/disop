@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom'
 const MenuMouvements = ({type}) => {
 
   return (
-    <div className='flex flex-row gap-4 items-center px-2 w-full h-14 bg-white rounded-sm shadow-sm'>
+    <div className='flex flex-row gap-4 items-center px-2 py-2 w-full h-14 bg-white rounded-sm shadow-sm'>
         {/* Bacs Selector */}
         <div className=''>
         <DropDownListComponent dataSource={['Tous', 'RA-301', 'RA-302', 'RA-303', 'RA-304']} placeholder={"Choisir un bac"}/>

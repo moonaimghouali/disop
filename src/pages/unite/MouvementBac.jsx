@@ -15,9 +15,9 @@ const MouvementBac = () => {
       </div>
 
       {/* Menu */}
-      <div className='flex flex-col w-full mt-8'>
+      {/* <div className='flex flex-col w-full mt-8'>
        <MenuMouvements type={false}/>
-      </div>
+      </div> */}
 
       <div className="flex flex-row h-full w-full my-6 gap-6 ">
         <MouvementForm/>

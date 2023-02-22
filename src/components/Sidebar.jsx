@@ -17,7 +17,7 @@ const Sidebar = () => {
   if (isUnite || isRespUnite) Links = uniteLinks;
   
   return (
-    <div className='relative flex flex-col items-center bg-white h-screen w-40 border-r-1 border-gray-200 px-3 py-5 shadow-sm hover:shadow-md'>
+    <div className='relative flex flex-col items-center bg-white h-screen w-44 border-r-1 border-gray-200 px-2 py-5 shadow-sm hover:shadow-md'>
         {/* Header */}
             <div className='flex flex-col items-center'>
                 <img className="w-10" src={logo} alt='Sonatrach' />
@@ -37,7 +37,7 @@ const Sidebar = () => {
                      to={item.path}
                      key={item.name}>
                         {item.icon}
-                        <span className="capitalize ml-2 font-medium text-xs">{item.name}</span>
+                        <span className="capitalize ml-2 font-medium text-xs ">{item.name}</span>
                      </NavLink>
                 </div>
             ))}

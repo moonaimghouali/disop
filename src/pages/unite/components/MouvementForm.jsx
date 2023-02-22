@@ -1,5 +1,6 @@
 import React from 'react'
 import MouvementMesures from './MouvementMesures'
+import MenuMouvements from './MenuMouvements'
 
 const MouvementForm = () => {
 
@@ -12,6 +13,7 @@ const MouvementForm = () => {
   return (
     <div className='h-full w-1/2 '>
         <form className='h-full w-full flex flex-col gap-6' method='POST' onSubmit={handleSubmit}>
+            <MenuMouvements type={false}/>
             <MouvementMesures />
             
 
