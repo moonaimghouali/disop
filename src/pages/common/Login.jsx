@@ -10,7 +10,7 @@ const Login = () => {
         <LoginForm/>
       </div>
       <div id='bg' className=' flex justify-center items-center bg-gray-100'>
-        <a className='absolute z-30' href='https://sonatrach.com/'> <img className=" opacity-30 hover:shadow-2xl hover:opacity-70 ease-out duration-150" src={logo}  alt="" /></a>
+        <a className='absolute z-30' href='https://sonatrach.com/' target="_blank" rel="noopener noreferrer"> <img className=" opacity-30 hover:shadow-2xl hover:opacity-70 ease-out duration-150" src={logo}  alt="" /></a>
         <img className="h-screen" src={bg2} alt="" />
       </div>
     </div>

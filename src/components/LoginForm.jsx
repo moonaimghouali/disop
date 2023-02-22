@@ -4,10 +4,13 @@ import InputField from './InputField'
 
 const LoginForm = () => {
 
-    const handleSubmit =()=>{}
+    const handleSubmit =(e)=>{
+        e.preventDefault()
+        alert("working")
+    }
 
   return (
-    <div className='flex flex-col py-12 px-8 h-fit w-full bg-white rounded-sm shadow-sm  '>
+    <div className='flex flex-col py-12 px-8 h-fit w-full bg-white rounded shadow-sm  '>
         <img className=" w-12" src={logo} alt="" />
         <div className='text-base font-semibold mt-1'>Sonatrach </div>
         <div className='text-base font-semibold mt-1'>Division Production</div>
