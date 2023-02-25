@@ -44,9 +44,9 @@ const ControlMenu = () => {
     }
 
   return (
-    <div className='w-full flex flex-row items-center px-2 h-16 bg-white rounded-sm my-4'>
+    <div className='w-full flex flex-row items-center px-2 h-16 bg-white rounded-sm mt-4 mb-2 shadow-sm'>
         <div className='w-fit mr-4'>
-            <DropDownListComponent change={handlePeriodicteChange} id="periode" dataSource={[ 'Journalier', 'Periodique', 'Mensuel']} placeholder={"Periodicite"} ></DropDownListComponent>
+            <DropDownListComponent change={handlePeriodicteChange} id="periodicite" dataSource={[ 'Journalier', 'Periodique', 'Mensuel']} placeholder={"Periodicite"} ></DropDownListComponent>
         </div>
         
         { Journalier && (

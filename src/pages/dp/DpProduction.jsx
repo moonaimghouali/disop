@@ -1,6 +1,8 @@
+import { TreeGridComponent, Inject, Page } from '@syncfusion/ej2-react-treegrid'
 import React from 'react'
 import PageHeader from '../../components/PageHeader'
 import ControlMenu from './components/ControlMenu'
+import {data} from '../../data/TreeData'
 
 const DpProduction = () => {
   return (
@@ -8,7 +10,11 @@ const DpProduction = () => {
       <PageHeader pageName="Production" />
       <ControlMenu/>
       <div className='flex w-full h-full rounded bg-white shadow-sm' >
-        akslas
+
+        <TreeGridComponent dataSource={data}
+          childMapping="UNITES" treeColumnIndex={1} >
+          {/* <Inject services={[Page]} /> */}
+        </TreeGridComponent>
       </div>
     </div>
   )

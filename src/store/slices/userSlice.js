@@ -4,29 +4,60 @@ const initialState = {
   id: 0,
   isSignedIn : true,
   isAdmin : false,
-  isManager : true,
+  isManager : false,
   isUnite : false,
-  isRespUnite : false
+  isRespUnite : true
 }
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    increment: (state) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
+    Logout: (state) => {
+      state.id = -1
+      state.isSignedIn = false
+      state.isAdmin = false
+      state.isManager = false
+      state.isUnite = false
+      state.isRespUnite = false
+    },
+    LoginAdmin: (state) => {
+      state.id = 0
+      state.isSignedIn = true
+      state.isAdmin = true
+      state.isManager = false
+      state.isUnite = false
+      state.isRespUnite = false
+    },
+    LoginUnite: (state) => {
+      state.id = 0
+      state.isSignedIn = true
+      state.isAdmin = false
+      state.isManager = false
+      state.isUnite = true
+      state.isRespUnite = false
+    },
+    LoginManager: (state) => {
+      state.id = 0
+      state.isSignedIn = true
+      state.isAdmin = false
+      state.isManager = true
+      state.isUnite = false
+      state.isRespUnite = false
+    },
+    LoginResp: (state) => {
+      state.id = 0
+      state.isSignedIn = true
+      state.isAdmin = false
+      state.isManager = false
+      state.isUnite = false
+      state.isRespUnite = true
+    },
     
-    },
-    decrement: (state) => {
-      
-    },
-    incrementByAmount: (state, action) => {
-     
-    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = userSlice.actions
+export const { Logout, LoginAdmin, LoginManager, LoginUnite,  LoginResp } = userSlice.actions
 
 export default userSlice.reducer

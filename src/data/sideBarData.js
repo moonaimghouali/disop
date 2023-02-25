@@ -1,6 +1,6 @@
 import { FiUsers} from 'react-icons/fi'
 import { BsArrowLeftRight } from 'react-icons/bs'
-import {GiOilRig, GiOilPump, GiWaterDrop} from 'react-icons/gi'
+import {GiOilRig, GiOilPump, GiWaterDrop, GiOilDrum} from 'react-icons/gi'
 import { BiDroplet } from 'react-icons/bi'
 import { TbBuildingFactory} from 'react-icons/tb'
 import { MdOutlineModeComment } from 'react-icons/md'

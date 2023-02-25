@@ -2,19 +2,25 @@ import React from 'react'
 import logo from "../assets/images/logo-primary.png";
 import {AiOutlineUser} from "react-icons/ai"
 import {BiLogOut} from "react-icons/bi"
-import { NavLink } from 'react-router-dom';
+import { Navigate, NavLink } from 'react-router-dom';
 import {adminLinks, dpLinks, uniteLinks} from '../data/sideBarData'
-import { useSelector } from 'react-redux';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { Logout } from '../store/slices/userSlice'
 const Sidebar = () => {
   const inActiveStyle = "flex flex-row items-center px-2 py-2 rounded hover:bg-gray-100"
-  const activeStyle = "flex flex-row items-center px-2 py-2 rounded bg-orange-50 hover:bg-orange-100 text-orange-600"
+  const activeStyle = "flex flex-row items-center px-2 py-2 font-semibold rounded bg-orange-50 hover:bg-orange-100 text-orange-600"
 
   const { isSignedIn, isAdmin, isManager, isUnite, isRespUnite} = useSelector((state)=> state.user);
   var Links = []
   if (isAdmin) Links = adminLinks;
   if (isManager) Links = dpLinks;
   if (isUnite || isRespUnite) Links = uniteLinks;
+
+  const dispatch = useDispatch()
+  const handleLogOut = () =>{
+    dispatch(Logout())
+    
+  }
   
   return (
     <div className='relative flex flex-col items-center bg-white h-screen w-44 border-r-1 border-gray-200 px-2 py-5 shadow-sm hover:shadow-md'>
@@ -52,7 +58,7 @@ const Sidebar = () => {
               <AiOutlineUser size={18} />
               <p className='capitalize ml-1 font-semibold'>Mouhammed</p>  
             </NavLink>
-            <button className="text-2xl mt-2" >
+            <button onClick={handleLogOut} className="text-2xl mt-2" >
              <BiLogOut color='#333333'/>
             </button>
         </div>

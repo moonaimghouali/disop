@@ -45,7 +45,8 @@ const CommentairesForm = () => {
             
 
             <div className='flex w-full items-center justify-center mt-4'>
-            <button type="submit" className='h-10 w-3/4 rounded-sm text-lg text-white font-semibold shadow-md bg-green-600 hover:bg-green-700 hover:shadow-lg ease-in-out duration-150'>Valider</button>
+            <button type="submit" className='h-10 w-3/4 rounded-sm text-lg text-white font-semibold shadow-md bg-green-600 hover:bg-green-700 hover:shadow-lg ease-in-out duration-150'>
+              Envoyer</button>
             </div>
 
         </form>
