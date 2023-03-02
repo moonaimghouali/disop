@@ -5,8 +5,8 @@ const initialState = {
   isSignedIn : true,
   isAdmin : false,
   isManager : false,
-  isUnite : false,
-  isRespUnite : true
+  isUnite : true,
+  isRespUnite : false
 }
 
 export const userSlice = createSlice({

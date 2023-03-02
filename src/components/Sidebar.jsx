@@ -6,6 +6,7 @@ import { Navigate, NavLink } from 'react-router-dom';
 import {adminLinks, dpLinks, uniteLinks} from '../data/sideBarData'
 import { useSelector, useDispatch } from 'react-redux';
 import { Logout } from '../store/slices/userSlice'
+
 const Sidebar = () => {
   const inActiveStyle = "flex flex-row items-center px-2 py-2 rounded hover:bg-gray-100"
   const activeStyle = "flex flex-row items-center px-2 py-2 font-semibold rounded bg-orange-50 hover:bg-orange-100 text-orange-600"
@@ -17,9 +18,9 @@ const Sidebar = () => {
   if (isUnite || isRespUnite) Links = uniteLinks;
 
   const dispatch = useDispatch()
+  
   const handleLogOut = () =>{
     dispatch(Logout())
-    
   }
   
   return (

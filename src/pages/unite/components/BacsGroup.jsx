@@ -13,10 +13,10 @@ const BacsGroup = ({onSpec}) => {
 
             {/* bacs de stockage */}
           <div className='flex flex-row flex-wrap h-full w-full gap-4 py-2 overflow-y-auto whitespace-nowrap '>
-            <BacDetail/>
-            {onSpec && <BacDetail/> }
-            {onSpec && <BacDetail/> }
-            {onSpec && <BacDetail/> }
+            <BacDetail categorie_bac={"flottant"} capacite_stockage={124324.09} stockage_actuel={100213.89}/>
+            {onSpec && <BacDetail categorie_bac={"flottant"} capacite_stockage={124324.09} stockage_actuel={100213.89}/> }
+            {onSpec && <BacDetail categorie_bac={"flottant"} capacite_stockage={124324.09} stockage_actuel={100213.89}/> }
+            {onSpec && <BacDetail categorie_bac={"flottant"} capacite_stockage={124324.09} stockage_actuel={100213.89}/> }
           </div>
         </div>
   )
