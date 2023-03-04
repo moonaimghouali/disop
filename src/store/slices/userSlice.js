@@ -4,8 +4,8 @@ const initialState = {
   id: 0,
   isSignedIn : true,
   isAdmin : false,
-  isManager : false,
-  isUnite : true,
+  isManager : true,
+  isUnite : false,
   isRespUnite : false
 }
 

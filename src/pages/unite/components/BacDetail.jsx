@@ -29,7 +29,7 @@ const BacDetail = ({categorie_bac, capacite_stockage, stockage_actuel}) => {
               <button className='p-1 text-green-800 rounded hover:bg-green-100 hover:shadow'> <FiGrid size={18}/></button>
             </TooltipComponent>
          </div>
-         <div className='mt-1 w-fit text-blue-700 px-3 rounded-3xl bg-blue-100 '>{categorie_bac}</div>
+         <div className='mt-1 w-fit text-blue-700 px-2 py-1 rounded bg-blue-100 '>{categorie_bac}</div>
          <div className='mt-2 text-gray-700'>Capacite Stockage : <span className='font-semibold text-black'>{capacite_stockage}</span></div>
          <div className='mt-1 text-gray-700'>Stockage Actuel : <span className='font-semibold text-black'>{stockage_actuel}</span></div>
         </div>
