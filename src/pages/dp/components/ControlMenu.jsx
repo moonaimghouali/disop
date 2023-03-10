@@ -4,24 +4,30 @@ import { DatePickerComponent, DateRangePickerComponent } from '@syncfusion/ej2-r
 
 const ControlMenu = () => {
     
-    const [Journalier , setJournalier] =useState(false)
+    let ddlObj ;
+
+    const data = [ { periodicite:'Journalier', id:0}, { periodicite:'Periodique', id:1}, { periodicite:'Mensuel', id:2}]
+    const fields = {text : "periodicite" , value :"id" }
+
+    const [Journalier , setJournalier] =useState(true)
     const [Periodique , setPeriodique] =useState(false)
     const [Mensuel , setMensuel] =useState(false)
 
     const handlePeriodicteChange = (e) =>{
+        console.log(e.value)
         switch (e.value) {
-            case "Journalier":
+            case 0:
                 setJournalier(prevJournalier => !prevJournalier)
                 setPeriodique(false)
                 setMensuel(false)   
                 break;
-            case "Periodique":
+            case 1:
                 setPeriodique(prevPeriodique => !prevPeriodique) 
                 setJournalier(false)
                 setMensuel(false)     
                 break;
 
-            case "Mensuel":
+            case 2:
                 setMensuel(prevMensuel => !prevMensuel) 
                 setJournalier(false) 
                 setPeriodique(false)            
@@ -43,14 +49,15 @@ const ControlMenu = () => {
         console.log(e.value)
     }
 
+
   return (
     <div className='w-full flex flex-row items-center px-2 h-16 bg-white rounded-sm mt-4 mb-2 shadow-sm'>
         <div className='w-fit mr-4'>
-            <DropDownListComponent change={handlePeriodicteChange} id="periodicite" dataSource={[ 'Journalier', 'Periodique', 'Mensuel']} placeholder={"Periodicite"} ></DropDownListComponent>
+            <DropDownListComponent  value={0} change={handlePeriodicteChange} id="periodicite" fields={fields} dataSource={data} placeholder={"Periodicite"} ></DropDownListComponent>
         </div>
         
         { Journalier && (
-        <div className='w-fit mr-4'> <DatePickerComponent format="dd-MMM-yyyy" change={handleDateChange}></DatePickerComponent> </div>
+        <div className='w-fit mr-4'> <DatePickerComponent format="dd-MMM-yyyy"  change={handleDateChange}></DatePickerComponent> </div>
         ) }
 
         { Periodique && (

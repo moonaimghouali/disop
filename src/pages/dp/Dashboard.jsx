@@ -11,7 +11,7 @@ const Dashboard = () => {
       <PageHeader pageName="Dashboard Production" />
       <ControlMenu />
       <div className=' grid grid-rows-8 grid-cols-2 gap-2 w-full h-full rounded' >
-        <div className='bg-white rounded-sm row-span-3 p-40'> Info</div>
+        <div className='bg-white rounded-sm row-span-3 p-6'> Info</div>
         <ProductionRegionChart />
         <ContributionChart />
         <ExpeditionRegionChart/>      

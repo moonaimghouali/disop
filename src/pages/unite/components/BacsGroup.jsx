@@ -1,7 +1,7 @@
 import React from 'react'
 import BacDetail from './BacDetail'
 
-const BacsGroup = ({onSpec}) => {
+const BacsGroup = ({onSpec, bacs}) => {
   var style = "-rotate-90 whitespace-nowrap text-xl font-semibold";
   var style2 = onSpec? (style+= " text-green-600") : (style+= " text-red-600")
 
@@ -13,10 +13,13 @@ const BacsGroup = ({onSpec}) => {
 
             {/* bacs de stockage */}
           <div className='flex flex-row flex-wrap h-full w-full gap-4 py-2 overflow-y-auto whitespace-nowrap '>
-            <BacDetail categorie_bac={"flottant"} capacite_stockage={124324.09} stockage_actuel={100213.89}/>
+            {bacs.map((bac) => (
+              <BacDetail key={bac.id} codeBacs={bac.codeBacs} categorie_bac={"flottant"} capacite_stockage={bac.capacitestockage} stockage_actuel={bac.stockageActuel}/>
+            ))}
+            
+            {/* {onSpec && <BacDetail categorie_bac={"flottant"} capacite_stockage={124324.09} stockage_actuel={100213.89}/> }
             {onSpec && <BacDetail categorie_bac={"flottant"} capacite_stockage={124324.09} stockage_actuel={100213.89}/> }
-            {onSpec && <BacDetail categorie_bac={"flottant"} capacite_stockage={124324.09} stockage_actuel={100213.89}/> }
-            {onSpec && <BacDetail categorie_bac={"flottant"} capacite_stockage={124324.09} stockage_actuel={100213.89}/> }
+            {onSpec && <BacDetail categorie_bac={"flottant"} capacite_stockage={124324.09} stockage_actuel={100213.89}/> } */}
           </div>
         </div>
   )

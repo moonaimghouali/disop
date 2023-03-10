@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  id: 0,
-  isSignedIn : true,
+  userInfo : {}, 
+  isSignedIn : false,
   isAdmin : false,
-  isManager : true,
+  isManager : false,
   isUnite : false,
   isRespUnite : false
 }
@@ -13,40 +13,47 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+
     Logout: (state) => {
-      state.id = -1
+      localStorage.removeItem("jwt")
+      state.userInfo = {}
       state.isSignedIn = false
       state.isAdmin = false
       state.isManager = false
       state.isUnite = false
       state.isRespUnite = false
     },
-    LoginAdmin: (state) => {
-      state.id = 0
+
+    LoginAdmin: (state, action) => {
+      state.userInfo = action.payload
+      
       state.isSignedIn = true
       state.isAdmin = true
       state.isManager = false
       state.isUnite = false
       state.isRespUnite = false
     },
-    LoginUnite: (state) => {
-      state.id = 0
+
+    LoginUnite: (state, action) => {
+      state.userInfo = action.payload
       state.isSignedIn = true
       state.isAdmin = false
       state.isManager = false
       state.isUnite = true
       state.isRespUnite = false
     },
-    LoginManager: (state) => {
-      state.id = 0
+
+    LoginManager: (state, action) => {
+      state.userInfo = action.payload
       state.isSignedIn = true
       state.isAdmin = false
       state.isManager = true
       state.isUnite = false
       state.isRespUnite = false
     },
-    LoginResp: (state) => {
-      state.id = 0
+    
+    LoginResp: (state, action) => {
+      state.userInfo = action.payload
       state.isSignedIn = true
       state.isAdmin = false
       state.isManager = false

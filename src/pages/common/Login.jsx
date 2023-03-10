@@ -1,7 +1,7 @@
 import React from 'react'
 import logo from '../../assets/images/logo-white.png'
 import bg2 from '../../assets/images/bg2.jpg'
-import LoginForm from '../../components/LoginForm'
+import LoginForm from '../../Forms/LoginForm'
 
 const Login = () => {
   return (

@@ -3,13 +3,17 @@ import {BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Error,Login, Profile } from './pages/common';
 import { Utilisateurs, Regions, Secteurs, Perimetres, Unites } from './pages/admin';
 import { Dashboard, DpProduction, Kpi, Map, Reporting } from "./pages/dp";
-import{ Mouvements, Production, Stockage, Commentaires, MouvementBac} from './pages/unite'
+import{ Mouvements, Production, Stockage, Baremage, Commentaires, MouvementBac} from './pages/unite'
 import { Sidebar } from './components';
 import { useSelector } from 'react-redux';
+
 
 function App() {
 
   const { isSignedIn, isAdmin, isManager, isUnite, isRespUnite} = useSelector((state)=> state.user);
+  const role = useSelector((state)=> state.user.userInfo.role);
+  
+
 
   return (
     <div className='bg-white '>
@@ -41,7 +45,11 @@ function App() {
           <Route path='p/unite/mouvement' element={isSignedIn? ((isUnite || isRespUnite) ? <MouvementBac/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/unite/production' element={isSignedIn? ((isUnite || isRespUnite) ? <Production/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/unite/stock' element={isSignedIn? ((isUnite || isRespUnite) ? <Stockage/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
+          <Route path='p/unite/baremage' element={isSignedIn? ((isUnite || isRespUnite) ? <Baremage/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/unite/commentaires' element={isSignedIn? ((isUnite || isRespUnite) ? <Commentaires/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
+
+          {/* <Route path='p/unite/mouvements' element={isSignedIn? ((role==="Manager") ? <Mouvements/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
+          <Route path='p/unite/mouvement' element={isSignedIn? ((role==="Manager") ? <MouvementBac/> : <Error/>) : (<Navigate to="/login" replace/>)}/> */}
 
           {/* dp Routes */}
           <Route path='p/dp/dashboard' element={isSignedIn? (isManager? <Dashboard/> : <Error/>) : (<Navigate to="/login" replace/>)}/>

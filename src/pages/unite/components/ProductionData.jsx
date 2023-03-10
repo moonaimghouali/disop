@@ -19,8 +19,8 @@ const rowSelected = ()=>{
     const valdiation = props.validation
     return (
     <div className='flex items-center justify-center w-full px-6'>
-      { valdiation ? <div className='py-1 px-2 w-full rounded bg-green-100 text-green-600 font-semibold'>Validee</div> 
-      : <div className='py-1 px-2 w-full rounded bg-red-100 text-red-600 font-semibold'>Non-Validee</div>
+      { valdiation ? <div className='py-1 px-2 w-full rounded bg-green-50 text-green-600 font-semibold hover:bg-green-100'>Validee</div> 
+      : <div className='py-1 px-2 w-full rounded bg-red-50 text-red-600 font-semibold hover:bg-red-100'>Non-Validee</div>
       } </div>)
 };
 

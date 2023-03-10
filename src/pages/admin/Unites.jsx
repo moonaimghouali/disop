@@ -7,11 +7,11 @@ import {unites} from '../../data/unitesData'
 
 const Unites = () => {
   return (
-    <div className='rounded-sm pl-8 py-4 bg-gray-100 w-full h-screen'>
+    <div className="flex flex-col h-screen w-screen bg-gray-100 px-8 py-8">
       <PageHeader className="mb-10" subTitle="Gestion des" pageName="Unites"/>  
     
-     <div className="w-2/3 mt-10">
-     <GridComponent dataSource={unites} allowPaging={true}  allowSorting={true}  allowFiltering={true} pageSettings={{pageSize:10}} >
+    <div className='flex w-full h-full mt-8 rounded bg-white shadow-sm' >
+     <GridComponent  height={"100%"} dataSource={unites} allowPaging={true}  allowSorting={true} pageSettings={{pageSize:10}} >
        <Inject services={[Page, Sort, Filter, Group]}/>
      </GridComponent>
      </div>

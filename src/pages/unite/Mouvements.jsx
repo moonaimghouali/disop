@@ -25,15 +25,15 @@ const Mouvements = () => {
             <ColumnDirective field='date_operation' headerText='Date' textAlign='left'/>
             <ColumnDirective field='type_operation' headerText='Type' textAlign='left'/>
             <ColumnDirective field='code_bac' headerText='Bac' textAlign='left'/>
-            <ColumnDirective field='initiale_cote' headerText='Cote' textAlign='left'/>
+            {/* <ColumnDirective field='initiale_cote' headerText='Cote' textAlign='left'/>
             <ColumnDirective field='initiale_temperature' headerText='Temperature' textAlign='left'/>
-            <ColumnDirective field='initiale_densite' headerText='Densite' textAlign='left'/>
+            <ColumnDirective field='initiale_densite' headerText='Densite' textAlign='left'/> */}
             <ColumnDirective field='initiale_volume_apparent' headerText='Volume apparent(m3)' textAlign='left'/>
             <ColumnDirective field='initiale_coef_correction' headerText='Coef K' textAlign='left'/>
             <ColumnDirective field='itnitale_volume_standard' headerText='Volume Standard (m3)' textAlign='left'/>
-            <ColumnDirective field='finale_cote' headerText='Cote' textAlign='left'/>
+            {/* <ColumnDirective field='finale_cote' headerText='Cote' textAlign='left'/>
             <ColumnDirective field='finale_temperature' headerText='Temperature' textAlign='left'/>
-            <ColumnDirective field='finale_densite' headerText='Densite' textAlign='left'/>
+            <ColumnDirective field='finale_densite' headerText='Densite' textAlign='left'/> */}
             <ColumnDirective field='finale_volume_apparent' headerText='Volume apparent(m3)' textAlign='left'/>
             <ColumnDirective field='finale_coef_correction' headerText='Coef K' textAlign='left'/>
             <ColumnDirective field='finale_volume_standard' headerText='Volume Standard (m3)' textAlign='left'/>
