@@ -1,32 +1,33 @@
 import React, {useEffect} from 'react'
 import { TooltipComponent } from '@syncfusion/ej2-react-popups'
 import {FiGrid} from 'react-icons/fi'
+import { NavLink, Link } from 'react-router-dom'
 
 const BacDetail = ({key, codeBacs, categorie_bac, capacite_stockage, stockage_actuel}) => {
 
   const   tankFillPercentage = stockage_actuel / capacite_stockage
   const percent = (tankFillPercentage * 100 ).toFixed(2)
 
-  const oilLevelSetter = ()=>{
-    if(capacite_stockage === 0)
-    return
+  // const oilLevelSetter = ()=>{
+  //   if(capacite_stockage === 0)
+  //   return
 
-    let oilContainer = document.getElementById("oil-container")
-    let oil = document.getElementById("oil")
-    let parentHeight = oilContainer.style.height
-    alert(parentHeight)
-    //oil.style.height = parentHeight * tankFillPercentage  
-  }
+  //   let oilContainer = document.getElementById("oil-container")
+  //   let oil = document.getElementById("oil")
+  //   let parentHeight = oilContainer.style.height
+  //   alert(parentHeight)
+  //   //oil.style.height = parentHeight * tankFillPercentage  
+  // }
 
-  //oilLevelSetter()
+  // //oilLevelSetter()
   return ( 
     <div className='h-full w-1/4 bg-white flex flex-col shadow-sm rounded '>
         {/* info section */}
-        <div className='w-full h-3/5 px-2 pt-2'> 
+        <div className='w-full h-3/5 px-2 pt-1'> 
          <div className='w-full flex flex-row items-center pl-1'>
             <div className='font-semibold text-base flex-1'>{codeBacs}</div>
             <TooltipComponent position="TopCenter" content="Table de baremage">
-              <button className='p-1 text-green-800 rounded hover:bg-green-100 hover:shadow'> <FiGrid size={18}/></button>
+              <Link to="/p/unite/baremage"  className='p-1 text-green-800 rounded hover:bg-green-100 hover:shadow'> <FiGrid size={18}/></Link>
             </TooltipComponent>
          </div>
          <div className='mt-1 w-fit text-blue-700 px-2 py-1 rounded bg-blue-100 '>{categorie_bac}</div>

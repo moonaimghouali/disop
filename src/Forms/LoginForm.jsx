@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import logo from '../assets/images/logo-primary.png'
 import InputField from '../components/InputField'
 import * as api from '../api/userApi'
-import { useSelector, useDispatch } from 'react-redux';
-import { LoginAdmin, LoginManager, LoginUnite,  LoginResp } from '../store/slices/userSlice'
+import { useDispatch } from 'react-redux';
+import {  Login } from '../store/slices/userSlice'
 
 const LoginForm = () => {
 
@@ -37,21 +37,9 @@ const LoginForm = () => {
         const accessToken = response.data.accessToken
 
         // Saving jwt token to local storage
-        if(accessToken) localStorage.setItem("jwt",accessToken)
-
-        //Define user role
-        switch (utilisateur.role) {
-          case "Admin": dispatch(LoginAdmin(utilisateur))
-            break;
-          case "Unite_Controle": dispatch(LoginUnite(utilisateur))
-            break;
-          case "Manager": dispatch(LoginManager(utilisateur))
-            break;
-          case "Resp_Unite": dispatch(LoginResp(utilisateur))
-            break;
-        
-          default:
-            break;
+        if(accessToken) {
+        localStorage.setItem("jwt",accessToken)
+        dispatch(Login(utilisateur))
         }
 
     }

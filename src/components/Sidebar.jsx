@@ -2,20 +2,25 @@ import React from 'react'
 import logo from "../assets/images/logo-primary.png";
 import {AiOutlineUser} from "react-icons/ai"
 import {BiLogOut} from "react-icons/bi"
-import { Navigate, NavLink } from 'react-router-dom';
-import {adminLinks, dpLinks, uniteLinks} from '../data/sideBarData'
+import { NavLink } from 'react-router-dom';
+import {adminLinks, dpLinks, uniteLinks, EPLinks, XPLinks} from '../data/sideBarData'
 import { useSelector, useDispatch } from 'react-redux';
 import { Logout } from '../store/slices/userSlice'
+import { roles } from '../store/types/roles';
 
 const Sidebar = () => {
   const inActiveStyle = "flex flex-row items-center px-2 py-2 rounded hover:bg-gray-100"
   const activeStyle = "flex flex-row items-center px-2 py-2 font-semibold rounded bg-orange-50 hover:bg-orange-100 text-orange-600"
 
-  const { isSignedIn, isAdmin, isManager, isUnite, isRespUnite} = useSelector((state)=> state.user);
+  const user = useSelector((state)=> state.user);
   var Links = []
-  if (isAdmin) Links = adminLinks;
-  if (isManager) Links = dpLinks;
-  if (isUnite || isRespUnite) Links = uniteLinks;
+  if (user.userInfo.role === roles.Admin) Links = adminLinks;
+  if (user.userInfo.role === roles.Manager) Links = dpLinks;
+  if (user.userInfo.role === roles.Unite || user.userInfo.role === roles.RespUnite) Links = uniteLinks;
+  if (user.userInfo.role === roles.EP) Links = EPLinks;
+  if (user.userInfo.role === roles.XP) Links = XPLinks;
+
+
 
   const dispatch = useDispatch()
   
@@ -28,8 +33,13 @@ const Sidebar = () => {
         {/* Header */}
             <div className='flex flex-col items-center'>
                 <img className="w-10" src={logo} alt='Sonatrach' />
-                <p className='font-meduim mt-1'>Sonatrach</p>
-                <p className='font-semibold mt-3'>Administration</p>
+                <p className='font-meduim'>Sonatrach</p>
+
+                {/* type de la structure */}
+                {(user.userInfo.role !== roles.Manager) && (<p className='font-medium mt-1'>{user.userInfo.affectation}</p>)}
+                {/* Nom de la structure */}
+                {(user.userInfo.role === roles.Manager) && (<p className='font-semibold mt-2'>Division Production</p>)}
+                {(user.userInfo.role !== roles.Manager) && (<p className='font-semibold mt-2'>Hassi Messaoud</p>)}
             </div>
 
         {/* Divider */}
@@ -57,7 +67,7 @@ const Sidebar = () => {
         <div className='absolute bottom-6 flex flex-col items-center pt-5 '>
             <NavLink to="/profile" className='flex flex-row px-4 py-2 items-center rounded hover:bg-orange-50 hover:cursor-pointer'>
               <AiOutlineUser size={18} />
-              <p className='capitalize ml-1 font-semibold'>Mouhammed</p>  
+              <p className='capitalize ml-1 font-semibold'>{user.userInfo.firstName}</p>  
             </NavLink>
             <button onClick={handleLogOut} className="text-2xl mt-2" >
              <BiLogOut color='#333333'/>

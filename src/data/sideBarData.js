@@ -9,7 +9,7 @@ import { MdOutlineModeComment } from 'react-icons/md'
 export const adminLinks = [
     {
       name: 'Utilisateurs',
-      path : "p/admin/utilisateurs",
+path : "p/admin/utilisateurs",
       icon: <FiUsers size={18}/>,
     },
     {
@@ -83,4 +83,45 @@ export const adminLinks = [
       path : "p/unite/commentaires",
       icon: <MdOutlineModeComment size={18}/>,
     },
+  ]
+
+  export const EPLinks = [
+    {
+      name: 'Puits',
+      path : "p/ep/puits",
+      icon: <BsArrowLeftRight size={18}/>,
+    },
+    {
+      name: 'Perimetres',
+      path : "p/ep/perimetres",
+      icon: <BiDroplet size={18}/>,
+    },
+    {
+      name: 'Production',
+      path : "p/ep/production",
+      icon: <FiUsers size={18}/>,
+    }
+  ]
+
+  export const XPLinks = [
+    {
+      name: 'Produciton',
+      path : "p/xp/production",
+      icon: <BsArrowLeftRight size={18}/>,
+    },
+    {
+      name: 'Unites',
+      path : "p/xp/unites",
+      icon: <BiDroplet size={18}/>,
+    },
+    {
+      name: 'Perimetres',
+      path : "p/xp/perimetres",
+      icon: <FiUsers size={18}/>, 
+    },
+    {
+      name: 'Previsions',
+      path : "p/xp/previsions",
+      icon: <FiUsers size={18}/>,
+    }
   ]
