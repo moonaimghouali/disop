@@ -1,6 +1,6 @@
 import React from 'react'
 import PageHeader from '../../components/PageHeader'
-import CommentairesForm from './components/CommentairesForm'
+import CommentairesForm from '../../Forms/CommentairesForm'
 import CommentairesList from './components/CommentairesList'
 
 const Commentaires = () => {

@@ -3,9 +3,11 @@ import PageHeader from '../../components/PageHeader'
 import MenuMouvements from './components/MenuMouvements'
 import { GridComponent, ColumnsDirective, ColumnDirective, Inject, Page, Toolbar, PdfExport, ExcelExport, Edit } from '@syncfusion/ej2-react-grids'
 import { mouvements } from '../../data/data'
+import * as calcul from '../../utils/CalculProduction';
 
 const Mouvements = () => {
 
+  console.log(calcul.arrondirCote(10093.12))
   const editOptions = { allowEditing: true, allowAdding: true, allowDeleting: true };
     const toolbarOptions = ['Add', 'Edit', 'Delete', 'Update', 'Cancel'];
   

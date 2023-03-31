@@ -1,9 +1,13 @@
 import { FiUsers} from 'react-icons/fi'
-import { BsArrowLeftRight } from 'react-icons/bs'
-import {GiOilRig, GiOilPump, GiWaterDrop, GiOilDrum} from 'react-icons/gi'
-import { BiDroplet } from 'react-icons/bi'
-import { TbBuildingFactory} from 'react-icons/tb'
-import { MdOutlineModeComment } from 'react-icons/md'
+import { BsArrowLeftRight, BsPinMap } from 'react-icons/bs'
+import { GiOilPump} from 'react-icons/gi'
+import { TbBuildingFactory, TbReportAnalytics, TbBrandProducthunt} from 'react-icons/tb'
+import { MdOutlineModeComment, MdOutlineDashboard } from 'react-icons/md'
+import { CgPerformance } from 'react-icons/cg'
+import { GoGraph } from 'react-icons/go'
+import { RiWaterFlashLine } from 'react-icons/ri'
+
+
 
 
 export const adminLinks = [
@@ -38,27 +42,27 @@ path : "p/admin/utilisateurs",
     {
       name: 'Dashboard',
       path : "p/dp/dashboard",
-      icon: <FiUsers size={18}/>,
+      icon: <MdOutlineDashboard size={18}/>,
     },
     {
       name: 'Production',
       path : "p/dp/production",
-      icon: <FiUsers size={18}/>,
+      icon: <GiOilPump size={18}/>,
     },
     {
       name: 'KPI',
       path : "p/dp/performance",
-      icon: <FiUsers size={18}/>,
+      icon: <CgPerformance size={18}/>,
     },
     {
       name: 'Reporting',
       path : "p/dp/reporting",
-      icon: <GiOilPump size={20}/>,
+      icon: <TbReportAnalytics size={20}/>,
     },
     {
       name: 'Carte',
       path : "p/dp/carte",
-      icon: <TbBuildingFactory size={18}/>,
+      icon: <BsPinMap size={18}/>,
     },  
   ]
 
@@ -71,7 +75,7 @@ path : "p/admin/utilisateurs",
     {
       name: 'Production',
       path : "p/unite/production",
-      icon: <BiDroplet size={18}/>,
+      icon: <RiWaterFlashLine size={18}/>,
     },
     {
       name: 'Stockage',
@@ -89,17 +93,17 @@ path : "p/admin/utilisateurs",
     {
       name: 'Puits',
       path : "p/ep/puits",
-      icon: <BsArrowLeftRight size={18}/>,
+      icon: <GiOilPump size={18}/>,
     },
     {
       name: 'Perimetres',
       path : "p/ep/perimetres",
-      icon: <BiDroplet size={18}/>,
+      icon: <TbBrandProducthunt size={18}/>,
     },
     {
       name: 'Production',
       path : "p/ep/production",
-      icon: <FiUsers size={18}/>,
+      icon: <RiWaterFlashLine size={18}/>,
     }
   ]
 
@@ -107,21 +111,21 @@ path : "p/admin/utilisateurs",
     {
       name: 'Produciton',
       path : "p/xp/production",
-      icon: <BsArrowLeftRight size={18}/>,
+      icon: <RiWaterFlashLine size={18}/>,
     },
     {
       name: 'Unites',
       path : "p/xp/unites",
-      icon: <BiDroplet size={18}/>,
+      icon: <TbBuildingFactory size={18}/>,
     },
     {
       name: 'Perimetres',
       path : "p/xp/perimetres",
-      icon: <FiUsers size={18}/>, 
+      icon: <TbBrandProducthunt size={18}/>, 
     },
     {
       name: 'Previsions',
       path : "p/xp/previsions",
-      icon: <FiUsers size={18}/>,
+      icon: <GoGraph size={18}/>,
     }
   ]

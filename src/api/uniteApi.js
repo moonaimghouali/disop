@@ -1,19 +1,37 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+// require("dotenv").config();
 
-const severUrl = "http://localhost:5000"
+const serverUrl = "http://localhost:5000"
 
 
-const RouteMouvements = `${severUrl}/api/bacOperations/`
-const RouteBacs = `${severUrl}/api/unites/${5}/mybacs`
+const RouteMouvements = `${serverUrl}/api/bacOperations/`
+const RouteBacs = `${serverUrl}/api/unites/${1}/getbacs`
+const RouteCommentaires = `${serverUrl}/api/commentaires`
 
+// /////////////////////////////////////////////////////////////////////////////////////////////////
 //Mouvements
-export const fetchMouvements = async () => await axios.get(RouteMouvements);
-export const createMouvement = async (newMouvement) => await axios.post(RouteMouvements, newMouvement);
+export const fetchMouvements = createAsyncThunk("mouvements/fetchMouvements", () =>  {
+    return axios.get(RouteBacs).then((response) => response.data.data)
+})
 
+
+
+// /////////////////////////////////////////////////////////////////////////////////////////////////
 //bacs
 export const  fetchBacs =  createAsyncThunk("bacs/fetchBacs", () =>  {
     return axios.get(RouteBacs).then((response) => response.data.data)
 })
 
-export const createBac = async (newBac) => await axios.post(RouteBacs, newBac);
+
+
+// ////////////////////////////////////////////////////////////////////////////////////////////////
+//Commentaires
+export const  fetchCommentaires =  createAsyncThunk("Commentaires/fetchCommentaires", () =>  {
+    return axios.get(RouteBacs).then((response) => response.data.data)
+})
+
+export const postCommentaire = async (body) =>{
+    const response = (await axios.post(`${RouteCommentaires}`, body))
+    return response
+}

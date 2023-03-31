@@ -1,11 +1,13 @@
 import React from 'react'
-import MouvementMesures from './MouvementMesures'
-import MenuMouvements from './MenuMouvements'
+import MouvementMesuresForm from '../pages/unite/components/MouvementMesuresForm'
+import MenuMouvements from '../pages/unite/components/MenuMouvements'
+import { validateMouvementForm } from './UniteFormValidation'
 
 const MouvementForm = () => {
 
     const handleSubmit = (e) =>{
         e.preventDefault()
+        validateMouvementForm()
         alert("hello its working")
         console.log(e.target.cote.value)
     }
@@ -14,7 +16,7 @@ const MouvementForm = () => {
     <div className='h-full w-1/2 '>
         <form className='h-full w-full flex flex-col gap-6' method='POST' onSubmit={handleSubmit}>
             <MenuMouvements type={false}/>
-            <MouvementMesures />
+            <MouvementMesuresForm />
             
 
             {/* Button  */}

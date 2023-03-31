@@ -21,18 +21,20 @@ const BacDetail = ({key, codeBacs, categorie_bac, capacite_stockage, stockage_ac
 
   // //oilLevelSetter()
   return ( 
-    <div className='h-full w-1/4 bg-white flex flex-col shadow-sm rounded '>
+    <div className='h-full w-1/4 bg-white flex flex-col shadow-sm rounded'>
         {/* info section */}
-        <div className='w-full h-3/5 px-2 pt-1'> 
-         <div className='w-full flex flex-row items-center pl-1'>
+        <div className='w-full h-3/5 px-2 pt-2'> 
+         <div className='w-full h flex flex-row items-center pl-1'>
             <div className='font-semibold text-base flex-1'>{codeBacs}</div>
             <TooltipComponent position="TopCenter" content="Table de baremage">
-              <Link to="/p/unite/baremage"  className='p-1 text-green-800 rounded hover:bg-green-100 hover:shadow'> <FiGrid size={18}/></Link>
+              <div className='p-1 text-green-800 rounded hover:bg-green-100 hover:shadow'>
+              <Link to="/p/unite/bacs/baremage" > <FiGrid size={18}/></Link>
+              </div>
             </TooltipComponent>
          </div>
          <div className='mt-1 w-fit text-blue-700 px-2 py-1 rounded bg-blue-100 '>{categorie_bac}</div>
-         <div className='mt-2 text-gray-700'>Capacite Stockage : <span className='font-semibold text-black'>{capacite_stockage}</span></div>
-         <div className='mt-1 text-gray-700'>Stockage Actuel : <span className='font-semibold text-black'>{stockage_actuel}</span></div>
+         <div className='mt-2 text-gray-700'>Capacite Stockage : <span className='font-semibold text-black'>{capacite_stockage} m3</span></div>
+         <div className='mt-1 text-gray-700'>Stockage Actuel : <span className='font-semibold text-black'>{stockage_actuel} m3</span></div>
         </div>
 
         {/* stock section */}

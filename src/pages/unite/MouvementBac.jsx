@@ -1,6 +1,6 @@
 import React from 'react'
 import MenuMouvements from './components/MenuMouvements';
-import MouvementForm from "./components/MouvementForm";
+import MouvementForm from "../../Forms/MouvementForm";
 import MouvementBilan from "./components/MouvementBilan";
 import { NavLink } from 'react-router-dom'
 import { FiArrowLeft } from 'react-icons/fi'

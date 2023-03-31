@@ -13,6 +13,7 @@ const Sidebar = () => {
   const activeStyle = "flex flex-row items-center px-2 py-2 font-semibold rounded bg-orange-50 hover:bg-orange-100 text-orange-600"
 
   const user = useSelector((state)=> state.user);
+  const system = useSelector((state)=> state.system);
   var Links = []
   if (user.userInfo.role === roles.Admin) Links = adminLinks;
   if (user.userInfo.role === roles.Manager) Links = dpLinks;
@@ -36,10 +37,10 @@ const Sidebar = () => {
                 <p className='font-meduim'>Sonatrach</p>
 
                 {/* type de la structure */}
-                {(user.userInfo.role !== roles.Manager) && (<p className='font-medium mt-1'>{user.userInfo.affectation}</p>)}
+                {(user.userInfo.role !== roles.Manager) && (<p className='font-medium mt-2'>{user.userInfo.role.toUpperCase()}</p>)}
                 {/* Nom de la structure */}
                 {(user.userInfo.role === roles.Manager) && (<p className='font-semibold mt-2'>Division Production</p>)}
-                {(user.userInfo.role !== roles.Manager) && (<p className='font-semibold mt-2'>Hassi Messaoud</p>)}
+                {(user.userInfo.role !== roles.Manager) && (<p className='font-semibold mt-1 text-center'>{system.nom}</p>)}
             </div>
 
         {/* Divider */}

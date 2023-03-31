@@ -1,19 +1,30 @@
 import React from 'react'
 import PageHeader from '../../components/PageHeader'
 import InputField from '../../components/InputField'
+import avatar from '../../assets/images/avatar.webp'
+import { useSelector } from 'react-redux'
+import {HiOutlineMail } from 'react-icons/hi'
+
 
 const Profile = () => {
 
   const handleSubmit = (e) =>{ 
     e.preventDefault()
     alert("form submitted")}
-
+  
+  const user = useSelector((state) => state.user)
   return (
     <div className="flex flex-col h-screen w-screen bg-gray-100 px-8 py-8">
       <PageHeader subTitle="Mon" pageName="Profile" />
       <div className='h-full w-full my-8 flex flex-col gap-8'>
         {/* User Info */}
-        <div className='w-1/2 h-52 bg-white rounded-sm shadow-sm'> Info section</div> 
+        <div className='w-1/2 h-52 flex flex-row bg-white rounded-sm shadow-sm p-2 gap-10'> 
+          <div className='w-20 h-20'><img src={avatar} /></div>
+          <div className='flex flex-col'>
+            <div className='font-semibold text-xl'>{user.userInfo.firstName} {user.userInfo.lastName} </div>
+            <div className='font-medium text-lg flex flex-row items-center gap-2'><HiOutlineMail size={18}/> {user.userInfo.email} </div>
+          </div>
+        </div> 
 
         {/* Mot de passe */}
         <div className='w-1/2 h-full bg-white rounded-sm shadow-sm px-4 py-2'>

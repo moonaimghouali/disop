@@ -1,37 +1,46 @@
 import React, { useState } from 'react'
 import logo from '../assets/images/logo-primary.png'
 import InputField from '../components/InputField'
+import { validateLoginForm } from './UniteFormValidation'
 import * as api from '../api/userApi'
 import { useDispatch } from 'react-redux';
 import {  Login } from '../store/slices/userSlice'
+import { intitializeSystemInfo } from '../store/slices/systemSlice'
 
 const LoginForm = () => {
 
-    const [errorMessage, setErrorMessage] = useState("")
-    const [error, setError] = useState(false)
-
+    const [error, setError] = useState({error : false, errorMessage :""})
     const dispatch = useDispatch()
 
+
+    //handle form submission
     const handleSubmit = async (e)=>{
         e.preventDefault()
 
+        // valider les donnees saisis
+        // const validationResponse = await validateLoginForm(e.target.email.value)
+
+        // if(validationResponse.error) {
+        //   setError(validationResponse)
+        // }
+        // else{
+        //   setError({error : false, errorMessage :""})
+          
         //requestBody
         const requestBody = {
           email : e.target.email.value,
           password : e.target.password.value
         }
-        
         //ResponseData
         let response
         try {
            response = await api.loginUser(requestBody)
            console.log(response.data)
         } catch (error) {
-
           console.log(error)
-          setErrorMessage(error.response.data)
-          setError(true)
+          setError({error:true, errorMessage: error.response.data})
         }
+
         if(!response) return
         const utilisateur = response.data.utilisateur
         const accessToken = response.data.accessToken
@@ -40,8 +49,10 @@ const LoginForm = () => {
         if(accessToken) {
         localStorage.setItem("jwt",accessToken)
         dispatch(Login(utilisateur))
+        const sysInfo = await api.getSystemInfo(utilisateur)
+        dispatch(intitializeSystemInfo(sysInfo))
         }
-
+        // }
     }
 
   return (
@@ -58,8 +69,8 @@ const LoginForm = () => {
             <InputField label="E-mail Adresse" required={true} type="text" id="email" name="email" placeholder="name@sonatrach.dz"/>
             
             <div className='mt-4 mb-1 '>Mot de Passe</div>
-            <InputField label="Mot de Passe" required={false} type="password" id="password" name="password" />
-            {error &&(<div className='mt-3 text-red-600 text-xs'>{errorMessage}</div>)}
+            <InputField label="Mot de Passe" required={true} type="password" id="password" name="password" />
+            {error.error &&(<div className='mt-3 text-red-600 text-xs'>{error.errorMessage}</div>)}
             <button type="submit" className=' mt-6 h-10 w-full rounded-sm text-lg text-white font-semibold shadow bg-orange-500 hover:bg-orange-600 hover:shadow-md ease-in-out duration-100'>
                     Connecter</button>
         </form>
