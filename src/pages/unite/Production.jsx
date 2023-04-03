@@ -1,6 +1,5 @@
 import React from 'react'
 import PageHeader from '../../components/PageHeader'
-import PopupBG from '../../components/PopupBG'
 import Bilan from './components/Bilan'
 import ProductionData from './components/ProductionData'
 

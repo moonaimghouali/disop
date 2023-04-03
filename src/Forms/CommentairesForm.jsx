@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
 import { validateCommentaireForm } from './UniteFormValidation'
 import * as api from '../api/uniteApi'
+import { useDispatch, useSelector } from 'react-redux'
 
 const CommentairesForm = () => {
-    const [error, setError] = useState({error:false , errorMessage:""})  
+    const [error, setError] = useState({error:false , errorMessage:""})
+    const userId = useSelector(state => state.user.userInfo.id)
+    const uniteId = useSelector(state => state.system.id)
+    let dispatch = useDispatch()
 
     //handle Submit event
     const handleSubmit = async(e) =>{
@@ -19,21 +23,27 @@ const CommentairesForm = () => {
 
         //requestBody
         const requestBody = {
-        dateCommentaire : new Date().getDate(),
-        titreCommentaire : e.target.titre.value,
-        contenuCommentaire : e.target.contenu.value,
-        id_unite : 5,
-        id_utilisateur : 3,
+        // date_commentaire : new Date().getDate(),
+        titre_commentaire : e.target.titre.value,
+        contenu_commentaire : e.target.contenu.value,
+        uniteId : uniteId ,
+        userId : userId,
         }
-        
-        //ResponseData
-        // let response
-        // try {
-        //    response = await api.postCommentaire(requestBody)
-        // } catch (error) {
-        // }
+        console.log(requestBody)
+        // //ResponseData
+        let response
+        try {
+           response = await api.postCommentaire(requestBody)
+        } catch (error) {
+          console.log(error)
+        }
   
-        // if(!response) return 
+        if(!response) return 
+        else{
+          console.log(response)
+          // update the list of comments
+          // dispatch(updateCommentaires)
+        }
       // }    
     }
 

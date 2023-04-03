@@ -3,12 +3,12 @@ import * as api from '../../api/uniteApi'
 
 const initialState = {
   loading : false,
-  Commentaires : [],
+  uniteCommentaires : [],
   error : ""
 }
 
 export const commentairesSlice = createSlice({
-  name: 'Commentaires',
+  name: 'commentaires',
   initialState,
   reducers: {
   },
@@ -17,12 +17,12 @@ export const commentairesSlice = createSlice({
     builder.addCase(api.fetchCommentaires.pending, (state)=>{state.loading=true})
     builder.addCase(api.fetchCommentaires.fulfilled, (state, action)=>{
       state.loading=false
-      state.uniteBacs = action.payload
+      state.uniteCommentaires = action.payload
       state.error = ""
     })
     builder.addCase(api.fetchCommentaires.rejected, (state ,action)=>{
       state.loading=false
-      state.uniteBacs = []
+      state.uniteCommentaires = []
       state.error = action.error.message
     })
   }

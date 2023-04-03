@@ -8,9 +8,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import {roles } from '../../store/types/roles'
 import * as api from '../../api/uniteApi'
 
-
-
-
 const Stockage = () => {
   
   const {loading, uniteBacs, error} = useSelector(state => state.bacs)
@@ -20,6 +17,7 @@ const Stockage = () => {
 
   const user = useSelector((state) => state.user)
   const isRespUnite = (user.userInfo.role === roles.RespUnite)
+  console.log(uniteBacs)
 
   useEffect(()=>{
     dispatch(api.fetchBacs())

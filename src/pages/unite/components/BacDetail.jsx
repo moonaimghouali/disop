@@ -8,18 +8,6 @@ const BacDetail = ({key, codeBacs, categorie_bac, capacite_stockage, stockage_ac
   const   tankFillPercentage = stockage_actuel / capacite_stockage
   const percent = (tankFillPercentage * 100 ).toFixed(2)
 
-  // const oilLevelSetter = ()=>{
-  //   if(capacite_stockage === 0)
-  //   return
-
-  //   let oilContainer = document.getElementById("oil-container")
-  //   let oil = document.getElementById("oil")
-  //   let parentHeight = oilContainer.style.height
-  //   alert(parentHeight)
-  //   //oil.style.height = parentHeight * tankFillPercentage  
-  // }
-
-  // //oilLevelSetter()
   return ( 
     <div className='h-full w-1/4 bg-white flex flex-col shadow-sm rounded'>
         {/* info section */}
@@ -38,9 +26,9 @@ const BacDetail = ({key, codeBacs, categorie_bac, capacite_stockage, stockage_ac
         </div>
 
         {/* stock section */}
-        <div id="oil-container" className='w-full h-2/5 border-t-1 border-gray-200 flex-row-reverse relative'>
+        <div id="oil-tank"  className='w-full h-2/5 border-t-1 border-gray-200 flex-row-reverse relative'>
             <TooltipComponent position="TopCenter" content={`${stockage_actuel} m3 (${percent} %)`}>
-            <div id="oil" className='oil w-full bottom-0 absolute ease-in-out duration-150'></div>
+            <div id="oil-level" style={{ height: `${50}%` }} className='oil w-full bottom-0 absolute ease-in-out duration-150'></div>
             </TooltipComponent>         
         </div>
     </div>

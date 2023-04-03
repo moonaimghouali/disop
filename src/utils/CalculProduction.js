@@ -1,4 +1,4 @@
-
+import { ASTM } from "./ASTM"
 // aroondir la cote saisi en dm et mm 
 export const arrondirCote = (cote) =>{
 
@@ -12,6 +12,7 @@ export const arrondirCote = (cote) =>{
         mm -=10;
         i++;
     }
+    if(i < 0 ) i=0
     return ({coteDm : dm , coteMm : i*10})
 }
 
@@ -33,11 +34,37 @@ export const arrondirTemperature = (temperature) =>{
     return temperatureArrondi
 }
 
+// Calculer le coeffcient de correction depuis la tables ASTM
 export const calculCoeffCorrection = (densite, temperature) =>{
-    let CoeffCorrection = 0;
-    return CoeffCorrection
+
+    let index = 0;
+    if((densite < 0.5) || (densite > 0.6 && densite < 0.690) || (densite > 0.870 )){
+        console.log(" [error area]")
+        return
+    }
+    // density between 0.6 and 0.5
+    if (densite >= 0.500 && densite <= 0.600 && temperature <= 60.5 ){
+        console.log(" [0.5 , 0.6]")
+        let steps = Math.round(((densite - 0.5) * 1000) / 5 )
+        index = Math.trunc(steps) * 61 + Math.trunc(temperature)
+    }
+
+    // density between 0.69 and 0.87
+    if (densite >= 0.690 && densite <= 0.870 && temperature <= 75){
+        console.log(" [0.690 , 0.870]")
+        let steps = Math.round(((densite - 0.690) * 1000) / 5 )
+        index =(1281) + Math.trunc(steps) * 76 + Math.trunc(temperature)
+        console.log(steps , index)
+    }
+
+    if(Math.trunc(temperature) === temperature ){
+        return ASTM[index][2]
+    }else{
+        return ASTM[index][3] 
+    }
 }
 
+// Calculer le coeffcient de correction depuis la tables ASTM par la methode d'interopolation
 export const calculCoeffCorrectionInterpolation = (densite, temperature) =>{
     //determine the densities to use for the interpolation method
     let d0 = 0.5
@@ -60,6 +87,7 @@ export const calculCoeffCorrectionInterpolation = (densite, temperature) =>{
 
 }
 
+// Calculer le volume et masse standard d'un bac
 export const calculVolumeStandard = (coteValue, densiteValue , temperatureValue) =>{
     let coeffCorrection  = 0
 
@@ -69,12 +97,50 @@ export const calculVolumeStandard = (coteValue, densiteValue , temperatureValue)
     let temperature = arrondirTemperature(temperatureValue)
 
     // Get le volume apparent depuis la table de baremage.
+    let volumeApparent = 11345.67
 
     // calculer le CoefCorrectionVolume
-    
+    if((densite*1000) % 5 === 0){
+        coeffCorrection  = calculCoeffCorrection(densite, temperature)
+    }else{
+        coeffCorrection  = calculCoeffCorrectionInterpolation(densite, temperature)
+    }
 
+    let volumeStandard = Number(volumeApparent * coeffCorrection ).toFixed(3)
+    let masseStandard =  Number(volumeStandard * densite ).toFixed(3)
+    volumeApparent = Number(volumeApparent).toFixed(3)
+    
+    return {cote , densite , temperature , volumeApparent , coeffCorrection , volumeStandard , masseStandard}
 }
 
-export const calculResultatMouvement = () =>{
+// Calculer le resultat d'un mouvement (expedition, purge)
+export const calculResultatMouvement = (v) =>{
+    let valeursInitiales = calculVolumeStandard(v.initiale_cote , v.initiale_densite, v.initiale_temperature)
+    let valeursFinales = calculVolumeStandard(v.finale_cote , v.finale_densite, v.finale_temperature)
 
+    let resultatVolumeStandard = Math.abs(valeursFinales.volumeStandard - valeursInitiales.volumeStandard)
+    let resultatMasseStandard = resultatVolumeStandard * valeursFinales.densite
+
+    return {
+        valeursInitiales, 
+        valeursFinales,
+        resultatVolumeStandard ,
+        resultatMasseStandard
+    }
+};
+
+// Calculer le stock d'un bac a mi-nuit (Stock final)
+export const calculResultatJournee = (v) => {
+    let valeursFinales = calculVolumeStandard(v.finale_cote , v.finale_densite, v.finale_temperature)
+    let valeursInitiales = calculVolumeStandard(0 , 0, 0)
+
+    let resultatVolumeStandard = Math.abs(valeursFinales.volumeStandard  )
+    let resultatMasseStandard = resultatVolumeStandard * valeursFinales.densite
+
+    return {
+        valeursInitiales,
+        valeursFinales,
+        resultatVolumeStandard ,
+        resultatMasseStandard
+    }
 }

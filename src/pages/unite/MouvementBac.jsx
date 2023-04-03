@@ -1,11 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import MenuMouvements from './components/MenuMouvements';
 import MouvementForm from "../../Forms/MouvementForm";
 import MouvementBilan from "./components/MouvementBilan";
 import { NavLink } from 'react-router-dom'
 import { FiArrowLeft } from 'react-icons/fi'
+import {useDispatch} from 'react-redux'
+import { updateMenuMouvements } from '../../store/slices/menusSlice'
+import {calculCoeffCorrection} from '../../utils/CalculProduction'
 
 const MouvementBac = () => {
+  const dispatch = useDispatch() 
+
+  useEffect(() =>{
+    dispatch(updateMenuMouvements({operation : "NAN" , bac: "NAN"}))
+  }, [])
+
   return (
     <div className="flex flex-col h-screen w-screen bg-gray-100 px-8 pb-8 pt-14">
       {/* Header */}

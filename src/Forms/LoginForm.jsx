@@ -38,7 +38,7 @@ const LoginForm = () => {
            console.log(response.data)
         } catch (error) {
           console.log(error)
-          setError({error:true, errorMessage: error.response.data})
+          //setError({error:true, errorMessage: error.response.data})
         }
 
         if(!response) return

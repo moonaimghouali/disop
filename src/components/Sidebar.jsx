@@ -68,7 +68,7 @@ const Sidebar = () => {
         <div className='absolute bottom-6 flex flex-col items-center pt-5 '>
             <NavLink to="/profile" className='flex flex-row px-4 py-2 items-center rounded hover:bg-orange-50 hover:cursor-pointer'>
               <AiOutlineUser size={18} />
-              <p className='capitalize ml-1 font-semibold'>{user.userInfo.firstName}</p>  
+              <p className='capitalize ml-1 font-semibold'>{user.userInfo.prenom}</p>  
             </NavLink>
             <button onClick={handleLogOut} className="text-2xl mt-2" >
              <BiLogOut color='#333333'/>
