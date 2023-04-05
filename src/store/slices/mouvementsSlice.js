@@ -3,12 +3,12 @@ import * as api from '../../api/uniteApi'
 
 const initialState = {
   loading : false,
-  Mouvements : [],
+  mouvements : [],
   error : ""
 }
 
 export const mouvementsSlice = createSlice({
-  name: 'Mouvements',
+  name: 'mouvements',
   initialState,
   reducers: {
   },
@@ -17,12 +17,12 @@ export const mouvementsSlice = createSlice({
     builder.addCase(api.fetchMouvements.pending, (state)=>{state.loading=true})
     builder.addCase(api.fetchMouvements.fulfilled, (state, action)=>{
       state.loading=false
-      state.uniteBacs = action.payload
+      state.mouvements = action.payload
       state.error = ""
     })
     builder.addCase(api.fetchMouvements.rejected, (state ,action)=>{
       state.loading=false
-      state.uniteBacs = []
+      state.mouvements = []
       state.error = action.error.message
     })
   }

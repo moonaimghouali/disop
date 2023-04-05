@@ -2,24 +2,30 @@ import React, {useEffect, useState} from 'react'
 import PageHeader from '../../components/PageHeader'
 import MenuMouvements from './components/MenuMouvements'
 import { GridComponent, ColumnsDirective, ColumnDirective, Inject, Page, Toolbar, PdfExport, ExcelExport, Edit } from '@syncfusion/ej2-react-grids'
-import { mouvements } from '../../data/data'
-import * as calcul from '../../utils/CalculProduction';
-import { useSelector } from 'react-redux'
-import {useDispatch} from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { useConstructor } from '@toolz/use-constructor';
 import { updateMenuMouvements } from '../../store/slices/menusSlice'
+import * as api from '../../api/uniteApi'
 
 const Mouvements = () => {
-  
+
   const menuMouvements = useSelector((state) =>state.menus.menuMouvementsValue)
-  // console.log(calcul.arrondirCote(10093.12)) 
+  const {loading, mouvements, error} = useSelector((state) =>state.mouvements)
   const editOptions = { allowEditing: true, allowAdding: true, allowDeleting: true };
   const dispatch = useDispatch()
 
+  // runs once the component is created 
   useEffect(()=>{
-    dispatch(updateMenuMouvements({operation : "ALL" , bac: -1}))
-    console.log(menuMouvements)
+    dispatch(updateMenuMouvements({operation : "All" , bac: -1}))
+    dispatch(api.fetchMouvements({operation : "All" , bac: -1}))
   },[])
-  
+
+  // runs everytime the menumouvements changes
+  useEffect(()=>{
+    dispatch(api.fetchMouvements(menuMouvements))
+  },[ menuMouvements.operation , menuMouvements.bac])
+
+
   return (
     <div className="flex flex-col h-screen w-screen bg-gray-100 px-8 py-8">
       <PageHeader subTitle="Mouvements de" pageName="Bacs"/>
@@ -30,30 +36,32 @@ const Mouvements = () => {
 
         {/* table de mouvements */}
         <div className='w-full h-full bg-white'>
-         <GridComponent height={"100%"} dataSource={mouvements} editOptions={editOptions} allowPaging={true} allowPdfExport={true} allowExcelExport={true} pageSettings={{pageSize:9}}>
+          {/* { !loading && ( */}
+             <GridComponent height={"100%"} dataSource={mouvements} editOptions={editOptions} allowPaging={true} allowPdfExport={true} allowExcelExport={true} pageSettings={{pageSize:9}}>
           
-          <ColumnsDirective >
-            <ColumnDirective field='dateOperation' headerText='Date' textAlign='left'/>
-            <ColumnDirective field='typeOperation' headerText='Mouvement' textAlign='left'/>
-            <ColumnDirective field='codeBac' headerText='Bac' textAlign='left'/>
-            {/* <ColumnDirective field='initiale_cote' headerText='Cote' textAlign='left'/>
-            <ColumnDirective field='initiale_temperature' headerText='Temperature' textAlign='left'/>
-            <ColumnDirective field='initiale_densite' headerText='Densite' textAlign='left'/> */}
-            <ColumnDirective field='initialVolumeApparent' headerText='Volume apparent(m3)' textAlign='left'/>
-            <ColumnDirective field='initialCoeffCorrection' headerText='Coef K' textAlign='left'/>
-            <ColumnDirective field='itnitalVolumeStandard' headerText='Volume Standard (m3)' textAlign='left'/>
-            {/* <ColumnDirective field='finale_cote' headerText='Cote' textAlign='left'/>
-            <ColumnDirective field='finale_temperature' headerText='Temperature' textAlign='left'/>
-            <ColumnDirective field='finale_densite' headerText='Densite' textAlign='left'/> */}
-            <ColumnDirective field='finalVolumeApparent' headerText='Volume apparent(m3)' textAlign='left'/>
-            <ColumnDirective field='finalCoeffCorrection' headerText='Coef K' textAlign='left'/>
-            <ColumnDirective field='finalVolumeStandard' headerText='Volume Standard (m3)' textAlign='left'/>
-            <ColumnDirective field='resultaVolumeStandard' headerText='Volume(m3)' textAlign='left'/>
-            <ColumnDirective field='resultatMasseStandard' headerText='Masse(TM)' textAlign='left'/>
-          </ColumnsDirective>
-          <Inject services={[Page, PdfExport, ExcelExport, Toolbar, Edit]} />
-         </GridComponent>
+             <ColumnsDirective >
+               <ColumnDirective field='date_operation' headerText='Date' textAlign='left'/>
+               <ColumnDirective field='type_operation' headerText='Mouvement' textAlign='left' />
+               <ColumnDirective field='code_bac' headerText='Bac' textAlign='left'/>
+               {/* <ColumnDirective field='initiale_cote' headerText='Cote' textAlign='left'/>
+               <ColumnDirective field='initiale_temperature' headerText='Temperature' textAlign='left'/>
+               <ColumnDirective field='initiale_densite' headerText='Densite' textAlign='left'/> */}
+               <ColumnDirective field='initiale_volume_apparent' headerText='Volume apparent(m3)' textAlign='left' />
+               <ColumnDirective field='initiale_coef_correction' headerText='Coef K' textAlign='left'/>
+               <ColumnDirective field='itnitale_volume_standard' headerText='Volume Standard (m3)' textAlign='left'/>
+               {/* <ColumnDirective field='finale_cote' headerText='Cote' textAlign='left'/>
+               <ColumnDirective field='finale_temperature' headerText='Temperature' textAlign='left'/>
+               <ColumnDirective field='finale_densite' headerText='Densite' textAlign='left'/> */}
+               <ColumnDirective field='finale_volume_apparent' headerText='Volume apparent(m3)' textAlign='left'/>
+               <ColumnDirective field='finale_coef_correction' headerText='Coef K' textAlign='left'/>
+               <ColumnDirective field='finale_volume_standard' headerText='Volume Standard (m3)' textAlign='left'/>
+               <ColumnDirective field='resultat_volume_standard' headerText='Volume(m3)' textAlign='left'/>
+               <ColumnDirective field='resultat_masse_standard' headerText='Masse(TM)' textAlign='left'/>
+             </ColumnsDirective>
+             <Inject services={[Page, PdfExport, ExcelExport, Toolbar, Edit]} />
+            </GridComponent>
 
+          {/* )} */}
         </div>
       </div>
     </div>

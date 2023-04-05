@@ -2,18 +2,19 @@ import React, {useState, useEffect} from 'react'
 import MouvementMesuresForm from '../pages/unite/components/MouvementMesuresForm'
 import MenuMouvements from '../pages/unite/components/MenuMouvements'
 import { validateMouvementForm } from './UniteFormValidation'
-import { useSelector } from 'react-redux'
+import { updateBilanMouvement } from '../store/slices/BilansSlice'
+import { useSelector , useDispatch} from 'react-redux'
 import { calculResultatMouvement, calculResultatJournee } from '../utils/CalculProduction'
 
 const MouvementForm = () => {
 
     const [error, setError] = useState({error:false , errorMessage:""})
     let menuMouvements = useSelector((state) =>state.menus.menuMouvementsValue)
-    
-    useEffect(()=>{
-        
-        console.log(menuMouvements)
-    },[menuMouvements])
+    const dispatch = useDispatch()
+
+    // useEffect(()=>{    
+    //     console.log(menuMouvements)
+    // },[menuMouvements])
 
     // handle the submit event
     const handleSubmit = (e) =>{
@@ -42,52 +43,45 @@ const MouvementForm = () => {
         // validateMouvementForm()
         // if error set error 
         // else delete all errors
-        let bilan;
+        let resultat;
         if(menuMouvements.operation === "StockFinal") {
-            bilan = calculResultatJournee(FormValues)
-            console.log(bilan, menuMouvements)
+            resultat = calculResultatJournee(FormValues)
         }else{
-            bilan = calculResultatMouvement(FormValues)
-            console.log(bilan, menuMouvements)
+            resultat = calculResultatMouvement(FormValues)
         }
 
-        // update bac storage with volume apparent finale
-
-
-        // post the mouvement
-        let requestBody = {
-            dateOperatio : new Date(),
-            typeOperation : menuMouvements.operation,
-            inialCote : bilan.valeursInitiales.cote,
-            initialTemperature : bilan.valeursInitiales.temperature,
-            initialDensite : bilan.valeursInitiales.densite,
-            initialVolumeApparent : bilan.valeursInitiales.volumeApparent,
-            initialCoeffCorrection : bilan.valeursInitiales.coeffCorrection,
-            initialVolumeStandard : bilan.valeursInitiales.volumeStandard,
-            initialMasseStandard : bilan.valeursInitiales.masseStandard,
-            finalCote : bilan.valeursFinales.cote,
-            finalTemperature : bilan.valeursFinales.temperature,
-            finalDensite : bilan.valeursFinales.densite,
-            finalVolumeApparent : bilan.valeursFinales.volumeApparent,
-            finalCoeffCorrection : bilan.valeursFinales.coeffCorrection,
-            finalVolumeStandard : bilan.valeursFinales.volumeStandard,
-            finalMasseStandard : bilan.valeursFinales.masseStandard,
-            resultatVolumeStandard : bilan.resultatVolumeStandard ,
-            resultatMasseStandard : bilan.resultatVolumeStandard,
+        // suvgarder le bilan dans state
+        let bilan = {
+            date_operation : new Date(),
+            type_operation : menuMouvements.operation,
+            initiale_cote : resultat.valeursInitiales.cote,
+            initiale_temperature : resultat.valeursInitiales.temperature,
+            initiale_densite : resultat.valeursInitiales.densite,
+            initiale_volume_apparent : resultat.valeursInitiales.volume_apparent,
+            initiale_coef_correction : resultat.valeursInitiales.coef_correction,
+            initiale_volume_standard : resultat.valeursInitiales.volume_standard,
+            initiale_masse_standard : resultat.valeursInitiales.masse_standard,
+            finale_cote : resultat.valeursFinales.cote,
+            finale_temperature : resultat.valeursFinales.temperature,
+            finale_densite : resultat.valeursFinales.densite,
+            finale_volume_apparent : resultat.valeursFinales.volume_apparent,
+            finale_coef_correction : resultat.valeursFinales.coef_correction,
+            finale_volume_standard : resultat.valeursFinales.volume_standard,
+            finale_masse_standard : resultat.valeursFinales.masse_standard,
+            resultat_volume_standard : resultat.resultat_volume_standard ,
+            resultat_masse_standard : resultat.resultat_volume_standard,
             BacId : menuMouvements.bac
         }
-        // post the requestBody
-
-        // if success clear the form else show the error
+        console.log("arrived here" , bilan)
+        dispatch(updateBilanMouvement({bilan : bilan , hide: false}))
     }
 
   return (
     <div className='h-full w-1/2 '>
         <form className='h-full w-full flex flex-col gap-6' method='POST' onSubmit={handleSubmit}>
+            
             <MenuMouvements type={false}/>
             <MouvementMesuresForm />
-            
-
             {/* Button  */}
             <div className='flex w-full items-center justify-center px-20'>
                 <button type="submit" className='h-10 w-full rounded-sm text-lg text-white font-semibold shadow-md bg-green-600 hover:bg-green-700 hover:shadow-lg ease-in-out duration-150'>

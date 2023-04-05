@@ -30,7 +30,7 @@ export const getSystemInfo = async (utilisateur) =>{
         try {
             response = (await axios.get(`${serverUrl}/api/unites/${utilisateur.affectation_id}`))
             const data = response.data.data
-            return {code : data.codeUnite, nom : data.nomUnite, id : data.id }
+            return {code : data.code_unite, nom : data.nom_unite, id : data.id }
 
          } catch (error) {
             console.log(error)
@@ -40,7 +40,7 @@ export const getSystemInfo = async (utilisateur) =>{
             try {
                 response = (await axios.get(`${serverUrl}/api/regions/${utilisateur.affectation_id}`))
                 const data = response.data.data
-                return {code : data.codeRegion, nom : data.nomRegion, id : data.id }
+                return {code : data.code_region, nom : data.nom_region, id : data.id }
 
              } catch (error) {
                 console.log(error)

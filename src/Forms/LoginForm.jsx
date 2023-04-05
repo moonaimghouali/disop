@@ -5,7 +5,7 @@ import { validateLoginForm } from './UniteFormValidation'
 import * as api from '../api/userApi'
 import { useDispatch } from 'react-redux';
 import {  Login } from '../store/slices/userSlice'
-import { intitializeSystemInfo } from '../store/slices/systemSlice'
+import systemSlice, { intitializeSystemInfo } from '../store/slices/systemSlice'
 
 const LoginForm = () => {
 
@@ -50,6 +50,7 @@ const LoginForm = () => {
         localStorage.setItem("jwt",accessToken)
         dispatch(Login(utilisateur))
         const sysInfo = await api.getSystemInfo(utilisateur)
+        console.log(sysInfo);
         dispatch(intitializeSystemInfo(sysInfo))
         }
         // }

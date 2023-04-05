@@ -81,15 +81,15 @@ export const calculCoeffCorrectionInterpolation = (densite, temperature) =>{
      let coef_d1 = calculCoeffCorrection(d1 , temperature)
     
     //calcul du coeffecient de correction
-     let CoeffCorrection = coef_d0 + ((coef_d1 - coef_d0)/(d1 - d0)) * (densite-d0)
+     let coef_correction = coef_d0 + ((coef_d1 - coef_d0)/(d1 - d0)) * (densite-d0)
  
-     return CoeffCorrection;
+     return coef_correction;
 
 }
 
 // Calculer le volume et masse standard d'un bac
 export const calculVolumeStandard = (coteValue, densiteValue , temperatureValue) =>{
-    let coeffCorrection  = 0
+    let coef_correction  = 0
 
     // aroondir les valeurs saisis
     let cote = arrondirCote(coteValue)
@@ -97,20 +97,20 @@ export const calculVolumeStandard = (coteValue, densiteValue , temperatureValue)
     let temperature = arrondirTemperature(temperatureValue)
 
     // Get le volume apparent depuis la table de baremage.
-    let volumeApparent = 11345.67
+    let volume_apparent = 11345.67
 
     // calculer le CoefCorrectionVolume
     if((densite*1000) % 5 === 0){
-        coeffCorrection  = calculCoeffCorrection(densite, temperature)
+        coef_correction  = calculCoeffCorrection(densite, temperature)
     }else{
-        coeffCorrection  = calculCoeffCorrectionInterpolation(densite, temperature)
+        coef_correction  = calculCoeffCorrectionInterpolation(densite, temperature)
     }
 
-    let volumeStandard = Number(volumeApparent * coeffCorrection ).toFixed(3)
-    let masseStandard =  Number(volumeStandard * densite ).toFixed(3)
-    volumeApparent = Number(volumeApparent).toFixed(3)
+    let volume_standard = Number(volume_apparent * coef_correction ).toFixed(3)
+    let masse_standard =  Number(volume_standard * densite ).toFixed(3)
+    volume_apparent = Number(volume_apparent).toFixed(3)
     
-    return {cote , densite , temperature , volumeApparent , coeffCorrection , volumeStandard , masseStandard}
+    return {cote , densite , temperature , volume_apparent , coef_correction , volume_standard , masse_standard}
 }
 
 // Calculer le resultat d'un mouvement (expedition, purge)
@@ -118,14 +118,14 @@ export const calculResultatMouvement = (v) =>{
     let valeursInitiales = calculVolumeStandard(v.initiale_cote , v.initiale_densite, v.initiale_temperature)
     let valeursFinales = calculVolumeStandard(v.finale_cote , v.finale_densite, v.finale_temperature)
 
-    let resultatVolumeStandard = Math.abs(valeursFinales.volumeStandard - valeursInitiales.volumeStandard)
-    let resultatMasseStandard = resultatVolumeStandard * valeursFinales.densite
+    let resultat_volume_standard = Math.abs(valeursFinales.volume_standard - valeursInitiales.volume_standard)
+    let resultat_masse_standard = resultat_volume_standard * valeursFinales.densite
 
     return {
         valeursInitiales, 
         valeursFinales,
-        resultatVolumeStandard ,
-        resultatMasseStandard
+        resultat_volume_standard ,
+        resultat_masse_standard
     }
 };
 
@@ -134,13 +134,13 @@ export const calculResultatJournee = (v) => {
     let valeursFinales = calculVolumeStandard(v.finale_cote , v.finale_densite, v.finale_temperature)
     let valeursInitiales = calculVolumeStandard(0 , 0, 0)
 
-    let resultatVolumeStandard = Math.abs(valeursFinales.volumeStandard  )
-    let resultatMasseStandard = resultatVolumeStandard * valeursFinales.densite
+    let resultat_volume_standard = Math.abs(valeursFinales.volume_standard  )
+    let resultat_masse_standard = resultat_volume_standard * valeursFinales.densite
 
     return {
         valeursInitiales,
         valeursFinales,
-        resultatVolumeStandard ,
-        resultatMasseStandard
+        resultat_volume_standard ,
+        resultat_masse_standard
     }
 }

@@ -5,19 +5,19 @@ import axios from 'axios';
 const serverUrl = "http://localhost:5000"
 
 
-const RouteMouvements = `${serverUrl}/api/bacOperations/`
+const RouteMouvements = `${serverUrl}/api/unites/${1}/bacsOperations/`
 const RouteUniteProduction = `${serverUrl}/api/unites/${1}/productionData/`
 const RouteBacs = `${serverUrl}/api/unites/${1}/getbacs`
-const RouteCommentaires = `${serverUrl}/api/commentaires`
+const RouteCommentaires = `${serverUrl}/api/unites/${1}/commentaires`
 
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 //Mouvements
-export const fetchMouvements = createAsyncThunk("mouvements/fetchMouvements", () =>  {
-    return axios.get(RouteMouvements).then((response) => response.data.data)
+export const fetchMouvements = createAsyncThunk("mouvements/fetchMouvements", ({operation , bac}) =>  {
+    return axios.get(`${RouteMouvements}?type_operation=${operation}&bac=${bac}`).then((response) => response.data.data)
 })
 
 export const postMouvement = async (body) =>{
-    const response = (await axios.post(`${RouteMouvements}`, body))
+    const response = (await axios.post(`${serverUrl}/api/bacOperations`, body))
     return response
 }
 
@@ -46,7 +46,7 @@ export const  fetchBacs =  createAsyncThunk("bacs/fetchBacs", () =>  {
 //Commentaires
 
 export const  fetchCommentaires =  createAsyncThunk("commentaires/fetchCommentaires", () =>  {
-    return axios.get(`${RouteCommentaires}/unite/${1}`).then((response) => response.data.data)
+    return axios.get(`${RouteCommentaires}`).then((response) => response.data.data)
 })
 
 // export const  fetchCommentaires =  () =>  {

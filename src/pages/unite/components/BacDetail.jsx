@@ -3,7 +3,7 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups'
 import {FiGrid} from 'react-icons/fi'
 import { NavLink, Link } from 'react-router-dom'
 
-const BacDetail = ({key, codeBacs, categorie_bac, capacite_stockage, stockage_actuel}) => {
+const BacDetail = ({key, code_bacs, categorie_bac, capacite_stockage, stockage_actuel}) => {
 
   const   tankFillPercentage = stockage_actuel / capacite_stockage
   const percent = (tankFillPercentage * 100 ).toFixed(2)
@@ -13,7 +13,7 @@ const BacDetail = ({key, codeBacs, categorie_bac, capacite_stockage, stockage_ac
         {/* info section */}
         <div className='w-full h-3/5 px-2 pt-2'> 
          <div className='w-full h flex flex-row items-center pl-1'>
-            <div className='font-semibold text-base flex-1'>{codeBacs}</div>
+            <div className='font-semibold text-base flex-1'>{code_bacs}</div>
             <TooltipComponent position="TopCenter" content="Table de baremage">
               <div className='p-1 text-green-800 rounded hover:bg-green-100 hover:shadow'>
               <Link to="/p/unite/bacs/baremage" > <FiGrid size={18}/></Link>
@@ -28,7 +28,7 @@ const BacDetail = ({key, codeBacs, categorie_bac, capacite_stockage, stockage_ac
         {/* stock section */}
         <div id="oil-tank"  className='w-full h-2/5 border-t-1 border-gray-200 flex-row-reverse relative'>
             <TooltipComponent position="TopCenter" content={`${stockage_actuel} m3 (${percent} %)`}>
-            <div id="oil-level" style={{ height: `${50}%` }} className='oil w-full bottom-0 absolute ease-in-out duration-150'></div>
+            <div id="oil-level" style={{ height: `${percent}%` }} className='oil w-full bottom-0 absolute ease-in-out duration-150'></div>
             </TooltipComponent>         
         </div>
     </div>

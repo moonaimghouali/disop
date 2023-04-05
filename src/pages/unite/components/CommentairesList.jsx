@@ -9,7 +9,7 @@ const CommentairesList = ({commentaires}) => {
 
         <div className='flex flex-col h-full w-full mt-4 border-t-1 border-b-1 border-gray-200 p-2 overflow-scroll basis-96 grow-0'>
         {commentaires.map((commentaire) => (
-                <CommentaireDetail  date={commentaire.date_commentaire} titre={commentaire.titre_commentaire} contenu={commentaire.contenu_commentaire} />
+                <CommentaireDetail  date_commentaire={commentaire.date_commentaire} titre_commentaire={commentaire.titre_commentaire} contenu_commentaire={commentaire.contenu_commentaire} />
             ))}
             
         </div>

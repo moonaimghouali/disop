@@ -11,8 +11,8 @@ import * as api from '../../api/uniteApi'
 const Stockage = () => {
   
   const {loading, uniteBacs, error} = useSelector(state => state.bacs)
-  const onspecBacs = uniteBacs.filter(bac => bac.typeBacs === "OnSpecs")
-  const offspecBacs = uniteBacs.filter(bac => bac.typeBacs !== "OnSpecs")
+  const onspecBacs = uniteBacs.filter(bac => bac.type_bacs === "OnSpecs")
+  const offspecBacs = uniteBacs.filter(bac => bac.type_bacs !== "OnSpecs")
   const dispatch = useDispatch()
 
   const user = useSelector((state) => state.user)
