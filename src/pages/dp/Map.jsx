@@ -12,23 +12,26 @@ const Map = () => {
     <div className="flex flex-col h-screen w-screen bg-gray-100 px-8 py-8">
       <PageHeader subTitle="" pageName="Carte Geographique" />
 
-      <div className="grid grid-cols-10 gap-2 w-full h-full my-8">
-        <div className='col-span-7 flex flex-col'>
-          {/* Control Menu  */}
-          <div className='w-full flex flex-row items-center px-2 h-16 bg-white rounded-sm shadow-sm'>
-            <div className="w-fit">
+      <div className='grid grid-cols-12 gap-2 w-full h-full my-8'>
+        
+        {/* Entites */}
+        <div className='col-span-2 flex flex-col bg-white rounded-sm shadow-sm'>
+          {/* DropDown Menu */}
+          <div className="w-fit p-2">
             <DropDownListComponent  change={handleentitesChange} id="entites" dataSource={['Regions', 'Unites', 'Bacs']} placeholder="Localiser les ..." ></DropDownListComponent>
-            </div>
           </div>
-
-          {/* Map */}
-          <div className='h-full w-full mt-2 bg-white rounded-sm shadow-sm'>
-            Map
-          </div>
+          {/* Divider */}
+          <div className='h-px w-full my-2 bg-gray-300'></div>
         </div>
+        
+        {/* Map */}
+        <div className='col-span-6 bg-white rounded-sm shadow-sm'>Map</div>
 
-        <MapInfo />
+        {/* MapInfo */}
+        <div className='col-span-4 bg-white rounded-sm shadow-sm'>MapInfo</div>
       </div>
+
+
 
     </div>
   )
