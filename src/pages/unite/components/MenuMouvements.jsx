@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns'
 import { IoMdAddCircleOutline} from 'react-icons/io'
 import { NavLink } from 'react-router-dom'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import { updateMenuMouvements, initializerMenuMouvement } from '../../../store/slices/menusSlice'
+import * as api from '../../../api/uniteApi'
 
 const MenuMouvements = ({type}) => {
   
+  const {loading, uniteBacs, error} = useSelector(state => state.bacs)
 
   // operations data
   let operationsData = [{id:"All" , operation: "Tous"}, {id:"StockFinal" , operation: "Stock Final"}, 
@@ -15,7 +17,7 @@ const MenuMouvements = ({type}) => {
   let operationsFields = { text: 'operation', value: 'id' };
 
   // bac data
-  let bacsData = [{id : -1 , bac:'Tous'}, {id : 1 , bac:'RA_310'}, {id : 2 , bac:'RA_320'}]
+  let [bacsData, setBacsData] = useState([])
   if(!type){bacsData = bacsData.filter(bac => bac.id !== -1)}
   let bacsFields = { text: 'bac', value: 'id' };
 
@@ -24,9 +26,25 @@ const MenuMouvements = ({type}) => {
   const handleClick = () =>{
     // dispatch(initializerMenuMouvement({operation : "NAN" , bac : "kska" }))
   }
-  // // reset menuMouvements value
-  // if(type) { dispatch(updateMenuMouvements({bac : -1 , operation : "All"}))}
-  // else{ dispatch(updateMenuMouvements({bac : "NAN" , operation : "NAN"}))}
+
+  useEffect(()=>{
+    dispatch(api.fetchBacs())
+    if(error) {
+      alert("il y a un problème lors du chargement des données depuis le serveur")
+      return
+    }
+    let bacs = []
+  
+    uniteBacs.map((bacItem) => {
+      let bac = { bac : bacItem.code_bacs, id : bacItem.id }
+      bacs.push(bac) 
+    })
+
+    if(type) {
+      bacs.unshift({id : -1, bac : "Tous"})
+    }
+    setBacsData(bacs)
+  },[])
 
   return (
     <div className='flex flex-row gap-4 items-center px-2 py-2 w-full h-14 bg-white rounded-sm shadow-sm'>

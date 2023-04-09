@@ -4,6 +4,7 @@ import Bilan from './components/Bilan'
 import ProductionData from './components/ProductionData'
 
 const Production = () => {
+  
 
   return (
     <div className="flex flex-col h-screen w-screen bg-gray-100 px-8 py-8">

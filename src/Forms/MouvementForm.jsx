@@ -29,7 +29,8 @@ const MouvementForm = () => {
             setError({error:true , errorMessage:"Veiullez choisir un bac."})
             return
         }
-        
+
+            setError({error:false , errorMessage:""})
         let FormValues = {
             initiale_densite : e.target.initiale_densite.value,
             initiale_cote : e.target.initiale_cote.value,
@@ -52,27 +53,28 @@ const MouvementForm = () => {
 
         // suvgarder le bilan dans state
         let bilan = {
+            id : null,
             date_operation : new Date(),
             type_operation : menuMouvements.operation,
             initiale_cote : resultat.valeursInitiales.cote,
             initiale_temperature : resultat.valeursInitiales.temperature,
             initiale_densite : resultat.valeursInitiales.densite,
-            initiale_volume_apparent : resultat.valeursInitiales.volume_apparent,
-            initiale_coef_correction : resultat.valeursInitiales.coef_correction,
-            initiale_volume_standard : resultat.valeursInitiales.volume_standard,
-            initiale_masse_standard : resultat.valeursInitiales.masse_standard,
+            initiale_volume_apparent : Number (resultat.valeursInitiales.volume_apparent),
+            initiale_coef_correction : Number (resultat.valeursInitiales.coef_correction),
+            initiale_volume_standard : Number (resultat.valeursInitiales.volume_standard),
+            initiale_masse_standard : Number (resultat.valeursInitiales.masse_standard),
             finale_cote : resultat.valeursFinales.cote,
             finale_temperature : resultat.valeursFinales.temperature,
             finale_densite : resultat.valeursFinales.densite,
-            finale_volume_apparent : resultat.valeursFinales.volume_apparent,
-            finale_coef_correction : resultat.valeursFinales.coef_correction,
-            finale_volume_standard : resultat.valeursFinales.volume_standard,
-            finale_masse_standard : resultat.valeursFinales.masse_standard,
-            resultat_volume_standard : resultat.resultat_volume_standard ,
-            resultat_masse_standard : resultat.resultat_volume_standard,
+            finale_volume_apparent : Number (resultat.valeursFinales.volume_apparent),
+            finale_coef_correction : Number (resultat.valeursFinales.coef_correction),
+            finale_volume_standard : Number (resultat.valeursFinales.volume_standard),
+            finale_masse_standard : Number (resultat.valeursFinales.masse_standard),
+            resultat_volume_standard : Number (resultat.resultat_volume_standard ),
+            resultat_masse_standard : Number (resultat.resultat_volume_standard),
             BacId : menuMouvements.bac
         }
-        console.log("arrived here" , bilan)
+        console.log(bilan);
         dispatch(updateBilanMouvement({bilan : bilan , hide: false}))
     }
 
@@ -81,6 +83,7 @@ const MouvementForm = () => {
         <form className='h-full w-full flex flex-col gap-6' method='POST' onSubmit={handleSubmit}>
             
             <MenuMouvements type={false}/>
+            {error.error && (<div className=' text-red-600 text-base font-semibold'>{error.errorMessage}</div>)}
             <MouvementMesuresForm />
             {/* Button  */}
             <div className='flex w-full items-center justify-center px-20'>

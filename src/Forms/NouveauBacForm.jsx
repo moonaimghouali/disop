@@ -1,62 +1,130 @@
-import React, {useState} from 'react';
-import ReactFileReader from 'react-file-reader';
+import React, {useEffect, useState} from 'react';
+import * as XLSX from "xlsx";
+import * as Excel from  '../utils/Excel' 
+import NouveauBacMesures from '../pages/unite/components/NouveauBacMesures';
+import { validateNouveauBacForm } from './UniteFormValidation'
+import * as api from '../api/uniteApi'
+
 
 const NouveauBacForm = () => {
-    const [error, setError] = useState({error:false , errorMessage:""}) 
 
-    const handleFiles = (files ) => {
-        console.log(files[0] )
+    const [error, setError] = useState({error:false , errorMessage:""}) 
+    const [baremeTable, setBaremeTable] = useState([]);
+    const [displayTable, setDisplayTable] = useState([]);
+
+    // Chargement Fichier Excel
+    const handleFileUpload =  (e ) => {
+      Excel.readExcelFile(e, setBaremeTable, setDisplayTable , setError)
     }
 
+    // Handle the form submit
     const handleSubmit = async(e) =>{
-        e.preventDefault()
+      e.preventDefault()
+      let requestBody = {
+        code_bacs : e.target.code_bacs.value,
+        type_bacs : e.target.type_bacs.value,
+        categorie_bacs : e.target.categorie_bacs.value,
+        capacite_stockage : e.target.capacite_stockage.value,
+        stockage_actuel : 0,
+        UniteId : 1 ,
+        date_creation : e.target.date_creation.value,
+        date_mis_a_jour : 21,
+        etablie_par : e.target.etablie_par.value,
+      }
+      
+      const error = await validateNouveauBacForm(requestBody)
+
+      if(error.error) { 
+        setError(error)
+      }else{
+        setError({error:false , errorMessage:""})
+
+        let response
+        try {
+          // PostBac
+           response = await api.postBacBareme(requestBody)
+           if(response.data.success){
+            console.log(response);
+                  // try {
+                  //   // Post TableBaremage
+                  //   for (let i = 0; i < baremeTable.length; i++) {
+                  //     baremeTable[i].map(async (item) => {
+                  //       try {
+                  //         let volume = { id: null, dm_valeur : item.dm_valeur ,mm_valeur : item.mm_valeur , volume_apparent : item.volume_apparent, BacsBaremeId : response.data.bac.id , BacId :  response.data.bareme.id}
+                  //         let responseTable = await api.postBacTable(volume)
+
+                  //       } catch (error) {
+                  //         console.log(error.message);
+                  //       }
+                  //     }) 
+                  //   }
+                  // } catch (error) {
+                  //   console.log(error.message)
+                  // }
+            }
+          } catch (error) {
+            console.log(error)
+          }
+         
+      }
     }
 
   return (
 
-    <form className='flex flex-col h-full p-4' method='POST' onSubmit={handleSubmit}>
-        <div className='flex flex-row'>
-            <div className='flex-1 flex flex-col'>
-            {/* Bac Info */}
-            <div className='font-semibold text-lg text-gray-800 mb-2'>Informations sur le bac</div>
-            <label>Identifiant du bac</label>
-            <input className="border-1 border-gray-300 h-8 rounded mt-1 mx-2 p-1 w-1/2 mb-2" required type="text" id="code_bac" name='code_bac' placeholder='ex : RA_310 ...'/>
-            
-            <label>Type de bac</label>
+    <form className='flex flex-row w-full h-full p-4' method='POST' onSubmit={handleSubmit}>
+        <NouveauBacMesures />
 
-            <label>Capacite de Stockage (m3)</label>
-            <input className="border-1 border-gray-300 h-8 rounded mt-1 mx-2 p-1 w-1/2 mb-2" required type="number" id="capacite_stockage" name='capacite_stockage' placeholder='ex : 150 000 ...'/>
-            </div>
-
-            <div className='flex-1 flex flex-col'>
-            {/* Bareme Info */}
-            <div className='font-semibold text-lg text-gray-800 mb-2 mt-2'>Informations sur le bareme du bac</div>
-            <label>Etablie par</label>
-            <input className="border-1 border-gray-300 h-8 rounded mt-1 mx-2 p-1 w-1/2 mb-2" required type="text" id="etablie_par" name='etablie_par' placeholder='ex : Amine mohammed ...'/>
-
-            <label>Etablie le</label>
-            <input className="border-1 border-gray-300 h-8 rounded mt-1 mx-2 p-1 w-1/2 mb-2" required type="date" id="etablie_par" name='etablie_par' placeholder='ex : Amine mohammed ...'/>
-            </div>
-
-        </div>
         {/* error Message */}
         {error.error && (<div className='text-red-500 font-medium my-2'>{error.errorMessage}</div>)}
 
         {/* Table Baremage Info */}
-        <div>
-        <div className='font-semibold text-lg text-gray-800 mb-2 mt-4'>Table de baremage du bac</div>
-        
-        {/* File reader */}
-        <ReactFileReader handleFiles={handleFiles} fileTypes={["xlsm",".xlsx" , ".xls"]}>
-            <button className='btn'>Upload</button>
-        </ReactFileReader>
-        </div>
+        <div className='w-7/12 h-1/2 flex flex-col items-center '>
+            <div className='font-semibold text-lg text-gray-800 mb-4 '>Table de baremage du bac</div>
             
-        <div className='flex w-full items-center justify-center mt-4'>
-            <button type="submit" className='h-10 w-3/4 rounded-sm text-lg text-white font-semibold shadow-md bg-green-600 hover:bg-green-700 hover:shadow-lg ease-in-out duration-150'>
-            Envoyer</button>
-        </div>
+            <div className='w-full flex flex-col items-center p-6 rounded border-2 border-dashed border-green-600 bg-green-50 text-gray-900 font-semibold '>
+                <input  
+                type="file" 
+                accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, application/vnd.ms-excel.sheet.macroEnabled.12"
+                onChange={(e) => handleFileUpload(e)} 
+                name="TableBaremage" 
+                id="TableBaremage" />
 
+                <p className="mt-6 ">Supported files</p>
+                <p className="text-lg text-green-700 font-semibold">XLS, XLSX, XLSM, CSV</p>
+            </div>
+            {/* display uploaded table */}
+            {displayTable.length && (
+                
+                <div className='h-full w-full mt-6 flex flex-col'>
+                    <div className='py-2 text-gray-900'>Entete de la table : </div>
+                    <table>
+                        <tr className='bg-green-200'>
+                            <th className='h-10 px-2'>Dm/Mm</th>
+                            <th>00 </th>
+                            <th>10 </th>
+                            <th>20 </th>
+                            <th>30 </th>
+                            <th>40 </th>
+                            <th>50 </th>
+                            <th>60 </th>
+                            <th>70 </th>
+                            <th>80 </th>
+                            <th>90 </th>
+                        </tr>
+
+                        {displayTable.map((row) =>(
+                            <tr>
+                            <td className='pl-2'>{row[0].dm_valeur}</td>
+                            {row.map((volume) =>(
+                                 <td className='pl-2'>{volume.volume_apparent}</td>
+                            ))}
+                        </tr>
+                        ))}
+                    </table>
+                </div>
+            )}
+
+        </div>
     </form>
     
   )

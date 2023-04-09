@@ -93,11 +93,11 @@ export const calculVolumeStandard = (coteValue, densiteValue , temperatureValue)
 
     // aroondir les valeurs saisis
     let cote = arrondirCote(coteValue)
-    let densite = densiteValue
-    let temperature = arrondirTemperature(temperatureValue)
+    let densite = Number(densiteValue)
+    let temperature = Number(arrondirTemperature(temperatureValue))
 
     // Get le volume apparent depuis la table de baremage.
-    let volume_apparent = 11345.67
+    let volume_apparent = Number(11345.67)
 
     // calculer le CoefCorrectionVolume
     if((densite*1000) % 5 === 0){

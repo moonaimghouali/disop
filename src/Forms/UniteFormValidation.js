@@ -24,3 +24,8 @@ export const validateMouvementForm = () =>{
     console.log("validation")
     
 }
+
+export const validateNouveauBacForm = (formValues) =>{
+    return {error:false, errorMessage:""}
+    
+}

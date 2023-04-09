@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { updateBilanMouvement } from '../../../store/slices/BilansSlice'
 import { useSelector , useDispatch} from 'react-redux'
 import * as api from '../../../api/uniteApi'
@@ -7,22 +7,42 @@ const MouvementBilan = () => {
   let bilanMouvement = useSelector((state) => state.bilans.bilanMouvement)
   let bilan = bilanMouvement.bilan
   const dispatch = useDispatch()
+  const [validation, setValidation] = useState({hide:true , message:""})
 
   const handleAnnulment = () =>{
     dispatch(updateBilanMouvement({bilan : {} , hide: true}))
   }
 
   const handleValidation = async () =>{
-    let response
+    let body = {...bilan }
+    body.initiale_cote =body.initiale_cote.coteDm*100 + body.initiale_cote.coteMm 
+    body.finale_cote =body.finale_cote.coteDm*100 + body.finale_cote.coteMm 
+    console.log(body)
         try {
-           response = await api.postMouvement(bilan)
-           console.log(response)
+           let response = await api.postMouvement(body)
+           if (response.data.success){
+            dispatch(updateBilanMouvement({bilan : {} , hide: true}))
+            setValidation({hide:false , message:"Mouvement Validee!"})
+           }
+           else{
+            setValidation({hide:false , message:"Erreur de serveur... reessayer ulterieurement"})
+           }
         } catch (error) {
-          console.log(error)
+          console.log(error.message)
         }
   }
+
+  useEffect(()=>{
+    dispatch(updateBilanMouvement({bilan : {} , hide: true}))
+    setValidation({hide:true , message:""})
+  },[])
+
   return (
     <div className='bg-white w-1/2 h-full px-3'>
+      {!validation.hide && (
+        <div className='mt-4 text-green-600 text-lg font-semibold'>{validation.message}</div>
+      )}
+
       {!bilanMouvement.hide && (
         <div className='flex flex-col gap-3 py-3 h-full'>
         <div className=' text-lg font-semibold'>Bilan de Mouvement</div>

@@ -3,6 +3,7 @@ import { validateCommentaireForm } from './UniteFormValidation'
 import * as api from '../api/uniteApi'
 import { useDispatch, useSelector } from 'react-redux'
 
+
 const CommentairesForm = () => {
     const [error, setError] = useState({error:false , errorMessage:""})
     const userId = useSelector(state => state.user.userInfo.id)
@@ -14,43 +15,43 @@ const CommentairesForm = () => {
       e.preventDefault()
 
       // Validate input fields
-      // const response = await validateCommentaireForm(e.target.titre.value, e.target.contenu.value )
-      // if(response.error) { 
-      //   setError(response)
-      // }
-      // else{
+      const response = await validateCommentaireForm(e.target.titre.value, e.target.contenu.value )
+      if(response.error) { 
+        setError(response)
+      }
+      else{
         setError({error:false , errorMessage:""})
 
         //requestBody
         const requestBody = {
-        // date_commentaire : new Date().getDate(),
+        id : null,
+        date_commentaire : new Date(),
         titre_commentaire : e.target.titre.value,
         contenu_commentaire : e.target.contenu.value,
-        uniteId : uniteId ,
-        userId : userId,
+        UniteId : 1 ,
+        UserId : userId,
         }
-        console.log(requestBody)
+        
         // //ResponseData
         let response
         try {
            response = await api.postCommentaire(requestBody)
+           if(response.data.success){
+            var form = document.getElementById('commentaireForm');
+            form.reset()
+            dispatch(api.fetchCommentaires())
+
+           }
         } catch (error) {
-          console.log(error)
+          console.log(error.message)
         }
-  
-        if(!response) return 
-        else{
-          console.log(response)
-          // update the list of comments
-          // dispatch(updateCommentaires)
-        }
-      // }    
+      }    
     }
 
   return (
     <div className='h-full w-6/12 flex flex-col p-4 bg-white rounded-sm shadow-sm'>
         <div className='font-semibold text-lg text-gray-800'>Ajouter un Commentaire</div>
-        <form className='flex flex-col h-full mt-4' method='POST' onSubmit={handleSubmit}>
+        <form id="commentaireForm" className='flex flex-col h-full mt-4' method='POST' onSubmit={handleSubmit}>
           {/* error Message */}
           {error.error && (<div className='text-red-500 font-medium'>{error.errorMessage}</div>)}
 
