@@ -16,7 +16,7 @@ const BacDetail = ({key, code_bacs, categorie_bac, capacite_stockage, stockage_a
             <div className='font-semibold text-base flex-1'>{code_bacs}</div>
             <TooltipComponent position="TopCenter" content="Table de baremage">
               <div className='p-1 text-green-800 rounded hover:bg-green-100 hover:shadow'>
-              <Link to="/p/unite/bacs/baremage" > <FiGrid size={18}/></Link>
+              <Link to={`/p/unite/bacs/baremage/${code_bacs}`} > <FiGrid size={18}/></Link>
               </div>
             </TooltipComponent>
          </div>

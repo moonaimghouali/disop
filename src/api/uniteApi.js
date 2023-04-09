@@ -8,7 +8,7 @@ const RouteUnite= `${serverUrl}/api/unites/${1}`
 const RouteMouvements = `${serverUrl}/api/bacOperations/`
 const RouteUniteProduction = `${serverUrl}/api/unites/${1}/productionData/`
 const RouteBacs = `${serverUrl}/api/bacs`
-const RouteBacBareme = `${serverUrl}/api/bacsbaremes`
+const RouteTableBaremages= `${serverUrl}/api/tableBaremage`
 const RouteCommentaires = `${serverUrl}/api/commentaires/`
 
 // /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -47,6 +47,17 @@ export const postBacBareme = async (body) =>{
 }
 
 
+// /////////////////////////////////////////////////////////////////////////////////////////////////
+// TableBaremage 
+export const  fetchTableBaremage =  async () =>{
+    const response = (await axios.get(`${RouteBacs}/${8}/tableBaremage`))
+    return response
+}
+
+export const postTableBaremage = async (body) =>{
+    const response = (await axios.post(`${RouteTableBaremages}`, body))
+    return response
+}
 
 
 // ////////////////////////////////////////////////////////////////////////////////////////////////

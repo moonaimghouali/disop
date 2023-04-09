@@ -43,7 +43,7 @@ export const sheetToArray = (ws) =>{
     let temp = []
 
     let ref = ws["!ref"].split(":")[1]
-    ref = Number(ref.slice(1,ref.length))
+    ref = Number(ref.slice(1,ref.length)) + 1
 
     for (let vIndex = 1; vIndex < ref; vIndex++) {
 

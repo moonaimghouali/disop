@@ -57,7 +57,7 @@ function App() {
           <Route path='p/unite/production' element={isSignedIn? ((isUnite || isRespUnite) ? <Production/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/unite/production/cloture' element={isSignedIn? ((isUnite || isRespUnite) ? <ProductionCloture/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/unite/stock' element={isSignedIn? ((isUnite || isRespUnite) ? <Stockage/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
-          <Route path='p/unite/bacs/baremage' element={isSignedIn? ((isUnite || isRespUnite) ? <Baremage/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
+          <Route path='p/unite/bacs/baremage/:id' element={isSignedIn? ((isUnite || isRespUnite) ? <Baremage/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/unite/bacs/nouveau' element={isSignedIn? ((isRespUnite) ? <NouveauBac/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/unite/commentaires' element={isSignedIn? ((isUnite || isRespUnite) ? <Commentaires/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
 

@@ -1,18 +1,58 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { FiArrowLeft } from 'react-icons/fi'
 import { GridComponent, ColumnsDirective, ColumnDirective, Inject, Page, Toolbar, PdfExport, ExcelExport, Edit } from '@syncfusion/ej2-react-grids'
+import {  useParams } from 'react-router-dom';
+import * as api from '../../api/uniteApi'
 
 const Baremage = () => {
+  let {id} =  useParams();
+  let [baremeTable, setBaremeTable] = useState([])
+  let [bareme, setBareme] = useState({})
+
+  useEffect( ()=>{
+  let fn = async () =>{
+    setBaremeTable([])
+    try {
+      let response  = await api.fetchTableBaremage();
+      let values = response.data.data
+      // var row = {dm_valeur : -1, mm_valeur_00 : -1,  mm_valeur_10 : -1, mm_valeur_20 : -1, mm_valeur_30 : -1, mm_valeur_40 : -1, mm_valeur_50 : -1, mm_valeur_60 : -1, mm_valeur_70 : -1, mm_valeur_80 : -1, mm_valeur_90 : -1, }
+      let j = 0
+      let temp = []
+      let array = []
+
+        values.map((item) =>{
+          // row[`mm_valeur_${j}0`] = item.volume_apparent
+          temp.push(item.volume_apparent)
+          j++
+          if (j === 10 ) {
+            let row = {dm_valeur : item.dm_valeur, mm_valeur_00 : temp[0],  mm_valeur_10 : temp[1], mm_valeur_20 : temp[2], mm_valeur_30 : temp[3], mm_valeur_40 : temp[4], mm_valeur_50 : temp[5], mm_valeur_60 : temp[6], mm_valeur_70 : temp[7], mm_valeur_80 : temp[8], mm_valeur_90 : temp[9] }
+            array.push(row)
+            temp = []
+            j=0
+          } 
+        })
+      // console.log(array);
+      setBaremeTable(array)
+      console.log("bareme", baremeTable);
+
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+  fn()
+  },[])
+
+
   return (
     <div className="flex flex-col h-screen w-screen bg-gray-100 px-8 py-8">
       <div className='flex flex-row w-full gap-4'>
       <NavLink to="/p/unite/stock"> <FiArrowLeft size={38}/> </NavLink>
-      <div className='text-3xl font-bold'>Table de baremage</div>   
+      <div className='text-3xl font-bold'>Table de baremage du bac {id}</div>   
       </div>
       {/* Info Section */}
       <div className='w-1/2 h-32 flex flex-col my-6 rounded-sm shadow-sm bg-white py-2 px-3' >
-        <div className='text-xl font-semibold mt-1'>RA_310</div>
+        <div className='text-xl font-semibold mt-1'>{id}</div>
         <div className='mt-2 flex flex-row gap-8'>
           <div>etablie le : <b >31-12-2014</b> </div>
           <div>a mettre a jour le : <b>31-12-2024</b></div>
@@ -23,7 +63,7 @@ const Baremage = () => {
       {/* Table Baremage */}
       <div className='w-full h-full flex flex-col bg-white rounded-sm shadow-sm '>
         <div className='text-lg font-semibold pl-3 my-2'>Table de Baremage</div>
-      <GridComponent height={"100%"}  allowPaging={true} allowPdfExport={true} allowExcelExport={true} pageSettings={{pageSize:9}}>
+      <GridComponent dataSource={baremeTable} height={"100%"}  allowPaging={true} allowPdfExport={true} allowExcelExport={true} pageSettings={{pageSize:8}}>
           
           <ColumnsDirective >
             <ColumnDirective field='dm_valeur' headerText='Dm' textAlign='left'/>

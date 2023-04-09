@@ -15,6 +15,7 @@ const NouveauBacForm = () => {
     // Chargement Fichier Excel
     const handleFileUpload =  (e ) => {
       Excel.readExcelFile(e, setBaremeTable, setDisplayTable , setError)
+      console.log(baremeTable);
     }
 
     // Handle the form submit
@@ -42,26 +43,27 @@ const NouveauBacForm = () => {
         let response
         try {
           // PostBac
-           response = await api.postBacBareme(requestBody)
-           if(response.data.success){
+          response = await api.postBacBareme(requestBody)
+          if(response.data.success){
             console.log(response);
-                  // try {
-                  //   // Post TableBaremage
-                  //   for (let i = 0; i < baremeTable.length; i++) {
-                  //     baremeTable[i].map(async (item) => {
-                  //       try {
-                  //         let volume = { id: null, dm_valeur : item.dm_valeur ,mm_valeur : item.mm_valeur , volume_apparent : item.volume_apparent, BacsBaremeId : response.data.bac.id , BacId :  response.data.bareme.id}
-                  //         let responseTable = await api.postBacTable(volume)
+            try {
+              // Post TableBaremage
+              for (let i = 0; i < baremeTable.length; i++) {
+                baremeTable[i].map(async (item) => {
+                  try {
+                    let body = { id: null, dm_valeur : item.dm_valeur ,mm_valeur : item.mm_valeur , volume_apparent : item.volume_apparent, BacsBaremeId : response.data.data.bareme.id , BacId :  response.data.data.bac.id}
+                    let responseTable = await api.postTableBaremage(body)
+                    console.log(responseTable);
 
-                  //       } catch (error) {
-                  //         console.log(error.message);
-                  //       }
-                  //     }) 
-                  //   }
-                  // } catch (error) {
-                  //   console.log(error.message)
-                  // }
+                  } catch (error) {
+                    console.log(error.message);
+                  }
+                }) 
+              }
+            } catch (error) {
+              console.log(error.message)
             }
+          }
           } catch (error) {
             console.log(error)
           }
