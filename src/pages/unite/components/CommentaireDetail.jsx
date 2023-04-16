@@ -5,7 +5,7 @@ const CommentaireDetail = ({date_commentaire, titre_commentaire, contenu_comment
   let date = new Date(date_commentaire)
 
   let day = date.getDate("dd")
-  let month = date.toLocaleString('default', { month: 'short' });
+  let month = date.toLocaleString('default', {  month: 'short'  });
    const  [hideContenu, setHideContenu] = useState(true)
    const handleClick = () =>{
     setHideContenu(prevHideContenu => !prevHideContenu)

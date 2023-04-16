@@ -16,11 +16,12 @@ const Stockage = () => {
   const dispatch = useDispatch()
 
   const user = useSelector((state) => state.user)
+  const UniteId = useSelector((state) => state.system.id)
   const isRespUnite = (user.userInfo.role === roles.RespUnite)
   console.log(uniteBacs)
 
   useEffect(()=>{
-    dispatch(api.fetchBacs())
+    dispatch(api.fetchBacs(UniteId))
   },[])
 
   return (

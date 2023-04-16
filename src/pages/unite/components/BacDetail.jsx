@@ -3,7 +3,7 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups'
 import {FiGrid} from 'react-icons/fi'
 import { NavLink, Link } from 'react-router-dom'
 
-const BacDetail = ({key, code_bacs, categorie_bac, capacite_stockage, stockage_actuel}) => {
+const BacDetail = ({id , code_bacs, categorie_bac, capacite_stockage, stockage_actuel}) => {
 
   const   tankFillPercentage = stockage_actuel / capacite_stockage
   const percent = (tankFillPercentage * 100 ).toFixed(2)

@@ -7,7 +7,8 @@ import { useDispatch, useSelector } from 'react-redux'
 const CommentairesForm = () => {
     const [error, setError] = useState({error:false , errorMessage:""})
     const userId = useSelector(state => state.user.userInfo.id)
-    const uniteId = useSelector(state => state.system.id)
+    const UniteId = useSelector(state => state.system.id)
+
     let dispatch = useDispatch()
 
     //handle Submit event
@@ -28,7 +29,7 @@ const CommentairesForm = () => {
         date_commentaire : new Date(),
         titre_commentaire : e.target.titre.value,
         contenu_commentaire : e.target.contenu.value,
-        UniteId : 1 ,
+        UniteId : UniteId ,
         UserId : userId,
         }
         
@@ -38,8 +39,10 @@ const CommentairesForm = () => {
            response = await api.postCommentaire(requestBody)
            if(response.data.success){
             var form = document.getElementById('commentaireForm');
+            dispatch(api.fetchCommentaires(UniteId))
             form.reset()
-            dispatch(api.fetchCommentaires())
+            // console.log(UniteId);
+            
 
            }
         } catch (error) {

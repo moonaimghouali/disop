@@ -8,21 +8,24 @@ import { updateMenuMouvements } from '../../store/slices/menusSlice'
 import * as api from '../../api/uniteApi'
 
 const Mouvements = () => {
-
+  
+  const UniteId = useSelector((state) => state.system.id)
   const menuMouvements = useSelector((state) =>state.menus.menuMouvementsValue)
   const {loading, mouvements, error} = useSelector((state) =>state.mouvements)
   const editOptions = { allowEditing: true, allowAdding: true, allowDeleting: true };
+  
   const dispatch = useDispatch()
 
   // runs once the component is created 
   useEffect(()=>{
     dispatch(updateMenuMouvements({operation : "All" , bac: -1}))
-    dispatch(api.fetchMouvements({operation : "All" , bac: -1}))
+    dispatch(api.fetchMouvements({operation : menuMouvements.operation , bac :menuMouvements.bac, UniteId}))
+    console.log(mouvements);
   },[])
 
   // runs everytime the menumouvements changes
   useEffect(()=>{
-    dispatch(api.fetchMouvements(menuMouvements))
+    dispatch(api.fetchMouvements({operation : menuMouvements.operation , bac :menuMouvements.bac, UniteId}))
   },[ menuMouvements.operation , menuMouvements.bac])
 
 
@@ -42,13 +45,13 @@ const Mouvements = () => {
              <ColumnsDirective >
                <ColumnDirective field='date_operation' headerText='Date' textAlign='left'/>
                <ColumnDirective field='type_operation' headerText='Mouvement' textAlign='left' />
-               <ColumnDirective field='code_bac' headerText='Bac' textAlign='left'/>
+               <ColumnDirective field='Bac.code_bacs' headerText='Bac' textAlign='left'/>
                {/* <ColumnDirective field='initiale_cote' headerText='Cote' textAlign='left'/>
                <ColumnDirective field='initiale_temperature' headerText='Temperature' textAlign='left'/>
                <ColumnDirective field='initiale_densite' headerText='Densite' textAlign='left'/> */}
                <ColumnDirective field='initiale_volume_apparent' headerText='Volume apparent(m3)' textAlign='left' />
                <ColumnDirective field='initiale_coef_correction' headerText='Coef K' textAlign='left'/>
-               <ColumnDirective field='itnitale_volume_standard' headerText='Volume Standard (m3)' textAlign='left'/>
+               <ColumnDirective field='initiale_volume_standard' headerText='Volume Standard (m3)' textAlign='left'/>
                {/* <ColumnDirective field='finale_cote' headerText='Cote' textAlign='left'/>
                <ColumnDirective field='finale_temperature' headerText='Temperature' textAlign='left'/>
                <ColumnDirective field='finale_densite' headerText='Densite' textAlign='left'/> */}

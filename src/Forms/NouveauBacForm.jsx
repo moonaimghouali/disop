@@ -3,6 +3,7 @@ import * as XLSX from "xlsx";
 import * as Excel from  '../utils/Excel' 
 import NouveauBacMesures from '../pages/unite/components/NouveauBacMesures';
 import { validateNouveauBacForm } from './UniteFormValidation'
+import { useSelector } from 'react-redux'
 import * as api from '../api/uniteApi'
 
 
@@ -11,6 +12,7 @@ const NouveauBacForm = () => {
     const [error, setError] = useState({error:false , errorMessage:""}) 
     const [baremeTable, setBaremeTable] = useState([]);
     const [displayTable, setDisplayTable] = useState([]);
+    const UniteId = useSelector(state => state.system.id)
 
     // Chargement Fichier Excel
     const handleFileUpload =  (e ) => {
@@ -21,15 +23,18 @@ const NouveauBacForm = () => {
     // Handle the form submit
     const handleSubmit = async(e) =>{
       e.preventDefault()
+      let creation = new Date(e.target.date_creation.value)
+      let mis_a_jour = new Date(creation)
+      mis_a_jour.setFullYear(creation.getFullYear() + 10)
       let requestBody = {
         code_bacs : e.target.code_bacs.value,
         type_bacs : e.target.type_bacs.value,
         categorie_bacs : e.target.categorie_bacs.value,
         capacite_stockage : e.target.capacite_stockage.value,
         stockage_actuel : 0,
-        UniteId : 1 ,
-        date_creation : e.target.date_creation.value,
-        date_mis_a_jour : 21,
+        UniteId : UniteId ,
+        date_creation : creation,
+        date_mis_a_jour : mis_a_jour,
         etablie_par : e.target.etablie_par.value,
       }
       

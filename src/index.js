@@ -2,8 +2,9 @@ import React from "react";
 import  ReactDOM  from "react-dom";
 import { registerLicense } from '@syncfusion/ej2-base';
 import "./assets/styles/index.css"
-import { store } from './store/store'
+import { store,  persistor} from './store/store'
 import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react';
 
 import App  from "./App";
 
@@ -12,6 +13,8 @@ registerLicense('Mgo+DSMBaFt/QHRqVVhkVFpFdEBBXHxAd1p/VWJYdVt5flBPcDwsT3RfQF5jS35
 
 ReactDOM.render(
 <Provider store={store}>
+{/* <PersistGate loading={null} persistor={persistor}>  */}
 <App/> 
+{/* </PersistGate> */}
 </Provider>,
 document.getElementById("root"))

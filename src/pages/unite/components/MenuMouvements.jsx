@@ -9,6 +9,7 @@ import * as api from '../../../api/uniteApi'
 const MenuMouvements = ({type}) => {
   
   const {loading, uniteBacs, error} = useSelector(state => state.bacs)
+  const UniteId = useSelector((state) => state.system.id)
 
   // operations data
   let operationsData = [{id:"All" , operation: "Tous"}, {id:"StockFinal" , operation: "Stock Final"}, 
@@ -28,11 +29,12 @@ const MenuMouvements = ({type}) => {
   }
 
   useEffect(()=>{
-    dispatch(api.fetchBacs())
-    if(error) {
-      alert("il y a un problème lors du chargement des données depuis le serveur")
-      return
+    try {
+      dispatch(api.fetchBacs(UniteId))
+    } catch (error) {
+      console.log(error);
     }
+    
     let bacs = []
   
     uniteBacs.map((bacItem) => {

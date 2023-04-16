@@ -17,7 +17,7 @@ const MouvementForm = () => {
     // },[menuMouvements])
 
     // handle the submit event
-    const handleSubmit = (e) =>{
+    const handleSubmit = async(e) =>{
 
         e.preventDefault()
         // verify the user has selected an operation and a bac
@@ -46,9 +46,9 @@ const MouvementForm = () => {
         // else delete all errors
         let resultat;
         if(menuMouvements.operation === "StockFinal") {
-            resultat = calculResultatJournee(FormValues)
+            resultat = await calculResultatJournee(FormValues, menuMouvements.bac)
         }else{
-            resultat = calculResultatMouvement(FormValues)
+            resultat = await calculResultatMouvement(FormValues, menuMouvements.bac)
         }
 
         // suvgarder le bilan dans state
@@ -71,7 +71,7 @@ const MouvementForm = () => {
             finale_volume_standard : Number (resultat.valeursFinales.volume_standard),
             finale_masse_standard : Number (resultat.valeursFinales.masse_standard),
             resultat_volume_standard : Number (resultat.resultat_volume_standard ),
-            resultat_masse_standard : Number (resultat.resultat_volume_standard),
+            resultat_masse_standard : Number (resultat.resultat_masse_standard),
             BacId : menuMouvements.bac
         }
         console.log(bilan);

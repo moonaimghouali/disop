@@ -3,7 +3,7 @@ import logo from '../assets/images/logo-primary.png'
 import InputField from '../components/InputField'
 import { validateLoginForm } from './UniteFormValidation'
 import * as api from '../api/userApi'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {  Login } from '../store/slices/userSlice'
 import systemSlice, { intitializeSystemInfo } from '../store/slices/systemSlice'
 
@@ -11,11 +11,13 @@ const LoginForm = () => {
 
     const [error, setError] = useState({error : false, errorMessage :""})
     const dispatch = useDispatch()
+    let system = useSelector((state)=>state.system)
 
 
     //handle form submission
     const handleSubmit = async (e)=>{
         e.preventDefault()
+        setError({error : false, errorMessage :""})
 
         // valider les donnees saisis
         // const validationResponse = await validateLoginForm(e.target.email.value)
@@ -35,23 +37,31 @@ const LoginForm = () => {
         let response
         try {
            response = await api.loginUser(requestBody)
-           console.log(response.data)
+           
         } catch (error) {
           console.log(error)
           //setError({error:true, errorMessage: error.response.data})
         }
 
         if(!response) return
+
         const utilisateur = response.data.utilisateur
         const accessToken = response.data.accessToken
 
         // Saving jwt token to local storage
         if(accessToken) {
         localStorage.setItem("jwt",accessToken)
-        dispatch(Login(utilisateur))
-        const sysInfo = await api.getSystemInfo(utilisateur)
-        console.log(sysInfo);
-        dispatch(intitializeSystemInfo(sysInfo))
+        try{
+          const sysInfo = await api.getSystemInfo(utilisateur)
+          if(sysInfo){
+            dispatch(intitializeSystemInfo(sysInfo))
+            dispatch(Login(utilisateur))
+          }else{
+            setError({error : true, errorMessage :"Erreur de connexion. Veuillez réessayer ulterieurement."})
+          }
+        }catch(error){
+          console.log(error);
+        }  
         }
         // }
     }

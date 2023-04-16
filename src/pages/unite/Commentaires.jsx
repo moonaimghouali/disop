@@ -7,12 +7,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import * as api from '../../api/uniteApi'
 
 const Commentaires = () => {
+  const UniteId = useSelector((state) => state.system.id)
   const {loading, uniteCommentaires, error} = useSelector(state => state.commentaires)
   const dispatch = useDispatch()
   console.log(uniteCommentaires);
 
   useEffect(  ()=>{
-    dispatch(api.fetchCommentaires())
+    console.log(UniteId);
+    dispatch(api.fetchCommentaires(UniteId))
   },[])
 
   return (

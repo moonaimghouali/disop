@@ -4,6 +4,8 @@ import { useSelector , useDispatch} from 'react-redux'
 import * as api from '../../../api/uniteApi'
 
 const MouvementBilan = () => {
+  const [error, setError] = useState({error:false , errorMessage:""})
+
   let bilanMouvement = useSelector((state) => state.bilans.bilanMouvement)
   let bilan = bilanMouvement.bilan
   const dispatch = useDispatch()
@@ -15,6 +17,7 @@ const MouvementBilan = () => {
 
   const handleValidation = async () =>{
     let body = {...bilan }
+    console.log(body);
     body.initiale_cote =body.initiale_cote.coteDm*100 + body.initiale_cote.coteMm 
     body.finale_cote =body.finale_cote.coteDm*100 + body.finale_cote.coteMm 
     console.log(body)
@@ -23,9 +26,8 @@ const MouvementBilan = () => {
            if (response.data.success){
             dispatch(updateBilanMouvement({bilan : {} , hide: true}))
             setValidation({hide:false , message:"Mouvement Validee!"})
-           }
-           else{
-            setValidation({hide:false , message:"Erreur de serveur... reessayer ulterieurement"})
+           }else{
+            setError({error:true , errorMessage : response.data.message})
            }
         } catch (error) {
           console.log(error.message)
@@ -35,17 +37,23 @@ const MouvementBilan = () => {
   useEffect(()=>{
     dispatch(updateBilanMouvement({bilan : {} , hide: true}))
     setValidation({hide:true , message:""})
+    setError({error:false , errorMessage:""})
   },[])
 
   return (
     <div className='bg-white w-1/2 h-full px-3'>
+      {/* Validation */}
       {!validation.hide && (
-        <div className='mt-4 text-green-600 text-lg font-semibold'>{validation.message}</div>
+        <div className='mt-4 text-green-600 text-lg font-semibold mt-2'>{validation.message}</div>
       )}
-
+      
+       {/* Bilan */}
       {!bilanMouvement.hide && (
         <div className='flex flex-col gap-3 py-3 h-full'>
         <div className=' text-lg font-semibold'>Bilan de Mouvement</div>
+        {/* Error */}
+       {error.error && (<div className=' text-red-600 text-base font-semibold mt-2'>{error.errorMessage}</div>)}
+       
         <div className='flex-1 w-full'>
           <div className=' text-ls font-medium'>Type mouvement : <b>{bilan.type_operation}</b></div>
           <div className=' text-ls font-medium'>Bac : <b>{bilan.BacId}</b></div>

@@ -25,7 +25,7 @@ const BacsGroup = ({onSpec, bacs}) => {
             {/* bacs de stockage */}
           <div className='flex flex-row flex-wrap h-full w-full gap-4 py-2 overflow-y-auto whitespace-nowrap '>
             {bacs.map((bac) => (
-                <BacDetail  code_bacs={bac.code_bacs} categorie_bac={bac.categorie_bacs} capacite_stockage={bac.capacite_stockage} stockage_actuel={bac.stockage_actuel}/>
+                <BacDetail  id={bac.id}code_bacs={bac.code_bacs} categorie_bac={bac.categorie_bacs} capacite_stockage={bac.capacite_stockage} stockage_actuel={bac.stockage_actuel}/>
             ))}
             {/* Ajouter un bac */}
             

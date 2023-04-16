@@ -3,10 +3,6 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   userInfo : {}, 
   isSignedIn : false,
-  // isAdmin : false,
-  // isManager : false,
-  // isUnite : false,
-  // isRespUnite : false
 }
 
 export const userSlice = createSlice({
@@ -18,10 +14,6 @@ export const userSlice = createSlice({
       localStorage.removeItem("jwt")
       state.userInfo = {}
       state.isSignedIn = false
-      // state.isAdmin = false
-      // state.isManager = false
-      // state.isUnite = false
-      // state.isRespUnite = false
     },
 
     Login (state, action) {
