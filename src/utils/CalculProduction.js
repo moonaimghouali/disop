@@ -266,3 +266,35 @@ export const calculUniteProductionJournaliere = (BacsOperations) => {
     return { bilanProductionUnite : response , bilanProductionBacs  : BacsProductionBilans}
 }
 
+// calculer la production Journaliere de l'Unite
+export const calculRegionProductionJournaliere = (bilansUnites, RegionId) => {
+    
+    console.log("id" , bilansUnites[0])
+    let bilanProductionRegion = {
+        journee_production : bilansUnites[0].production.journee_production,
+        RegionId : RegionId,
+        stock_initial_tm :0 ,
+        stock_initial_vm :0 ,
+        production_region_tm :0 ,
+        production_region_vm :0 ,
+        expedition_region_tm :0 ,
+        expedition_region_vm :0 ,
+        stock_final_tm :0 ,
+        stock_final_vm :0 ,
+       }
+
+    bilansUnites.map((unite)=>{
+        bilanProductionRegion.stock_initial_tm += unite.production.stock_initial_tm
+        bilanProductionRegion.stock_initial_vm += unite.production.stock_initial_vm
+        bilanProductionRegion.production_region_tm += unite.production.production_unite_tm
+        bilanProductionRegion.production_region_vm += unite.production.production_unite_vm
+        bilanProductionRegion.expedition_region_tm += unite.production.expedition_unite_tm
+        bilanProductionRegion.expedition_region_vm += unite.production.expedition_unite_vm
+        bilanProductionRegion.stock_final_tm += unite.production.stock_final_tm
+        bilanProductionRegion.stock_final_vm += unite.production.stock_final_vm
+
+   })
+
+   return bilanProductionRegion
+}
+

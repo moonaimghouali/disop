@@ -6,7 +6,6 @@ const serverUrl = "http://localhost:5000"
 
 const RouteUnite= `${serverUrl}/api/unites`
 const RouteMouvements = `${serverUrl}/api/bacOperations/`
-const RouteUniteProduction = `${serverUrl}/api/unites/${1}/productionData/`
 const RouteBacs = `${serverUrl}/api/bacs`
 const RouteTableBaremages= `${serverUrl}/api/tableBaremage`
 const RouteCommentaires = `${serverUrl}/api/commentaires/`

@@ -34,11 +34,11 @@ const rowSelected = ()=>{
 const handleClick = async () =>{
   let response = await api.calculUniteProduction(UniteId)
   console.log(response);
-  // let resultat = await calculUniteProductionJournaliere(response.data.data)
-  // if (resultat) {
-  //   //console.log("here", resultat , response.data.data);
-  //   dispatch(updateBilanUnite({bilanProductionUnite : resultat.bilanProductionUnite, bilanProductionBacs : resultat.bilanProductionBacs, bacsOperations : response.data.data, hide: false}))
-  // }
+  let resultat = await calculUniteProductionJournaliere(response.data.data)
+  if (resultat) {
+    //console.log("here", resultat , response.data.data);
+    dispatch(updateBilanUnite({bilanProductionUnite : resultat.bilanProductionUnite, bilanProductionBacs : resultat.bilanProductionBacs, bacsOperations : response.data.data, hide: false}))
+  }
 }
 
   return (
@@ -58,7 +58,7 @@ const handleClick = async () =>{
             <ColumnDirective field='expedition_unite_vm' headerText='Expedition (m3)' textAlign='left'/>
             <ColumnDirective field='stock_final_tm' headerText='Stock FJ(m3)' textAlign='left'/>
             <ColumnDirective field='stock_final_vm' headerText='Stock FJ(m3)' textAlign='left'/>
-            <ColumnDirective field='validation_resp_unite' headerText='Validation' textAlign='Center' template={validationTemplate} width={"150"} />
+            <ColumnDirective field='validation_xp' headerText='Validation' textAlign='Center' template={validationTemplate} width={"150"} />
               
           </ColumnsDirective>
 
