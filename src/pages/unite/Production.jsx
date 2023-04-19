@@ -10,6 +10,7 @@ const Production = () => {
 
   const {loading, production, error} = useSelector(state => state.production.uniteProduction)
   const {hide , bilanProductionUnite , bilanProductionBacs, bacsOperations } = useSelector((state) =>state.bilans.bilanUnite)
+  const [popUp, setPopUp] = useState(false)
   const UniteId = useSelector((state) => state.system.id)
   const dispatch = useDispatch()
 
@@ -22,9 +23,9 @@ const Production = () => {
       <PageHeader subTitle="Consulter la" pageName="Production"/>
 
       <div className='my-8 w-full h-full flex flex-row gap-6'>
-        <ProductionData uniteProduction = {production}/>
-        {/* <PopupBG > <Bilan /> </PopupBG> */}
-        <Bilan/>
+        <ProductionData uniteProduction = {production} setPopUp={setPopUp}/>
+        {popUp && (<PopupBG setShow={setPopUp}> <Bilan/> </PopupBG>)}
+        {/* <Bilan/> */}
         
       </div>
     </div>  

@@ -17,13 +17,30 @@ const MouvementBilan = () => {
 
   const handleValidation = async () =>{
     let body = {...bilan }
-    console.log(body);
+    // console.log(body);
     body.initiale_cote =body.initiale_cote.coteDm*100 + body.initiale_cote.coteMm 
     body.finale_cote =body.finale_cote.coteDm*100 + body.finale_cote.coteMm 
+
     console.log(body)
         try {
+            if (body.type_operation ==="StockFinal") {
+              
+              let prevStockFinal = await api.fetchLastStockFinalMouvement({BacId : body.BacId})
+              if(prevStockFinal.data.data !== null) {
+                body.initiale_cote = prevStockFinal.data.data.finale_cote
+                body.initiale_densite = prevStockFinal.data.data.finale_densite
+                body.initiale_temperature = prevStockFinal.data.data.finale_temperature
+                body.initiale_volume_apparent = prevStockFinal.data.data.finale_volume_apparent
+                body.initiale_coef_correction = prevStockFinal.data.data.finale_coef_correction
+                body.initiale_volume_standard = prevStockFinal.data.data.finale_volume_standard
+                body.initiale_masse_standard = prevStockFinal.data.data.finale_masse_standard
+              }
+            }
+            
            let response = await api.postMouvement(body)
            if (response.data.success){
+            let responseUpdate = await api.updateBacStorage({BacId : body.BacId, stockage_actuel : body.finale_volume_apparent})
+            console.log(responseUpdate);
             dispatch(updateBilanMouvement({bilan : {} , hide: true}))
             setValidation({hide:false , message:"Mouvement Validee!"})
            }else{

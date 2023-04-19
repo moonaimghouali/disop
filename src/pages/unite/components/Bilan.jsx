@@ -6,6 +6,7 @@ import jsPDF from 'jspdf';
 
 const Bilan = () => {
   const [error, setError] = useState({error:false , errorMessage:""})
+  const nomUnite = useSelector(state =>state.system.nom)
   const user = useSelector((state)=> state.user.userInfo)
   const reportTemplateRef = useRef(null);
   const {hide , bilanProductionUnite , bilanProductionBacs, bacsOperations } = useSelector((state) =>state.bilans.bilanUnite)  
@@ -54,16 +55,17 @@ const Bilan = () => {
   },[])
 
   return (
-    <div className='h-full w-1/3 flex flex-col p-3 items-center bg-white rounded-sm shadow-sm'>
+    <div onClick={(e)=> e.stopPropagation()} className='h-full my-8 w-1/2 flex flex-col p-3 items-center bg-white rounded-sm shadow-sm z-50'>
       {!hide && (
         < >
         <div ref={reportTemplateRef} className='w-full h-5/6  flex flex-col overflow-y-scroll '>
         {/* Bilan Unite */}
-        <div className='mt-3 text-lg font-semibold'>Bilan Unite</div>
+        <div className='mt-3 text-lg font-semibold'>Bilan Production Journaliere</div>
         {error.error && (<div className=' text-red-600 text-base font-semibold'>{error.errorMessage}</div>) }
-        <div className='mt-3'>Journee production : <b>{bilanProductionUnite.journee_production}</b></div>
+        <div className='mt-3'>Unite : <b>{nomUnite}</b></div>
+        <div className='mt-1'>Journee production : <b>{bilanProductionUnite.journee_production}</b></div>
 
-        <table className='mt-2'>
+        <table className='mt-3'>
           <tr><th></th> <th>Tonne </th> <th>m3</th> </tr>
           <tr><td className='font-semibold'>Stock Initial</td> <td>{bilanProductionUnite.stock_initial_tm}</td> <td>{bilanProductionUnite.stock_initial_vm}</td></tr>
           <tr><td className='font-semibold'>Expedition</td>    <td>{bilanProductionUnite.expedition_unite_tm}</td>    <td>{bilanProductionUnite.expedition_unite_vm}</td></tr>
@@ -88,21 +90,18 @@ const Bilan = () => {
             </table>
 
             {/* Mouvements */}
-            <div>
-              <div className='mt-4 mb-1 text-lg font-semibold'> Operations sur le bac</div>
-              <table >
+            <div className='w-full'>
+              <div className='mt-4 mb-1 text-lg font-semibold w-full'> Operations sur le bac</div>
+              <table className='w-full'>
                   <tr><th>Date</th> <th>Type</th> <th>Resultat TM</th> <th>Resultat m3</th> </tr>
               {
                 bacsOperations.filter((bac)=> bac.id === bilanBac.BacId).map((bac)=>bac.BacsOperations.map((operation)=>(
-                  <tr><td>{operation.date_operation}</td> <td>{operation.type_operation}</td> <td>{operation.resultat_masse_standard}</td> <td>{operation.resultat_volume_standard}</td></tr>
+                  <tr><td>{(operation.date_operation).split("T")[0]}</td> <td>{operation.type_operation}</td> <td>{operation.resultat_masse_standard}</td> <td>{operation.resultat_volume_standard}</td></tr>
                 ))) 
               }
               </table>
             </div>
           </div>
-
-          
-
         
         ))}
       </div>
@@ -110,7 +109,7 @@ const Bilan = () => {
         <button onClick={handleValidation} className='h-10 w-full rounded-sm text-lg text-white font-semibold shadow-md bg-green-600 hover:bg-green-700 hover:shadow-lg ease-in-out duration-150'>Valider</button>
         <button onClick={handleAnnulment} className='h-10 w-full rounded-sm text-lg text-white font-semibold shadow-md bg-red-600 hover:bg-red-700 hover:shadow-lg ease-in-out duration-150'>Annuler</button>
 
-        </div>
+      </div>
       </>
       )}
     </div>

@@ -2,9 +2,11 @@ import React, { useEffect } from 'react'
 import { GridComponent, ColumnsDirective, ColumnDirective, Inject, Page, Toolbar, PdfExport, ExcelExport, Edit } from '@syncfusion/ej2-react-grids'
 import * as api from '../../../api/xpApi'
 import { useDispatch, useSelector } from 'react-redux';
+import { updateBilanUniteRegion, updateBilanRegion } from '../../../store/slices/BilansSlice';
+import { fetchUniteProductionJournaliere } from '../../../api/uniteApi';
 import { calculRegionProductionJournaliere } from '../../../utils/CalculProduction';
 
-const UniteProductionData = ({productionData}) => {
+const UniteProductionData = ({productionData, setShowUnite, setShowRegion}) => {
 
     let grid;
     const RegionId = useSelector(state=>state.system.id)
@@ -24,42 +26,39 @@ const UniteProductionData = ({productionData}) => {
 
     const rowSelected = async ()=>{
       if (grid) {
-        /** Get the selected row indexes */
         const selectedrowindex = grid.getSelectedRowIndexes();
-        /** Get the selected records. */
         const selected = grid.getSelectedRecords()[0];
-        alert(JSON.stringify(selected))
-        if (selected.production !== {}) {
-          //alert("here")
-          let response = await api.updateUnitesProductionValidation({UniteId : selected.id, UniteProductionId :selected.production.id }) 
-          
-          if(response.data.success) {
-            console.log("successful");
-            dispatch(api.fetchRegionUnitesProduction({RegionId : selected.RegionId , journee_production : selected.production.journee_production}))
-            let response2 = await api.postUnitesRealisation(selected)
-          } 
+        if (Object.hasOwn(selected.production ,"stock_initial_tm")) {
+          dispatch(updateBilanUniteRegion({hide : false , bilanProductionUnite : selected, mouvements : []}))
+          setShowUnite(prev => !prev)
+
         }else{
           alert("empty")
-        }          
+        }     
       } 
     }
 
     const handleClick = async () =>{
-      //console.log(emptyBilans , invalidBilans);
-      if(emptyBilans > 0 || invalidBilans > 0 ) return
-      let bilanProductionRegion = calculRegionProductionJournaliere(productionData, RegionId)
-      console.log(productionData , bilanProductionRegion);
-      let response = await api.postRegionProduction(bilanProductionRegion)
-      console.log(response)
+  
+      if(emptyBilans > 0 || invalidBilans > 0 ) {
+        setShowRegion(prev => !prev)
+
+      }else{
+        let bilanProductionRegion = calculRegionProductionJournaliere(productionData, RegionId)
+        // alert(JSON.stringify(bilanProductionRegion))
+        console.log(productionData);
+        dispatch(updateBilanRegion({hide : false, bilanProductionRegion : bilanProductionRegion, bilansUnites : productionData}))
+        setShowRegion(prev => !prev)
+        
+      }    
     }
     
-
   return (
     <div className='h-full col-span-8 bg-white rounded-sm shadow-sm'> 
     
-        <div className='p-2 w-full flex flex-row justify-between'>
+        <div className='p-3 w-full flex flex-row justify-between items-center '>
           {emptyBilans !== 0 ? (<div>Il y'a {emptyBilans} unites qui n'ont pas encore cloturer la journee courante</div>) : (<div>  </div>)}
-          <button onClick={handleClick} className='py-1 px-4 rounded text-base text-white font-semibold shadow-md bg-orange-600 hover:bg-orange-700 hover:shadow-lg ease-in-out duration-150'>Cloturer La Journee</button>
+          {(emptyBilans === 0 && invalidBilans === 0) && (<button onClick={handleClick} className='py-2 px-4 rounded text-base text-white font-semibold shadow-md bg-orange-600 hover:bg-orange-700 hover:shadow-lg ease-in-out duration-150'>Cloturer La Journee</button>)}
         </div>
       
          <GridComponent  dataSource={productionData} rowSelected={rowSelected} ref={g => grid = g}
@@ -85,4 +84,4 @@ const UniteProductionData = ({productionData}) => {
   )
 }
 
-export default UniteProductionData
+export default UniteProductionData;

@@ -1,6 +1,5 @@
 import React from 'react'
 import PageHeader from '../../components/PageHeader'
-import KpiItem from './components/Kpiitem'
 
 const Kpi = () => {
   return (
@@ -8,14 +7,7 @@ const Kpi = () => {
       <PageHeader subTitle="Indicateurs de" pageName="Performance" />
       <div className='grid grid-cols-4 w-full h-full my-8 gap-2'>
         
-        <KpiItem/>
-        <KpiItem/>
-        <KpiItem/>
-        <KpiItem/>
-        <KpiItem/>
-        <KpiItem/>
-        <KpiItem/>
-        <KpiItem/>
+       
 
       </div>
       

@@ -24,6 +24,37 @@ export const postRegionProduction = async (bilanProductionRegion) =>  {
     }
 }
 
+export const postRegionRealisation = async (bilanProductionRegion) =>  {
+    try {
+        const hier = new Date(new Date(bilanProductionRegion.journee_production) - 24*60*60*1000).toISOString().split("T")[0]
+        const resultat = (await axios.get(`${RouteRegion}/${bilanProductionRegion.RegionId}/realisationData?journee_production=${hier}`))
+        
+        let realHier = resultat.data.data
+        let body = {}
+
+        if(realHier.length === 0){
+            
+            body = { journee_production : bilanProductionRegion.journee_production, RegionId : bilanProductionRegion.RegionId,
+                realisation_region_production_tm : bilanProductionRegion.production_region_tm , 
+                realisation_region_production_vm : bilanProductionRegion.production_region_vm,
+                realisation_region_expedition_tm : bilanProductionRegion.expedition_region_tm , 
+                realisation_region_expedition_vm : bilanProductionRegion.expedition_region_vm,
+            }
+        }else{
+            body = { journee_production : bilanProductionRegion.journee_production, RegionId : bilanProductionRegion.RegionId,
+                realisation_region_production_tm : bilanProductionRegion.production_region_tm + realHier[0].realisation_region_production_tm , 
+                realisation_region_production_vm : bilanProductionRegion.production_region_vm + realHier[0].realisation_region_production_vm,
+                realisation_region_expedition_tm : bilanProductionRegion.expedition_region_tm + realHier[0].realisation_region_expedition_tm , 
+                realisation_region_expedition_vm : bilanProductionRegion.expedition_region_vm + realHier[0].realisation_region_expedition_vm,
+            }
+        }
+        const response = (await axios.post(`${RouteRegion}/${bilanProductionRegion.RegionId}/realisationData`, body))
+        return response
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 
 // ////////////////////////////////////////////////////////////////////////////////////////////////

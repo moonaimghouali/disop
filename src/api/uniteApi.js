@@ -5,7 +5,7 @@ import axios from 'axios';
 const serverUrl = "http://localhost:5000"
 
 const RouteUnite= `${serverUrl}/api/unites`
-const RouteMouvements = `${serverUrl}/api/bacOperations/`
+const RouteMouvements = `${serverUrl}/api/bacOperations`
 const RouteBacs = `${serverUrl}/api/bacs`
 const RouteTableBaremages= `${serverUrl}/api/tableBaremage`
 const RouteCommentaires = `${serverUrl}/api/commentaires/`
@@ -29,6 +29,16 @@ export const postMouvement = async (body) =>{
     }
 }
 
+export const fetchLastStockFinalMouvement = async ({ BacId }) =>  {
+    try {
+        const response = (await axios.get(`${RouteMouvements}/StockFinal?BacId=${BacId}`))
+        return response
+    } catch (error) {
+        console.log(error.message);   
+    }  
+}
+
+
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 //Production
 export const fetchUniteProduction = createAsyncThunk("production/fetchUniteProduction", (UniteId) =>  {
@@ -48,9 +58,9 @@ export const postUniteProduction = async (body) =>{
     }
 }
 
-export const calculUniteProduction = async (UniteId) =>{
+export const fetchUniteProductionJournaliere = async (UniteId) =>{
     try {
-        const response = (await axios.get(`${RouteUnite}/${UniteId}/productionData/new`))
+        const response = (await axios.get(`${RouteMouvements}/aujourdhui?UniteId=${UniteId}`))
         return response
     } catch (error) {
         console.log(error);
@@ -78,6 +88,14 @@ export const postBacBareme = async (body) =>{
     }
 }
 
+export const updateBacStorage = async ({ BacId, stockage_actuel}) =>{
+    try {
+        const response = (await axios.put(`${RouteBacs}/${BacId}`, {stockage_actuel : stockage_actuel}))
+        return response
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 // TableBaremage 

@@ -6,7 +6,7 @@ import { calculUniteProductionJournaliere } from '../../../utils/CalculProductio
 import { useDispatch, useSelector } from 'react-redux'
 import { updateBilanUnite }from '../../../store/slices/BilansSlice'
 
-const ProductionData = ({uniteProduction}) => {
+const ProductionData = ({uniteProduction, setPopUp}) => {
   let grid;
   let isResp = useSelector((state) => state.user.userInfo.role) 
   let UniteId = useSelector((state) =>state.system.id)
@@ -32,7 +32,8 @@ const rowSelected = ()=>{
 };
 
 const handleClick = async () =>{
-  let response = await api.calculUniteProduction(UniteId)
+  setPopUp(prev => !prev)
+  let response = await api.fetchUniteProductionJournaliere(UniteId)
   console.log(response);
   let resultat = await calculUniteProductionJournaliere(response.data.data)
   if (resultat) {
@@ -42,9 +43,9 @@ const handleClick = async () =>{
 }
 
   return (
-    <div className='h-full w-2/3 bg-white rounded-sm shadow-sm'> 
+    <div className='h-full w-full bg-white rounded-sm shadow-sm'> 
       <div className='w-full h-full bg-white'>
-        {!(isResp == "Resp_Unite ") && (<div className='p-2 w-full flex flex-row-reverse'> <button onClick={handleClick} className='py-1 px-4 rounded text-base text-white font-semibold shadow-md bg-orange-600 hover:bg-orange-700 hover:shadow-lg ease-in-out duration-150'>Cloturer La Journee</button></div>)}
+        {!(isResp == "Resp_Unite ") && (<div className='p-4 w-full flex flex-row-reverse'> <button onClick={handleClick} className='py-2 px-4 rounded text-base text-white font-semibold shadow-md bg-orange-600 hover:bg-orange-700 hover:shadow-lg ease-in-out duration-150'>Cloturer La Journee</button></div>)}
          <GridComponent  dataSource={uniteProduction} rowSelected={rowSelected} ref={g => grid = g}
          allowPaging={true} allowPdfExport={true} allowExcelExport={true} pageSettings={{pageSize:9}}>
           

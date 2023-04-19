@@ -218,9 +218,11 @@ export const calculBacProductionJournaliere = (bac) => {
 }
 
 // calculer la production Journaliere de l'Unite
-export const calculUniteProductionJournaliere = (BacsOperations) => {
+export const calculUniteProductionJournaliere = (Bacs) => {
 
     let BacsProductionBilans = []
+    let BacsOperations = Bacs.filter((bac)=> bac.type_bacs !=="OffSpecs")
+    console.log(BacsOperations);
     let journee_production = new Date(new Date() - 24*60*60*1000).toISOString().split("T")[0]
 
     let stock_initial_tm =0
