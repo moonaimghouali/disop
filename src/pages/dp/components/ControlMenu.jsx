@@ -1,101 +1,91 @@
 import React, {useState, useEffect} from 'react'
-import { useDispatch, useSelector} from 'react-redux'
 import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns'
-import { DatePickerComponent, DateRangePickerComponent } from '@syncfusion/ej2-react-calendars'
-import { updateMenuDateDp } from '../../../store/slices/menusSlice'
-import { dateToLastWeek, dateToString } from '../../../utils/Date'
+import { DatePickerComponent } from '@syncfusion/ej2-react-calendars'
+import * as api from '../../../api/dpApi'
 
-const ControlMenu = () => {
+
+const ControlMenu = ({dbMenu, setDbMenu}) => {
     
     let ddlObj ;
 
-    const data = [ { periodicite:'Journalier', id:0}, { periodicite:'Periodique', id:1}, { periodicite:'Mensuel', id:2}]
-    const fields = {text : "periodicite" , value :"id" }
+    const periodiciteData = [ { periodicite:'Journalier', id:0},  { periodicite:'Mensuel', id:1}]
+    const periodiciteFields = {text : "periodicite" , value :"id" }
 
-    const menuDateDp = useSelector((state)=>state.menus.menuDateDp)
-    const dispatch = useDispatch()
+    const [entiteData, setEntiteData] = useState([]) 
+    const entiteFields = {text : "entite" , value :"id" }
 
-    const [Journalier , setJournalier] =useState(true)
-    const [Periodique , setPeriodique] =useState(false)
-    const [Mensuel , setMensuel] =useState(false)
+    useEffect(()=>{
+        const fn = async() =>{
+            let regions = await api.fetchRegions()
+            console.log("resigons : ",regions);
+            if (regions.length ===0) return
+
+            let entites = []
+            regions.map((region)=>{
+                let entite = { entite : region.nom_region, id : region.id }
+                entites.push(entite)
+            })
+
+            entites.unshift({ entite : "DIVISION PRODUCTION", id : -1 })
+            setEntiteData(entites)
+        }
+        fn()
+    },[])
+
+
+    const handleEntiteChange = (e) =>{
+        setDbMenu( prev => ({entite : e.value, journalier : prev.journalier , date : prev.date}))
+    }
 
     const handlePeriodicteChange = async (e) =>{
-        console.log(e.value)
+       
         switch (e.value) {
             case 0:
-                dispatch(updateMenuDateDp({start:  new Date(new Date()- 86400000), end : new Date(new Date()- 86400000)}))
-                setJournalier(prevJournalier => !prevJournalier)
-                setPeriodique(false)
-                setMensuel(false)   
-                break;
-            case 1:
-                await dispatch(updateMenuDateDp({start: new Date(new Date()- 8*24*60*60*1000), end : new Date(new Date()- 24*60*60*1000)}))
-                setPeriodique(prevPeriodique => !prevPeriodique) 
-                setJournalier(false)
-                setMensuel(false)     
+                setDbMenu( prev => ({entite : prev.entite, journalier : true , date : new Date(new Date()- 86400000)}))
                 break;
 
-            case 2:
-                await dispatch(updateMenuDateDp({start: new Date(new Date().getFullYear(), (new Date().getMonth()-1).toString()), end : new Date()}))
-                setMensuel(prevMensuel => !prevMensuel) 
-                setJournalier(false) 
-                setPeriodique(false)            
+            case 1:
+                setDbMenu( prev => ({entite : prev.entite, journalier : false , date : new Date( new Date().getFullYear(), new Date().getMonth() -1 )}))
                 break;
+
             default:
                 break;
         }
     }
 
     const handleDateChange = (e) =>{
-        // let start = dateToString(e.value)
-        let start = e.value
-        let end = e.value
-        dispatch(updateMenuDateDp({start : start, end :end}))
-    }
-
-    const handlePeriodChange = (e) =>{
-        // let start = dateToString(e.value[0])
-        // let end = dateToString(e.value[1])
-        let start = e.value[0]
-        let end = e.value[1]
-        dispatch(updateMenuDateDp({start : start, end :end}))
+        setDbMenu( prev => ({entite : prev.entite, journalier : true , date : e.value})) 
     }
 
     const handleMonthChange = (e) =>{
-        let year = new Date(e.value).getFullYear()
-        let month = new Date(e.value).getMonth()
-
-        // let start =  dateToString(new Date(year, month.toString()))
-        // let end = dateToString(new Date(year, (month + 1).toString(), 0))
-        let start =  (new Date(year, month.toString()))
-        let end = (new Date(year, (month + 1).toString(), 0))
-        dispatch(updateMenuDateDp({start : start, end :end}))
+        setDbMenu( prev => ({entite : prev.entite, journalier : false , date : e.value})) 
     }
 
   return (
     <div className='w-full flex flex-row items-center px-2 h-16 bg-white rounded-sm mt-4 mb-2 shadow-sm'>
+        
+        {/* Choix d'entite */}
         <div className='w-fit mr-4'>
-            <DropDownListComponent  value={0} change={handlePeriodicteChange} id="periodicite" fields={fields} dataSource={data} placeholder={"Periodicite"} ></DropDownListComponent>
+            <DropDownListComponent  value={-1} change={handleEntiteChange} id="entite" fields={entiteFields} dataSource={entiteData} placeholder={"Entite"} ></DropDownListComponent>
+        </div>
+
+        {/* Choix de periodicite */}
+        <div className='w-fit mr-4'>
+            <DropDownListComponent  value={0} change={handlePeriodicteChange} id="periodicite" fields={periodiciteFields} dataSource={periodiciteData} placeholder={"Periodicite"} ></DropDownListComponent>
         </div>
         
-        { Journalier && (
-        <div className='w-fit mr-4'> <DatePickerComponent value={menuDateDp.start}  format="dd-MMM-yyyy"  change={handleDateChange}></DatePickerComponent> </div>
+        {/* Date Journaliere */}
+        { dbMenu.journalier && (
+        <div className='w-fit mr-4'> <DatePickerComponent value={dbMenu.date}  format="dd-MMM-yyyy"  change={handleDateChange}></DatePickerComponent> </div>
         ) }
 
-        { Periodique && (
-            <div className='w-fit mr-4'> </div>
-            // <DateRangePickerComponent value={[menuDateDp.start, menuDateDp.end]} format="dd-MMM-yyyy" change={handlePeriodChange}></DateRangePickerComponent> </div>
-        ) }
-
-        { Mensuel && (
+        {/* Date Mensuelle */}
+        { !dbMenu.journalier && (
         <div className='w-fit mr-4'> 
-        <DatePickerComponent change={handleMonthChange} value={menuDateDp.start} format="MMM-yyyy" start="Year" depth='Year'></DatePickerComponent> </div>
-
+        <DatePickerComponent change={handleMonthChange} value={dbMenu.date} format="MMM-yyyy" start="Year" depth='Year'></DatePickerComponent> </div>
         ) }
-        
-    
     </div>
-   
+
   )
 }
 

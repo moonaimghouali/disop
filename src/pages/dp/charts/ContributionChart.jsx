@@ -3,25 +3,24 @@ import { AccumulationChartComponent, AccumulationSeriesCollectionDirective, Accu
 import { productionData } from '../../../data/chartsData';
 import { expeditionData } from '../../../data/chartsData';
 
-const ContributionChart = () => {
+const ContributionChart = ({data}) => {
 
   return (
-    <div className='bg-white rounded-sm row-span-5'>
-        <AccumulationChartComponent id='pie-chart' legendSettings={{visible: true}} 
-        enableSmartLabels={true} enableAnimation={true} tooltip={{ enable: true }} title="Contribution a la production">
+    <div className='w-full h-full flex flex-col p-2'>
+      <div className='text-lg font-semibold'>Contribution Production</div>
 
-            <Inject services={[AccumulationLegend, PieSeries, AccumulationDataLabel, AccumulationTooltip]}/>
+        <AccumulationChartComponent id='pie-chart' tooltip={{ enable: true }}  >
+            <Inject services={[AccumulationLegend, PieSeries,  AccumulationTooltip, AccumulationDataLabel]}/>
+            
             <AccumulationSeriesCollectionDirective>
-              <AccumulationSeriesDirective dataSource={productionData} xName='code_region' yName='production' startAngle='270' endAngle='90' innerRadius='20%' 
-              dataLabel={{visible: true, position: 'Outside', name: 'code_region'}} radius='r'>
+
+              <AccumulationSeriesDirective type='Pie' dataSource={data} xName='code_region' yName='production'  
+              dataLabel={{visible: true, position: 'Outside', name: 'production'}} radius='r'>
               </AccumulationSeriesDirective>
 
-              <AccumulationSeriesDirective dataSource={productionData} xName='code_region' yName='expedition' startAngle='270' endAngle='90' innerRadius='20%' 
-              dataLabel={{visible: true, position: 'Outside', name: 'code_region'}} radius='r'>
-              </AccumulationSeriesDirective>
             </AccumulationSeriesCollectionDirective>
-          </AccumulationChartComponent>
 
+          </AccumulationChartComponent>
     </div>
   )
 }
