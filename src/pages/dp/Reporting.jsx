@@ -13,17 +13,15 @@ const Reporting = () => {
     const fetcData = async ()=>{
       if (rapport.rapport === 0) {
         setProduction([])
-        console.log("heree is working");
         let journee = new Date(rapport.date).toISOString().split("T")[0]
-        console.log(journee)
         let response = await api.fetchBilanJournalier(journee)
-        console.log("res", response);
         if (response.data.success) {
           setProduction(response.data.res)
-          console.log("production" ,production);
         }
       }
       if (rapport.rapport === 1) {
+        setProduction([])
+        let response = await api.fetchBilanSpe(rapport.date)
         
       }
       if (rapport.rapport === 2) {

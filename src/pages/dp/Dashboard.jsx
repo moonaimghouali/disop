@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import PageHeader from '../../components/PageHeader'
 import ControlMenu from './components/ControlMenu'
-import {GlobalInformation, ContributionChart, ProductionRegionChart, ExpeditionRegionChart, EvolutionProduction } from './charts'
+import {GlobalInformation, ContributionChart, ProductionRegionChart, Kpi, ExpeditionRegionChart, EvolutionProduction } from './charts'
 import * as api from '../../api/dpApi'
 
 const Dashboard = () => {
   const [dbMenu, setDbMenu] = useState({entite : -1, journalier : true , date : new Date(new Date()- 86400000) })
   const [productionData, setProductionData] = useState([])
+  const [evolutionData, setEvolutionData] = useState([])
 
   useEffect(()=>{
     console.log(dbMenu);
@@ -14,11 +15,13 @@ const Dashboard = () => {
       if (dbMenu.entite === -1 && dbMenu.journalier) {
         let response = await api.fetchDpDailyData(new Date(dbMenu.date).toISOString().split("T")[0])
         setProductionData(response)
+        response = await api.fetchDpDailyEvolutionData(new Date(dbMenu.date).toISOString().split("T")[0])
+        setEvolutionData(response)
       }
     }
 
     fn()
-    console.log(productionData);
+    console.log("dashboard",productionData);
   },[dbMenu.entite, dbMenu.journalier, dbMenu.date])
 
 
@@ -26,25 +29,29 @@ const Dashboard = () => {
     <div className="flex flex-col h-screen w-screen bg-gray-100 px-8 py-8">
       <PageHeader pageName="Dashboard Production Global" />
       <ControlMenu setDbMenu={setDbMenu} dbMenu={dbMenu}/>
-
+      
       <div className=' grid grid-rows-12 grid-cols-12 gap-2 w-full h-full rounded' >
-        <div className='bg-white rounded-sm shadow-sm row-span-6 col-span-3 '> <GlobalInformation dbMenu={dbMenu} data={productionData}/></div>
-        <div className='bg-white rounded-sm shadow-sm row-span-6 col-span-4'> <ContributionChart data={productionData}/> </div>
-        <div className='bg-white rounded-sm shadow-sm row-span-6 col-span-5'>KPI</div>
-        <div className='bg-white rounded-sm shadow-sm row-span-6 col-span-6 '> <ProductionRegionChart data={productionData}/> </div>
-        <div className='bg-white rounded-sm shadow-sm row-span-6 col-span-6 '> { /*<ProductionRegionChart /> */}</div>
+        
+        <div className='bg-white rounded-sm shadow-sm row-span-6 col-span-3 '> 
+        <GlobalInformation dbMenu={dbMenu} data={productionData}/>
+        </div>
 
+        <div className='bg-white rounded-sm shadow-sm row-span-6 col-span-4'> 
+        <ContributionChart data={productionData}/> 
+        </div>
 
+        <div className='bg-white rounded-sm shadow-sm row-span-6 col-span-5'> 
+        <Kpi /> 
+        </div>
 
-
-
-        {/* <div className='bg-white rounded-sm'>6</div>
-        <div className='bg-white rounded-sm'>7</div> */}
-
-        {/* <div className='bg-white rounded-sm row-span-3 p-6'> Info</div>
-        <ProductionRegionChart />
-        <ContributionChart />
-        <ExpeditionRegionChart/>       */}
+        <div className='bg-white rounded-sm shadow-sm row-span-6 col-span-6 '> 
+        <ProductionRegionChart data={productionData}/> 
+        </div>
+        
+        <div className='bg-white rounded-sm shadow-sm row-span-6 col-span-6 '> 
+        <EvolutionProduction data={evolutionData}/>
+        </div>
+      
       </div>
     </div>
   )

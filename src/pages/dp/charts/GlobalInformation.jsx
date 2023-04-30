@@ -4,7 +4,7 @@ const GlobalInformation = ({data}) => {
     const [dpData, SetDpData] = useState([])
 
     useEffect(()=>{
-
+    console.log("prod", data);
     let arr=[0,0,0,0,0,0]
     data.map((reg)=>{
         arr[0] += reg.production
@@ -17,39 +17,34 @@ const GlobalInformation = ({data}) => {
     SetDpData(arr)
     console.log("arra", arr);
     },[])
+
+    const Item = ({name, value, color})=>{
+        let style = `text-base font-semibold text-${color}-700`
+        
+        return(
+            <div className='flex flex-col justify-center items-center bg-gray-50 rounded'>
+                <div className={style}>{value}</div>
+                <div className='text-base font-medium text-gray-400'>{name}</div>
+            </div>
+        )
+    }
+
   return (
     <div className='w-full h-full flex flex-col p-2'>
         {/* Entite */}
-        <div className='text-lg font-semibold'>{"Division Production"}</div>
-        <div className='text-base font-semibold text-gray-400'>{"12-10-2024"}</div>
+        <div className='text-lg font-semibold w-full text-center'>{"Division Production"}</div>
+        {/* <div className='text-base font-semibold text-gray-400'>{"12-10-2024"}</div> */}
 
-        <div className='h-full w-full grid grid-rows-2 grid-cols-3 gap-2 mt-3'>
-
-            <div className='flex flex-col justify-center items-center '>
-                <div className='text-base font-semibold text-gray-700'>{dpData[0]} </div>
-                <div className='text-base font-semibold text-gray-700'>Production </div>
-            </div>
-
-            <div className='flex flex-col justify-center items-center '>
-                <div className='text-base font-semibold text-gray-700'>{dpData[0] - dpData[1]} </div>
-                <div className='text-base font-semibold text-gray-700'>Ecart </div>
-            </div>
-
-            <div className='flex flex-col justify-center items-center '>
-                <div className='text-base font-semibold text-gray-700'>{dpData[1]} </div>
-                <div className='text-base font-semibold text-gray-700'>Prevision </div>
-            </div>
-
-            <div className='flex flex-col justify-center items-center '>
-                <div className='text-base font-semibold text-gray-700'>{dpData[4]} </div>
-                <div className='text-base font-semibold text-gray-700'>Realisation </div>
-            </div>
-
-            <div className='flex flex-col justify-center items-center'>
-                <div className='text-base font-semibold text-gray-700'>{dpData[3]} </div>
-                <div className='text-base font-semibold text-gray-700'>Expedition </div>
-            </div>
-           
+        <div className='h-full w-full grid grid-rows-3 grid-cols-3 gap-1 mt-3'>
+            <Item name={"Production"} value={1000} color="orange"/>
+            <Item name={"Ecart"} value={1000} color="red"/>
+            <Item name={"Prevision"} value={1000} color="blue"/>
+            <Item name={"Real Mois"} value={1000} color="teal"/>
+            <Item name={"Ecart"} value={1000} color="red"/>
+            <Item name={"Prevision"} value={1000} color="blue"/>
+            <Item name={"Real Annee"} value={1000} color="violet"/>
+            <Item name={"Ecart"} value={1000} color="red"/>
+            <Item name={"Prevision"} value={1000} color="blue"/>
         </div>
         
     </div>

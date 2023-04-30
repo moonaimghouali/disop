@@ -8,10 +8,10 @@ const ProductionRegionChart = ({data}) => {
   return (
 
     <div className='w-full h-full flex flex-col px-2 pt-1'>
-    <div className='text-lg font-semibold'>Production Regions</div>
+    <div className='text-lg font-semibold w-full text-center'>Production Regions</div>
       <ChartComponent  
-      primaryXAxis={{valueType:"Category",title:"Regions" , labelFormat:"{category}" , labelStyle:{fontWeight:"Bold"}}}
-      primaryYAxis={{ labelFormat:"{value} TM", title:"Production"}} height="210"
+      primaryXAxis={{valueType:"Category", labelFormat:"{category}" , labelStyle:{fontWeight:"Bold"}}}
+      primaryYAxis={{ labelFormat:"{value} TM"}} height="210"
       tooltip={{enable:true}} legendSettings={{visible:true}}> 
 
         <Inject services={[ColumnSeries, Category, Tooltip, Legend ]}></Inject>

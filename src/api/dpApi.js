@@ -17,12 +17,19 @@ export const fetchRegions = async () =>  {
 
 export const fetchDpDailyData = async (journee) =>  {
     try {
-        return axios.get(`${RouteDp}/dashboard/dpJournalier?journee=${journee}`).then((response) => response.data.data)
+        return axios.get(`${RouteDp}/dashboard/journalier/dp?journee=${journee}`).then((response) => response.data.data)
     } catch (error) {
         console.log(error.message);   
     }  
 }
 
+export const fetchDpDailyEvolutionData = async (journee) =>  {
+    try {
+        return axios.get(`${RouteDp}/dashboard/journalier/dpEvolution?journee=${journee}`).then((response) => response.data.data)
+    } catch (error) {
+        console.log(error.message);   
+    }  
+}
 
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 // Production
@@ -46,6 +53,21 @@ export const fetchBilanJournalier = async (journee) =>  {
         console.log(error);
     }
 }
+
+export const fetchBilanSpe = async (date) =>  {
+    let day= date.toISOString().split("T")[0]
+    let annee = parseInt(day.split("-")[0])
+    let mois = parseInt(day.split("-")[1])
+    if (mois === 12) mois=0
+    console.log(date, day, annee, mois+1);
+    try {
+        let response = await (axios.get(`${RouteDp}/bilans/bilanSpe?mois=${mois+1}&annee=${annee}`))
+        return response
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 
 
