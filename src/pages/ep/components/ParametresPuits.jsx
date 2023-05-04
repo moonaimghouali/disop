@@ -1,9 +1,11 @@
 import React,{ useState, useEffect } from 'react'
 import { DatePickerComponent } from '@syncfusion/ej2-react-calendars'
-import {FormPuits} from '../components'
+import {FormPuits, RealTimeData} from '../components'
+import {ToggleSwitch} from '../../../components'
 
 const ParametresPuits = ({puits}) => {
   const [date, setDate] = useState(new Date(new Date() - 24*60*60*1000))
+  const [toggle, setToggle] = useState(false)
 
   const handleDateChange = (e) =>{
     setDate(e.value)
@@ -25,9 +27,15 @@ const ParametresPuits = ({puits}) => {
 
           {/* Oil well input */}
           {(Object.keys(puits).length !== 0) && (
-            <div className='h-full w-full flex flex-col p-2'>
-              <div className='font-semibold text-xl '>Parametres Production du puits "{puits.code_puits}"</div>
-              <FormPuits puits={puits} date={date}/>
+            <div className='h-full w-full flex flex-col py-2 px-4'>
+              <div className='flex flex-row items-center '>
+                <div className='font-semibold text-xl flex-1'>Parametres du puits " {puits.code_puits} "</div>
+                <div className='flex flex-row gap-2 items-center'> Donnees en temp reel <ToggleSwitch toggle={toggle} setToggle={setToggle}/> </div>
+              </div>
+              
+              {!toggle && <FormPuits puits={puits} date={date}/>}
+              {toggle && <RealTimeData/>}
+              
             </div>
           )}
     </div>

@@ -4,7 +4,7 @@ import { DatePickerComponent } from '@syncfusion/ej2-react-calendars'
 import { useSelector } from 'react-redux'
 import * as api from '../../../api/epApi'
 
-const ProductionMenu = ({prodMenu, setProdMenu}) => {
+const PerimetresMenu = ({perimetresMenu, setPerimetresMenu}) => {
 
     const [perimetreData, setPerimetreData] = useState([]) 
     let RegionId = useSelector((state)=> state.system.id)
@@ -26,28 +26,27 @@ const ProductionMenu = ({prodMenu, setProdMenu}) => {
             setPerimetreData(perims)
         }
         fn()
-        
     },[])
     
     const handlePerimetreChange = (e) =>{
-        setProdMenu( prev => ({perimetre : e.value, date : prev.date}))
+        setPerimetresMenu( prev => ({perimetre : e.value, date : prev.date}))
     }
 
     const handleDateChange = (e) =>{
-        setProdMenu( prev => ({perimetre : prev.perimetre , date : e.value}))
+        setPerimetresMenu( prev => ({perimetre : prev.perimetre , date : e.value}))
     }
   
   return (
     <div className='w-full flex flex-row items-center px-2 h-16 bg-white rounded-sm mt-4 mb-4 shadow-sm'>
         
-        {/* Perimetre
+        {/* Perimetre */}
         <div className='w-fit mr-4'>
             <DropDownListComponent   change={handlePerimetreChange} id="entite" fields={perimetreFields} dataSource={perimetreData}  placeholder={"Perimetre"} ></DropDownListComponent>
-        </div> */}
+        </div>
 
         {/*  Journee*/}
         <div className='w-fit mr-4'> 
-            <DatePickerComponent  value={prodMenu.date} format="dd-MMM-yyyy"  change={handleDateChange} placeholder='Choisir la journee'></DatePickerComponent> 
+            <DatePickerComponent  value={perimetresMenu.date} format="dd-MMM-yyyy"  change={handleDateChange} placeholder='Choisir la journee'></DatePickerComponent> 
         </div>
 
 
@@ -55,4 +54,4 @@ const ProductionMenu = ({prodMenu, setProdMenu}) => {
   )
 }
 
-export default ProductionMenu
+export default PerimetresMenu

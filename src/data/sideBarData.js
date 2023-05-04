@@ -104,6 +104,11 @@ path : "p/admin/utilisateurs",
       name: 'Perimetres',
       path : "p/ep/perimetres",
       icon: <TbBrandProducthunt size={18}/>,
+    },
+    {
+      name: 'Config. Puits',
+      path : "p/ep/config",
+      icon: <TbBrandProducthunt size={18}/>,
     }
   ]
 

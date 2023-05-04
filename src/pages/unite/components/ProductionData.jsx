@@ -34,7 +34,7 @@ const rowSelected = ()=>{
 const handleClick = async () =>{
   setPopUp(prev => !prev)
   let response = await api.fetchUniteProductionJournaliere(UniteId)
-  console.log(response);
+  console.log("uniteProd",response);
   let resultat = await calculUniteProductionJournaliere(response.data.data)
   if (resultat) {
     //console.log("here", resultat , response.data.data);
@@ -45,7 +45,7 @@ const handleClick = async () =>{
   return (
     <div className='h-full w-full bg-white rounded-sm shadow-sm'> 
       <div className='w-full h-full bg-white'>
-        {!(isResp == "Resp_Unite ") && (<div className='p-4 w-full flex flex-row-reverse'> <button onClick={handleClick} className='py-2 px-4 rounded text-base text-white font-semibold shadow-md bg-orange-600 hover:bg-orange-700 hover:shadow-lg ease-in-out duration-150'>Cloturer La Journee</button></div>)}
+        {!(isResp === "Resp_Unite ") && (<div className='p-4 w-full flex flex-row-reverse'> <button onClick={handleClick} className='py-2 px-4 rounded text-base text-white font-semibold shadow-md bg-orange-600 hover:bg-orange-700 hover:shadow-lg ease-in-out duration-150'>Cloturer La Journee</button></div>)}
          <GridComponent  dataSource={uniteProduction} rowSelected={rowSelected} ref={g => grid = g}
          allowPaging={true} allowPdfExport={true} allowExcelExport={true} pageSettings={{pageSize:9}}>
           

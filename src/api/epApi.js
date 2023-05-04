@@ -16,6 +16,16 @@ export const fetchPuits = async (perimetreId) =>  {
     }  
 }
 
+// //////////////////////////////////////////////////////////////////////////////
+// PuitsProduction
+export const fetchPuitsProduction = async (PuitId, journee_production) =>  {
+    try {
+        return axios.get(`${RoutePuits}/${PuitId}/production?journee_production=${journee_production}`).then((response) => response.data.data)
+    } catch (error) {
+        console.log(error.message);   
+    }  
+}
+
 
 
 

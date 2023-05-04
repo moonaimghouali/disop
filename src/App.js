@@ -4,7 +4,7 @@ import { Error,Login, Profile } from './pages/common';
 import { Utilisateurs, Regions, Secteurs, Perimetres, Unites } from './pages/admin';
 import { Dashboard, DpProduction, Kpi, Map, Reporting } from "./pages/dp";
 import{ Mouvements, Production, Stockage, Baremage, Commentaires, MouvementBac, NouveauBac} from './pages/unite'
-import{ EpPerimetres, EpProduction, Puits} from './pages/ep'
+import{ EpPerimetres, EpProduction, Puits, EpConfig} from './pages/ep'
 import{ XpProduction, XpUnites,XpPerimetres, Previsions} from './pages/xp'
 import { Sidebar } from './components';
 import { useSelector } from 'react-redux';
@@ -72,6 +72,7 @@ function App() {
           <Route path='p/ep/puits' element={isSignedIn? ((isEP) ? <Puits/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/ep/perimetres' element={isSignedIn? ((isEP) ? <EpPerimetres/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/ep/production' element={isSignedIn? ((isEP) ? <EpProduction/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
+          <Route path='p/ep/config' element={isSignedIn? ((isEP) ? <EpConfig/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
 
 
           {/* dp Routes */}
