@@ -30,29 +30,30 @@ const Dashboard = () => {
       <PageHeader pageName="Dashboard Production Global" />
       <ControlMenu setDbMenu={setDbMenu} dbMenu={dbMenu}/>
       
-      <div className=' grid grid-rows-12 grid-cols-12 gap-2 w-full h-full rounded' >
+      <div className=' grid grid-rows-6 grid-cols-12 gap-2 w-full h-full rounded' >
         
-        <div className='bg-white rounded-sm shadow-sm row-span-6 col-span-3 '> 
-        <GlobalInformation dbMenu={dbMenu} data={productionData}/>
+        <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4 '> 
+          <GlobalInformation dbMenu={dbMenu} data={productionData}/>
         </div>
 
-        <div className='bg-white rounded-sm shadow-sm row-span-6 col-span-4'> 
-        <ContributionChart data={productionData}/> 
+        <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4'> 
+          <ContributionChart data={productionData}/> 
         </div>
 
-        <div className='bg-white rounded-sm shadow-sm row-span-6 col-span-5'> 
-        <Kpi /> 
+        <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4'> 
+          <Kpi /> 
         </div>
 
-        <div className='bg-white rounded-sm shadow-sm row-span-6 col-span-6 '> 
-        <ProductionRegionChart data={productionData}/> 
+        <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-6 '> 
+          <ProductionRegionChart data={productionData}/> 
         </div>
         
-        <div className='bg-white rounded-sm shadow-sm row-span-6 col-span-6 '> 
-        <EvolutionProduction data={evolutionData}/>
+        <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-6 '> 
+          <EvolutionProduction data={evolutionData}/>
         </div>
       
       </div>
+
     </div>
   )
 }

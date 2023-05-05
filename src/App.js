@@ -1,7 +1,7 @@
 import './assets/styles/App.css';
 import {BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Error,Login, Profile } from './pages/common';
-import { Utilisateurs, Regions, Secteurs, Perimetres, Unites } from './pages/admin';
+import { Utilisateurs, Regions, PuitsAdmin, Perimetres, Unites } from './pages/admin';
 import { Dashboard, DpProduction, Kpi, Map, Reporting } from "./pages/dp";
 import{ Mouvements, Production, Stockage, Baremage, Commentaires, MouvementBac, NouveauBac} from './pages/unite'
 import{ EpPerimetres, EpProduction, Puits, EpConfig} from './pages/ep'
@@ -47,7 +47,7 @@ function App() {
           {/* Admin Routes */}
           <Route path='p/admin/utilisateurs' element={isSignedIn? (isAdmin? <Utilisateurs/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/admin/regions' element={isSignedIn? (isAdmin? <Regions/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
-          <Route path='p/admin/secteurs' element={isSignedIn? (isAdmin? <Secteurs/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
+          <Route path='p/admin/puits' element={isSignedIn? (isAdmin? <PuitsAdmin/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/admin/perimetres' element={isSignedIn? (isAdmin? <Perimetres/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/admin/unites' element={isSignedIn? (isAdmin? <Unites/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
 

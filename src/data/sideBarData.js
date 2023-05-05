@@ -13,7 +13,7 @@ import { RiWaterFlashLine } from 'react-icons/ri'
 export const adminLinks = [
     {
       name: 'Utilisateurs',
-path : "p/admin/utilisateurs",
+      path : "p/admin/utilisateurs",
       icon: <FiUsers size={18}/>,
     },
     {
@@ -22,9 +22,9 @@ path : "p/admin/utilisateurs",
       icon: <FiUsers size={18}/>,
     },
     {
-      name: 'Secteurs',
-      path : "p/admin/secteurs",
-      icon: <FiUsers size={18}/>,
+      name: 'Unites',
+      path : "p/admin/unites",
+      icon: <TbBuildingFactory size={18}/>,
     },
     {
       name: 'Perimetres',
@@ -32,9 +32,9 @@ path : "p/admin/utilisateurs",
       icon: <GiOilPump size={20}/>,
     },
     {
-      name: 'Unites',
-      path : "p/admin/unites",
-      icon: <TbBuildingFactory size={18}/>,
+      name: 'Puits',
+      path : "p/admin/puits",
+      icon: <FiUsers size={18}/>,
     },
   ]
 

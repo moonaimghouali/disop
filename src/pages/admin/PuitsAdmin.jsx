@@ -2,13 +2,15 @@ import React from 'react'
 import { PageHeader } from '../../components'
 import { ColumnDirective, ColumnsDirective, Filter, GridComponent, Group } from '@syncfusion/ej2-react-grids';
 import { Inject, Page, Sort } from '@syncfusion/ej2-react-grids';
-import {unites} from '../../data/unitesData'
 import { IoMdAddCircleOutline} from 'react-icons/io'
 import { MdDelete, MdEdit} from 'react-icons/md'
+import {regions} from '../../data/regionsData'
 
-const Unites = () => {
+const PuitsAdmin = () => {
+
 
   const temp =  (props) => {
+    
     let handleModif = () =>{
 
     } 
@@ -27,38 +29,37 @@ const Unites = () => {
     </div>
     )};
 
-  const handleClick = () =>{
-    alert("working")
-  }
-
+    const handleClick = () =>{
+        alert("working")
+      }
+      
   return (
     <div className="flex flex-col h-screen w-screen bg-gray-100 px-8 py-8">
-      <PageHeader className="mb-10" subTitle="Gestion des" pageName="Unites"/>  
+      <PageHeader className="mb-10" subTitle="Gestion des" pageName="Puits"/>  
     
-      <div className='flex flex-col w-full h-full mt-8 rounded bg-white shadow-sm' >
+    <div className='flex flex-col w-full h-full mt-8 rounded bg-white shadow-sm' >
       
-        <div   className='flex flex-row-reverse p-2'>
-          <button onClick={handleClick} className='p-2 text-white font-semibold bg-blue-600 rounded shadow hover:bg-blue-700 hover:shadow-md flex flex-row items-center'>
-            <IoMdAddCircleOutline size={18} className="mr-1" color='#fff'/> Ajouter 
-            une unite
-          </button>
-        </div>
-        
-      <GridComponent  height={"100%"} dataSource={unites} allowPaging={true}  allowSorting={true} pageSettings={{pageSize:8}} >
+      <div   className='flex flex-row-reverse p-2'>
+        <button onClick={handleClick} className='p-2 text-white font-semibold bg-blue-600 rounded shadow hover:bg-blue-700 hover:shadow-md flex flex-row items-center'>
+          <IoMdAddCircleOutline size={18} className="mr-1" color='#fff'/> Ajouter un puits
+        </button>
+      </div>
+
+      <GridComponent height={"100%"} dataSource={regions} allowPaging={true}  allowSorting={true} pageSettings={{pageSize:8}} >
         <Inject services={[Page, Sort, Filter, Group]}/>
 
         <ColumnsDirective>
         <ColumnDirective field='id' headerText='Id' textAlign='left'/>
-        <ColumnDirective field='code_unite' headerText='Code' textAlign='left'/>
-        <ColumnDirective field='nom_unite' headerText='Nom' textAlign='left'/>
+        <ColumnDirective field='code' headerText='Code' textAlign='left'/>
+        <ColumnDirective field='nom_perimetre' headerText='Perimetre' textAlign='left'/>
         <ColumnDirective field='nom_region' headerText='Region' textAlign='left'/>
         <ColumnDirective field='modify' headerText='Config' template={temp} width="90" textAlign='left'/>
         </ColumnsDirective>
       </GridComponent>
     </div>
     
-    </div>
+  </div>
   )
 }
 
-export default Unites
+export default PuitsAdmin
