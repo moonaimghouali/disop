@@ -1,18 +1,33 @@
-import React from 'react'
+import React,{useState, useEffect} from 'react'
 import { PageHeader } from '../../components'
+import {RegionsForm} from'./Forms'
 import { ColumnDirective, ColumnsDirective, Filter, GridComponent, Group } from '@syncfusion/ej2-react-grids';
 import { Inject, Page, Sort } from '@syncfusion/ej2-react-grids';
 import { IoMdAddCircleOutline} from 'react-icons/io'
 import { MdDelete, MdEdit} from 'react-icons/md'
+import * as api from '../../api/adminApi'
 
 import {regions} from '../../data/regionsData'
 
 
 const Regions = () => {
+  
+  const[update, setUpdate] = useState(false)
+  const[form, setForm] = useState(false)
+  const[data, setData] = useState([])
+
+  useEffect(()=>{
+    const fn = async() => {
+      let response = await api.fetchRegions()
+      setData(response)
+    }
+    fn()
+  },[])
 
   const temp =  (props) => {
     let handleModif = () =>{
-
+      setUpdate(true)
+      setForm(true)
     } 
     let handleDelete = () =>{
 
@@ -29,9 +44,11 @@ const Regions = () => {
     </div>
     )};
 
-  const handleClick = () =>{
-    alert("working")
-  }
+    const handleClick = () =>{
+      // alert("working")
+      setUpdate(false)
+      setForm(true)
+    }
   
   return (
   <div className="flex flex-col h-screen w-screen bg-gray-100 px-8 py-8">
@@ -46,7 +63,7 @@ const Regions = () => {
         </button>
       </div>
 
-      <GridComponent height={"100%"} dataSource={regions} allowPaging={true}  allowSorting={true} pageSettings={{pageSize:8}} >
+      <GridComponent height={"100%"} dataSource={data} allowPaging={true}  allowSorting={true} pageSettings={{pageSize:8}} >
         <Inject services={[Page, Sort, Filter, Group]}/>
 
         <ColumnsDirective>
@@ -59,6 +76,8 @@ const Regions = () => {
         
       </GridComponent>
     </div>
+
+    {form && (<RegionsForm setForm={setForm} update={update}/>)}
     
   </div>
   )

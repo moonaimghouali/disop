@@ -1,15 +1,25 @@
 import React, {useState, useEffect} from 'react'
 import { PageHeader } from '../../components'
 import {UtilisateurForm} from'./Forms'
-import { ColumnDirective, ColumnsDirective, Filter, GridComponent, Group } from '@syncfusion/ej2-react-grids';
+import { ColumnDirective, ColumnsDirective, Filter, GridComponent, Group, ExcelExport } from '@syncfusion/ej2-react-grids';
 import { Inject, Page, Sort } from '@syncfusion/ej2-react-grids';
 import {utilisateurs} from '../../data/utilisateursData';
 import { IoMdAddCircleOutline} from 'react-icons/io'
 import { MdDelete, MdEdit} from 'react-icons/md'
+import * as api from '../../api/adminApi'
 
 const Utilisateurs = () => {
   const[update, setUpdate] = useState(false)
   const[form, setForm] = useState(false)
+  const[data, setData] = useState([])
+
+  useEffect(()=>{
+    const fn = async() => {
+      let response = await api.fetchUtilisateurs()
+      setData(response)
+    }
+    fn()
+  },[])
 
 
   const temp =  (props) => {
@@ -20,7 +30,7 @@ const Utilisateurs = () => {
       setForm(true)
     } 
     let handleDelete = () =>{
-
+      
     } 
     
     return (
@@ -35,7 +45,6 @@ const Utilisateurs = () => {
     )};
 
   const handleClick = () =>{
-    // alert("working")
     setUpdate(false)
     setForm(true)
   }
@@ -52,8 +61,9 @@ const Utilisateurs = () => {
           </button>
       </div>
 
-        <GridComponent height={"100%"} dataSource={utilisateurs} allowPaging={true}  allowSorting={true} pageSettings={{pageSize:8}} >
-          <Inject services={[Page, Sort, Filter, Group]}/>
+        <GridComponent height={"100%"} dataSource={data} allowPaging={true}  allowSorting={true} allowFiltering={true} allowExcelExport={true}
+        pageSettings={{pageSize:8}} >
+          <Inject services={[Page, Sort, Filter, Group, ExcelExport]}/>
 
         <ColumnsDirective>
         <ColumnDirective field='id' headerText='Id'  textAlign='left'/>
@@ -66,7 +76,7 @@ const Utilisateurs = () => {
         </GridComponent>
     </div>
 
-    {form && (<UtilisateurForm setForm={setForm}/>)}
+    {form && (<UtilisateurForm setForm={setForm} update={update}/>)}
 
   </div>
   )

@@ -10,10 +10,12 @@ const Dashboard = () => {
   const [evolutionData, setEvolutionData] = useState([])
 
   useEffect(()=>{
-    console.log(dbMenu);
+    
     const fn = async () =>{
+      console.log(dbMenu);
       if (dbMenu.entite === -1 && dbMenu.journalier) {
         let response = await api.fetchDpDailyData(new Date(dbMenu.date).toISOString().split("T")[0])
+        console.log("res", response);
         setProductionData(response)
         response = await api.fetchDpDailyEvolutionData(new Date(dbMenu.date).toISOString().split("T")[0])
         setEvolutionData(response)

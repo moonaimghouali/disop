@@ -1,18 +1,33 @@
-import React from 'react'
+import React,{useState, useEffect} from 'react'
 import { PageHeader } from '../../components'
-import { ColumnDirective, ColumnsDirective, Filter, GridComponent, Group } from '@syncfusion/ej2-react-grids';
+import {PuitsForm} from'./Forms'
+import { ColumnDirective, ColumnsDirective, Filter, GridComponent, Group, Toolbar , ExcelExport } from '@syncfusion/ej2-react-grids';
 import { Inject, Page, Sort } from '@syncfusion/ej2-react-grids';
 import { IoMdAddCircleOutline} from 'react-icons/io'
 import { MdDelete, MdEdit} from 'react-icons/md'
 import {regions} from '../../data/regionsData'
+import * as api from '../../api/adminApi'
 
 const PuitsAdmin = () => {
 
+  const[update, setUpdate] = useState(false)
+  const[form, setForm] = useState(false)
+  const[data, setData] = useState([])
+
+  useEffect(()=>{
+    const fn = async() => {
+      let response = await api.fetchPuits()
+      setData(response)
+      console.log("puits", response);
+    }
+    fn()
+  },[])
 
   const temp =  (props) => {
     
     let handleModif = () =>{
-
+      setUpdate(true)
+      setForm(true)
     } 
     let handleDelete = () =>{
 
@@ -30,9 +45,19 @@ const PuitsAdmin = () => {
     )};
 
     const handleClick = () =>{
-        alert("working")
-      }
+      // alert("working")
+      setUpdate(false)
+      setForm(true)
+    }
       
+    let grid;
+    const toolbar = ['ExcelExport'];
+    const toolbarClick = (args) => {
+        if (grid && args.item.id === 'grid_excelexport') {
+            grid.excelExport();
+        }
+    };
+
   return (
     <div className="flex flex-col h-screen w-screen bg-gray-100 px-8 py-8">
       <PageHeader className="mb-10" subTitle="Gestion des" pageName="Puits"/>  
@@ -45,18 +70,22 @@ const PuitsAdmin = () => {
         </button>
       </div>
 
-      <GridComponent height={"100%"} dataSource={regions} allowPaging={true}  allowSorting={true} pageSettings={{pageSize:8}} >
-        <Inject services={[Page, Sort, Filter, Group]}/>
+      <GridComponent id="grid" height={"100%"} dataSource={data} allowPaging={true}  allowSorting={true} allowFiltering={true}
+      pageSettings={{pageSize:8}} toolbar={toolbar} allowExcelExport={true} toolbarClick={toolbarClick} ref={g => grid = g}>
+        <Inject services={[Page, Sort, Filter, Group, Toolbar, ExcelExport]}/>
 
         <ColumnsDirective>
         <ColumnDirective field='id' headerText='Id' textAlign='left'/>
-        <ColumnDirective field='code' headerText='Code' textAlign='left'/>
+        <ColumnDirective field='code_puits' headerText='Code' textAlign='left'/>
+        <ColumnDirective field='type_puits' headerText='Code' textAlign='left'/>
         <ColumnDirective field='nom_perimetre' headerText='Perimetre' textAlign='left'/>
         <ColumnDirective field='nom_region' headerText='Region' textAlign='left'/>
         <ColumnDirective field='modify' headerText='Config' template={temp} width="90" textAlign='left'/>
         </ColumnsDirective>
       </GridComponent>
     </div>
+
+    {form && (<PuitsForm setForm={setForm} update={update}/>)}
     
   </div>
   )

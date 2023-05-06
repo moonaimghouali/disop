@@ -1,22 +1,38 @@
-import React from 'react'
+import React,{useState, useEffect} from 'react'
 import { PageHeader } from '../../components'
+import {UniteForm} from'./Forms'
 import { ColumnDirective, ColumnsDirective, Filter, GridComponent, Group } from '@syncfusion/ej2-react-grids';
 import { Inject, Page, Sort } from '@syncfusion/ej2-react-grids';
 import {unites} from '../../data/unitesData'
 import { IoMdAddCircleOutline} from 'react-icons/io'
 import { MdDelete, MdEdit} from 'react-icons/md'
+import * as api from '../../api/adminApi'
 
 const Unites = () => {
 
+  const[update, setUpdate] = useState(false)
+  const[form, setForm] = useState(false)
+  const[data, setData] = useState([])
+
+  useEffect(()=>{
+    const fn = async() => {
+      let response = await api.fetchUnites()
+      setData(response)
+    }
+    fn()
+  },[])
+
   const temp =  (props) => {
     let handleModif = () =>{
+      setUpdate(true)
+      setForm(true)
 
     } 
     let handleDelete = () =>{
 
     } 
     
-    return (
+  return (
     <div className='flex flex-row items-center justify-center gap-2'>
         <button onClick={handleModif} className='h-8 w-8 rounded-md shadow hover:shadow-md flex flex-row items-center justify-center bg-amber-500 hover:bg-amber-600 transition-all ease-in-out duration-150'> 
         <MdEdit size={13}  color='#fff'/> 
@@ -28,7 +44,9 @@ const Unites = () => {
     )};
 
   const handleClick = () =>{
-    alert("working")
+    // alert("working")
+    setUpdate(false)
+    setForm(true)
   }
 
   return (
@@ -44,7 +62,8 @@ const Unites = () => {
           </button>
         </div>
         
-      <GridComponent  height={"100%"} dataSource={unites} allowPaging={true}  allowSorting={true} pageSettings={{pageSize:8}} >
+      <GridComponent  height={"100%"} dataSource={data} allowPaging={true}  allowSorting={true} allowFiltering={true}
+      pageSettings={{pageSize:8}} >
         <Inject services={[Page, Sort, Filter, Group]}/>
 
         <ColumnsDirective>
@@ -55,7 +74,9 @@ const Unites = () => {
         <ColumnDirective field='modify' headerText='Config' template={temp} width="90" textAlign='left'/>
         </ColumnsDirective>
       </GridComponent>
-    </div>
+      </div>
+
+      {form && (<UniteForm setForm={setForm} update={update}/>)}
     
     </div>
   )

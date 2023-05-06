@@ -1,16 +1,31 @@
-import React from 'react'
+import React,{useState, useEffect} from 'react'
 import { PageHeader } from '../../components'
+import {PerimetreForm} from'./Forms'
 import { ColumnDirective, ColumnsDirective, Filter, GridComponent, Group } from '@syncfusion/ej2-react-grids';
 import { Inject, Page, Sort } from '@syncfusion/ej2-react-grids';
 import { IoMdAddCircleOutline} from 'react-icons/io'
 import { MdDelete, MdEdit} from 'react-icons/md'
 import {perimetres} from '../../data/perimetresData'
+import * as api from '../../api/adminApi'
 
 const Perimetres = () => {
 
+  const[update, setUpdate] = useState(false)
+  const[form, setForm] = useState(false)
+  const[data, setData] = useState([])
+
+  useEffect(()=>{
+    const fn = async() => {
+      let response = await api.fetchPerimetres()
+      setData(response)
+    }
+    fn()
+  },[])
+
   const temp =  (props) => {
     let handleModif = () =>{
-
+      setUpdate(true)
+      setForm(true)
     } 
     let handleDelete = () =>{
 
@@ -27,9 +42,11 @@ const Perimetres = () => {
     </div>
     )};
 
-  const handleClick = () =>{
-    alert("working")
-  }
+    const handleClick = () =>{
+      // alert("working")
+      setUpdate(false)
+      setForm(true)
+    }
 
   return (
   <div className="flex flex-col h-screen w-screen bg-gray-100 px-8 py-8">
@@ -44,7 +61,8 @@ const Perimetres = () => {
           </button>
         </div>
 
-      <GridComponent dataSource={perimetres} allowPaging={true}  allowSorting={true} pageSettings={{pageSize:8}} height={"100%"}>
+      <GridComponent dataSource={data} allowPaging={true}  allowSorting={true} allowFiltering={true} 
+      pageSettings={{pageSize:8}} height={"100%"}>
         <Inject services={[Page, Sort, Filter, Group]}/>
 
         <ColumnsDirective>
@@ -56,6 +74,8 @@ const Perimetres = () => {
         </ColumnsDirective>
       </GridComponent>
     </div>
+
+    {form && (<PerimetreForm setForm={setForm} update={update}/>)}
     
   </div>
   )

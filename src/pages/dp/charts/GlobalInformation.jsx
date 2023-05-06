@@ -37,13 +37,13 @@ const GlobalInformation = ({data}) => {
 
         <div className='h-full w-full grid grid-rows-3 grid-cols-3 gap-1 mt-3'>
             <Item name={"Production"} value={1000} color="orange"/>
-            <Item name={"Ecart"} value={1000} color="red"/>
+            <Item name={"Taux"} value={1000} color="red"/>
             <Item name={"Prevision"} value={1000} color="blue"/>
             <Item name={"Real Mois"} value={1000} color="teal"/>
-            <Item name={"Ecart"} value={1000} color="red"/>
+            <Item name={"Taux"} value={1000} color="red"/>
             <Item name={"Prevision"} value={1000} color="blue"/>
             <Item name={"Real Annee"} value={1000} color="violet"/>
-            <Item name={"Ecart"} value={1000} color="red"/>
+            <Item name={"Taux"} value={1000} color="red"/>
             <Item name={"Prevision"} value={1000} color="blue"/>
         </div>
         
