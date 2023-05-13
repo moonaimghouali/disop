@@ -59,3 +59,7 @@
   background: linear-gradient(0.30turn, #663300, #8b4400, #663300, #401f00, #1a0c00);
   transition: height 0.5s ease;
 }
+
+th, td{
+  text-align: center;
+}

@@ -1,0 +1,49 @@
+
+
+{
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "title": "HMD IRARA",
+          "description": "SHDP Irara Base de vie"
+        },
+        "geometry": {
+          "coordinates": [
+            6.148269908808146,
+            31.664895684688773
+          ],
+          "type": "Point"
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "title": "HMD B24",
+          "description": "SHDP B24 Base de vie"
+        },
+        "geometry": {
+          "coordinates": [
+            6.044506198059906,
+            31.737780650882712
+          ],
+          "type": "Point"
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "title": "DP Hydra",
+          "description": "Huydra"
+        },
+        "geometry": {
+          "coordinates": [
+            3.0291274143733915,
+            36.74944632173056
+          ],
+          "type": "Point"
+        }
+      }
+    ]
+  }

@@ -3,9 +3,9 @@ import { PopupBG } from '../../../components'
 
 const PuitsForm = ({setForm, update}) => {
   
-  const handleAnnulment = () => {
-   
-    alert("Annuler")
+  const handleAnnulment = (e) => {
+    e.preventDefault()
+    setForm(false)
   }
   
   const handleSubmit = (e) => {

@@ -4,7 +4,7 @@ const GlobalInformation = ({data}) => {
     const [dpData, SetDpData] = useState([])
 
     useEffect(()=>{
-    console.log("prod", data);
+    // console.log("prod", data);
     let arr=[0,0,0,0,0,0]
     data.map((reg)=>{
         arr[0] += reg.production
@@ -15,8 +15,8 @@ const GlobalInformation = ({data}) => {
         arr[5] += reg.real_expedition
     })
     SetDpData(arr)
-    console.log("arra", arr);
-    },[])
+    // console.log("arra", arr);
+    },[data])
 
     const Item = ({name, value, color})=>{
         let style = `text-base font-semibold text-${color}-700`
@@ -36,9 +36,9 @@ const GlobalInformation = ({data}) => {
         {/* <div className='text-base font-semibold text-gray-400'>{"12-10-2024"}</div> */}
 
         <div className='h-full w-full grid grid-rows-3 grid-cols-3 gap-1 mt-3'>
-            <Item name={"Production"} value={1000} color="orange"/>
-            <Item name={"Taux"} value={1000} color="red"/>
-            <Item name={"Prevision"} value={1000} color="blue"/>
+            <Item name={"Production"} value={dpData[0]} color="orange"/>
+            <Item name={"Taux"} value={(dpData[0]/dpData[1]).toFixed(3)} color="red"/>
+            <Item name={"Prevision"} value={dpData[1]} color="blue"/>
             <Item name={"Real Mois"} value={1000} color="teal"/>
             <Item name={"Taux"} value={1000} color="red"/>
             <Item name={"Prevision"} value={1000} color="blue"/>

@@ -1,0 +1,50 @@
+.rectangle-container {
+    position: relative;
+    
+  }
+  .map-buttons {
+    position: absolute;
+    z-index: 1;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+  }
+  
+  .map-buttons button {
+    margin: 0 10px;
+  }
+  
+  .map-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  
+  
+  
+  .sidebarStyle {
+    display: inline-block;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 5px;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #ffffff;
+    z-index: 1 !important;
+    padding: 5px;
+    font-weight: bold;
+  }
+
+  .menu {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 5px;
+    z-index: 1 !important;
+    
+  }

@@ -7,7 +7,7 @@ const RouteRegion= `${serverUrl}/api/regions`
 
 // ////////////////////////////////////////////////////////////////////////////////////////////////
 // Region Production
-export const fetchRegionProduction = createAsyncThunk("production/fetchRegionProduction", (RegionId) =>  {
+export const fetchRegionProduction = createAsyncThunk("production/fetchRegionProduction", ({RegionId, month}) =>  {
     try {
         return axios.get(`${RouteRegion}/${RegionId}/productionData`).then((response) => response.data.data)
     } catch (error) {
@@ -102,6 +102,22 @@ export const postUnitesRealisation = async (UniteProduction) =>{
         }
         console.log(body);
         const response = (await axios.post(`${RouteUnite}/${UniteProduction.id}/realisationData`, body))
+        return response
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+// ////////////////////////////////////////////////////////////////////////////////////////////////
+// Perimetres
+
+// ////////////////////////////////////////////////////////////////////////////////////////////////
+// Previsions
+
+export const fetchPrevisions = async (RegionId, year, perimetres)  =>{
+    try {
+        const response = (await axios.get(`${RouteRegion}/${RegionId}/previsionData?year=${year}&p=${perimetres}`))
         return response
     } catch (error) {
         console.log(error);

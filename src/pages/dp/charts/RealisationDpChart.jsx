@@ -1,11 +1,11 @@
 import React from 'react'
 import { ChartComponent, SeriesCollectionDirective, SeriesDirective, LineSeries,   Inject, Tooltip, ColumnSeries,  Category, Legend, DataLabel } from '@syncfusion/ej2-react-charts'
-import {productionData} from "../../../data/chartsData"
+import {DpData} from "../../../data/chartsData"
 
-const EvolutionProduction = ({data}) => {
-    return (
-      <div className='w-full h-full flex flex-col px-2 py-1'>
-      <div className='text-lg font-semibold w-full text-center'>Evolution Production</div>
+const RealisationDpChart = () => {
+  return (
+    <div className='w-full h-full flex flex-col px-2 py-1'>
+      <div className='text-lg font-semibold w-full text-center'>Realisations Production</div>
     
       <ChartComponent
       primaryXAxis={{valueType:"Category", labelFormat:"{category}" , labelPlacement:"OnTicks", edgeLabelPlacement:"Shift", labelIntersectAction:"MultipleRows"}}
@@ -16,18 +16,18 @@ const EvolutionProduction = ({data}) => {
         <Inject services={[LineSeries, Category, Tooltip, Legend, DataLabel ]}></Inject>
 
         <SeriesCollectionDirective>
-          <SeriesDirective type="Line" drawType="Line" name="Production" dataSource={data} 
-          xName="journee" yName="production_dp" marker={{dataLabel :{visible:true} , visible:true}} ></SeriesDirective>
+          <SeriesDirective type="Line" drawType="Line" name="Production" dataSource={DpData} 
+          xName="mois" yName="production_dp" marker={{dataLabel :{visible:true} , visible:true}} ></SeriesDirective>
 
-          <SeriesDirective type="Line" drawType="Line" name="Expedition" dataSource={data} 
-          xName="journee" yName="expedition_dp" marker={{dataLabel :{visible:true}, visible:true}} ></SeriesDirective>
+          <SeriesDirective type="Line" drawType="Line" name="Prevision" dataSource={DpData} 
+          xName="mois" yName="prevision_dp" marker={{dataLabel :{visible:true}, visible:true}} ></SeriesDirective>
 
         </SeriesCollectionDirective>
 
       </ChartComponent>
 
     </div>
-    )
+  )
 }
 
-export default EvolutionProduction
+export default RealisationDpChart

@@ -3,9 +3,10 @@ import { PopupBG } from '../../../components'
 
 const RegionsForm = ({setForm, update}) => {
 
-  const handleAnnulment = () => {
-   
-    alert("Annuler")
+  const handleAnnulment = (e) => {
+    e.preventDefault()
+    setForm(false)
+    // alert("Annuler")
   }
   
   const handleSubmit = (e) => {
@@ -30,13 +31,15 @@ const RegionsForm = ({setForm, update}) => {
           
             <div className='col-span-2 font-semibold'>Code region </div>            
             <input className="col-span-8 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='___' type="text"
-            required id="heure_de_marche" name='heure_de_marche' />
+            required id="code_region" name='code_region' />
 
             <div className='col-span-2 font-semibold'>Nom region </div>            
             <input className="col-span-8 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='________' type="text"
-            required id="heure_de_marche" name='heure_de_marche' />
+            required id="nom_region" name='nom_region' />
 
             <div className='col-span-2 font-semibold'>* Coordonnees geographiques</div>            
+            <textarea className="col-span-8 border-1 border-gray-400  pl-2 ml-2 "
+            name="coordonnees" id="coordonnees" cols="30" rows="8" placeholder='lat1,long1;lat2,long2;lati,longi;'></textarea>
             
           </div>
 

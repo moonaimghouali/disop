@@ -1,18 +1,29 @@
-import React from 'react'
+import React,{useState, useEffect} from 'react'
 import { PopupBG } from '../../../components'
 import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns'
+import {fetchRegions} from '../../../api/dpApi'
 
 const UniteForm = ({setForm, update}) => {
+  const[regions, setRegions] = useState([])
+  const regionsFields = {text : "nom_region" , value :"id" }
 
-  const handleAnnulment = () => {
-   
-    alert("Annuler")
+  const handleAnnulment = (e) => {
+    e.preventDefault()
+    setForm(false)
   }
   
   const handleSubmit = (e) => {
     e.preventDefault()
     alert("submitted")
   }
+
+  useEffect(()=>{
+    const fn = async()=>{
+      let response = await fetchRegions()
+      setRegions(response)
+    }
+    fn()
+  },[])
 
   return (
   <PopupBG setShow={setForm}>
@@ -38,11 +49,17 @@ const UniteForm = ({setForm, update}) => {
             required id="heure_de_marche" name='heure_de_marche' />
 
             <div className='col-span-2 font-semibold'>Region </div>    
-            <div className='col-span-8'><DropDownListComponent  id="Region" placeholder={"Regions"} ></DropDownListComponent></div>
+            <div className='col-span-8 pl-2'><DropDownListComponent dataSource={regions} fields={regionsFields} id="Region" placeholder={"Regions"} ></DropDownListComponent></div>
                     
             
 
-            <div className='col-span-2 font-semibold'>* Coordonnees geographiques</div>            
+            <div className='col-span-2 font-semibold'>* Coordonnees geographiques</div> 
+            <div className='w-full flex flex-row '>
+              <input className="col-span-8 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='latitude' type="number"
+              required id="heure_de_marche" name='heure_de_marche' />
+              <input className="col-span-8 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='longtitude' type="number"
+              required id="heure_de_marche" name='heure_de_marche' />
+            </div>
             
           </div>
 

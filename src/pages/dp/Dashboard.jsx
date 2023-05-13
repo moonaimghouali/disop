@@ -1,29 +1,23 @@
 import React, { useState, useEffect } from 'react'
-import PageHeader from '../../components/PageHeader'
+import {PageHeader, NoData} from '../../components'
 import ControlMenu from './components/ControlMenu'
 import {GlobalInformation, ContributionChart, ProductionRegionChart, Kpi, ExpeditionRegionChart, EvolutionProduction } from './charts'
+import { DpJ, DpM, RegJ, RegM} from './tdb'
 import * as api from '../../api/dpApi'
 
+
 const Dashboard = () => {
-  const [dbMenu, setDbMenu] = useState({entite : -1, journalier : true , date : new Date(new Date()- 86400000) })
-  const [productionData, setProductionData] = useState([])
-  const [evolutionData, setEvolutionData] = useState([])
+  const [dbMenu, setDbMenu] = useState({entite : -1, journalier : true , date : new Date(new Date()- 86400000) }) 
+  const [error, setError] = useState(false) 
+
 
   useEffect(()=>{
-    
-    const fn = async () =>{
-      console.log(dbMenu);
-      if (dbMenu.entite === -1 && dbMenu.journalier) {
-        let response = await api.fetchDpDailyData(new Date(dbMenu.date).toISOString().split("T")[0])
-        console.log("res", response);
-        setProductionData(response)
-        response = await api.fetchDpDailyEvolutionData(new Date(dbMenu.date).toISOString().split("T")[0])
-        setEvolutionData(response)
-      }
-    }
 
-    fn()
-    console.log("dashboard",productionData);
+      if(dbMenu.date >= new Date()) {
+        setError(true) 
+        return
+      }else { setError(false) }
+    
   },[dbMenu.entite, dbMenu.journalier, dbMenu.date])
 
 
@@ -33,29 +27,18 @@ const Dashboard = () => {
       <ControlMenu setDbMenu={setDbMenu} dbMenu={dbMenu}/>
       
       <div className=' grid grid-rows-6 grid-cols-12 gap-2 w-full h-full rounded' >
-        
-        <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4 '> 
-          <GlobalInformation dbMenu={dbMenu} data={productionData}/>
-        </div>
-
-        <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4'> 
-          <ContributionChart data={productionData}/> 
-        </div>
-
-        <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4'> 
-          <Kpi /> 
-        </div>
-
-        <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-6 '> 
-          <ProductionRegionChart data={productionData}/> 
-        </div>
-        
-        <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-6 '> 
-          <EvolutionProduction data={evolutionData}/>
-        </div>
       
+        { error ? 
+        (<div className='col-span-12 row-span-6'><NoData/></div>) : 
+        (<>
+        {(dbMenu.entite ===-1 && dbMenu.journalier) && (<DpJ dbMenu={dbMenu} setError={setError} />)}
+        {(dbMenu.entite ===-1 && !dbMenu.journalier) && (<DpM dbMenu={dbMenu}  />)}
+        {(dbMenu.entite !==-1 && dbMenu.journalier) && (<RegJ dbMenu={dbMenu}  />)}
+        {(dbMenu.entite !==-1 && !dbMenu.journalier) && (<RegM dbMenu={dbMenu} />)}
+        </>)
+        }
+        
       </div>
-
     </div>
   )
 }

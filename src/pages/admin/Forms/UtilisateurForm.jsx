@@ -1,8 +1,29 @@
-import React from 'react'
+import React,{useState, useEffect} from 'react'
 import { PopupBG } from '../../../components'
 import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns'
 
 const UtilisateurForm = ({setForm, update}) => {
+  const[roles, setRoles] = useState([
+    {title: "Manager DP", role : "Manager"}, {title: "Responsable Regional", role : "Resp_Region"}, {title: "Direction XP", role : "Xp"},
+    {title: "Direction EP", role : "Ep"}, {title: "Responsable Unite", role : "Resp_Unite"}, {title: "Bureau Controle Unite", role : "Unite_Controle"},
+  ])
+  const rolesFields = {text : "title" , value :"role" }
+  
+  const [role, setRole] = useState(null)
+
+  const [affectation, setAffectation] = useState([])
+
+  useEffect(()=>{
+    const fn = async()=>{
+      if (role === "Resp_Region" || role === "Xp" || role === "Ep") {
+        
+      }else if(role === "Resp_Unite" || role === "Unite_Controle"){
+        // let response = fetch() 
+        // setAffectation(response)
+      }
+    }
+    fn()
+  },[role])
 
   const handleAnnulment = () => {
    
@@ -39,11 +60,17 @@ const UtilisateurForm = ({setForm, update}) => {
             required id="heure_de_marche" name='heure_de_marche' />
 
             <div className='col-span-2 font-semibold'>Role </div>
-            <div className='col-span-8'><DropDownListComponent  id="Role" placeholder={"Roles"} ></DropDownListComponent></div>     
+            <div className='col-span-8 pl-2'><DropDownListComponent onChange={e=> setRole(e.value)} dataSource={roles} fields={rolesFields} id="Role" placeholder={"Roles"} ></DropDownListComponent></div>     
             
-            <div className='col-span-2 font-semibold'>Affectation </div>            
-            <div className='col-span-8'><DropDownListComponent  id="Affectation" placeholder={"Affectations"} ></DropDownListComponent></div>     
-                        
+            <div className='col-span-2 font-semibold'>Region </div>            
+            <div className='col-span-8 pl-2'><DropDownListComponent  id="Affectation" placeholder={"Affectations"} ></DropDownListComponent></div>     
+
+            {(role === "Resp_Unite" || role == "Unite_Controle") && (
+              <>
+              <div className='col-span-2 font-semibold'>Unite </div>            
+              <div className='col-span-8 pl-2'><DropDownListComponent  id="Affectation" placeholder={"Affectations"} ></DropDownListComponent></div>       
+              </>
+            )}  
           </div>
 
           <div className='flex-1'></div>

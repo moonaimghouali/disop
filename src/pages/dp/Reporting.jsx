@@ -1,22 +1,29 @@
 import React,{useEffect, useState} from 'react'
 import PageHeader from '../../components/PageHeader'
+import { formatBilanJournalier }from '../../utils/Reports'
 import { Rapport} from './components'
 import {RapportMenu} from './components'
 import {Spe, Mem, BilanJournalier } from './reports';
 import * as api from '../../api/dpApi'
 
+
 const Reporting = () => {
+
   const [rapport, setRapport] = useState({rapport : 0 , date: new Date(new Date()- 86400000)})
   const [production, setProduction] = useState([])
 
   useEffect(()=>{
+
     const fetcData = async ()=>{
+      
       if (rapport.rapport === 0) {
         setProduction([])
         let journee = new Date(rapport.date).toISOString().split("T")[0]
         let response = await api.fetchBilanJournalier(journee)
         if (response.data.success) {
-          setProduction(response.data.res)
+          let res = formatBilanJournalier(response.data.data)
+          console.log("aas", response.data.data, res);
+          setProduction(res)
         }
       }
       if (rapport.rapport === 1) {

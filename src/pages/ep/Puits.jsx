@@ -36,7 +36,6 @@ const Puits = () => {
       let response = await api.fetchPuits(perimetre)
       if(response.length >0) setPuitsData(response)
     }
-
     fn()
   },[perimetre])
 

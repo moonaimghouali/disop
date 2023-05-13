@@ -40,10 +40,10 @@ const Kpi = () => {
         {/* second Page */}
         {toggle && (
         <div className='h-full w-full grid grid-rows-2 grid-cols-2 gap-1 mt-3'>
-            <Item name="Evolution production2" value="" color={""}/>
-            <Item name="Production moyenne2" value="" color={""}/>
-            <Item name="Plus performante2" value="" color={""}/>
-            <Item name="Moins performante2" value="" color={""}/>
+            <Item name="kpi5" value="" color={""}/>
+            <Item name="kpi6" value="" color={""}/>
+            <Item name="kpi7" value="" color={""}/>
+            <Item name="kpi8" value="" color={""}/>
         </div>
         )}
         <div onClick={handleClick} className='w-full flex flex-row justify-center gap-2 pt-2 items-center hover:cursor-pointer'>

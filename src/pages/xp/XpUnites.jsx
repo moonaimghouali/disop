@@ -39,14 +39,11 @@ const XpUnites = () => {
       <div className='mt-4 w-full h-full flex flex-col gap-4'>
         <MenuDate />
 
-        <div className='w-full h-full flex flex-row'>
           <UniteProductionData productionData= {production} setShowRegion={setShowRegion} setShowUnite={setShowUnite} />
           {showRegion && (<PopupBG setShow={setShowRegion}> <RegionBilan setShowRegion={setShowRegion}/> </PopupBG>)}
           {showUnite && (<PopupBG setShow={setShowUnite}> <UniteBilan setShowUnite={setShowUnite}/> </PopupBG>)}
-          
-        </div>
+      
       </div>
-
     </div>
   )
 }

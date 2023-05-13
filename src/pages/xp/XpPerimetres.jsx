@@ -1,6 +1,6 @@
 import React from 'react'
 import {PageHeader} from '../../components'
-import { MenuDate } from './components'
+import { MenuDate, PerimetreProductionData } from './components'
 
 const XpPerimetres = () => {
   return (
@@ -8,11 +8,9 @@ const XpPerimetres = () => {
     <PageHeader subTitle="Production par" pageName="Perimetres"/>
 
     <div className='mt-4 w-full h-full flex flex-col gap-4'>
-        <MenuDate />
+      <MenuDate />
+      <PerimetreProductionData/>
 
-      <div className='grid grid-cols-12 gap-4 w-full h-full'>
-
-      </div>
     </div>
   </div> 
   )
