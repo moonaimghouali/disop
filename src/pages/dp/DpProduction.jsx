@@ -12,15 +12,21 @@ const DpProduction = () => {
   // const menuDateDp = useSelector((state)=>state.menus.menuDateDp)
 
   useEffect(()=>{
-    //  const fetchData = async ()=>{
-    //   let repsonse = await api.fetchProductionRegionByUnites()
-    //   console.log(repsonse);
-    //   setProduction(repsonse)
-    // }
-    // fetchData()
-    console.log("prod",menuProd);
+     const fetchData = async ()=>{
+      if (menuProd.journalier) {
+        let journee = new Date(menuProd.date).toISOString().split("T")[0]
+        console.log(journee);
+        let repsonse = await api.fetchDailyProduction(journee)
+        setProduction(repsonse.res)
+        console.log(repsonse);
+      }else{
+        console.log(menuProd.date);
+        // endOfMonth = ne
+      }  
+    }
 
-  },[menuProd.date])
+    fetchData()
+  },[menuProd.journalier, menuProd.date])
 
   return (
     <div className="flex flex-col h-screen w-screen bg-gray-100 px-8 py-8">

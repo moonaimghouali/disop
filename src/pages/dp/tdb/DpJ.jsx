@@ -1,46 +1,55 @@
 import React, {useState, useEffect} from 'react'
-import {GlobalInformation, ContributionChart, ProductionRegionChart, Kpi, ExpeditionRegionChart, EvolutionProduction } from '../charts'
 import * as api from '../../../api/dpApi'
+import {GlobalInformation, ChartProduction, ChartContribution, ChartEvolution } from '../charts'
+import { formatInfos } from './Utils'
 
 const DpJ = ({dbMenu, setError}) => {
-  const [data, setData] = useState([])
+
+  const [infos, setInfos] = useState([])
+  const [productionData, setProductionData] = useState([])
   const [evolutionData, setEvolutionData] = useState([])
 
   useEffect(()=>{
     const fn = async() =>{
-      let d1 = await api.fetchDpDailyData(new Date(dbMenu.date).toISOString().split("T")[0])
-      let d2 = await api.fetchDpDailyEvolutionData(new Date(dbMenu.date).toISOString().split("T")[0])
-      
-      if (d1.length ===0 && d2.length === 0) {
+      let res = await api.fetchDpDailyData(new Date(dbMenu.date).toISOString().split("T")[0])
+
+      console.log("daily data",res);
+      if (!res.success  || res.evolution.length === 0 || res.production.length === 0) {
         setError(true)
         return
       }
-      setData(d1)
-      setEvolutionData(d2)
+      setInfos(formatInfos(productionData))
+      setProductionData(res.production)
+      setEvolutionData(res.evolution)
     }
-    fn()
+    
+    fn()  
   },[dbMenu.date, dbMenu.journalier, dbMenu.entite])
 
   return (
     <>
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4 '> 
-        <GlobalInformation dbMenu={dbMenu} data={data}/>
+        <GlobalInformation dbMenu={dbMenu} data={infos}/>
       </div>
 
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4'> 
-        <ContributionChart data={data}/> 
+        {/* <ContributionChart data={data}/>  */}
+        < ChartContribution data={productionData} type={"Regions"}/>
       </div>
 
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4'> 
-        <Kpi /> 
+        {/* <Kpi />  */}
       </div>
       
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-6 '> 
-        <ProductionRegionChart data={data}/> 
+        {/* <ProductionRegionChart data={data}/>  */}
+        <ChartProduction data={productionData} type={"Regions"} />
+
       </div>
       
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-6 '> 
-        <EvolutionProduction data={evolutionData}/>
+        {/* <EvolutionProduction data={evolutionData}/> */}
+        < ChartEvolution data={evolutionData}/>
       </div>
     </>
   )

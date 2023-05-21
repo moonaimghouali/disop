@@ -12,6 +12,7 @@ const Previsions = () => {
   const [perimetres, setPerimetres] = useState([])
 
   useEffect(()=>{
+
       const fn = async () =>{
         let year = menu.date.getFullYear()
         let response = await api.fetchPrevisions(id, year, "yes") 
@@ -47,12 +48,12 @@ const Previsions = () => {
                 <tr className='h-10 border border-gray-200'>
                     <td>{p.code_perimetre}</td>
                   {p.Prevision_perimetres.map(prev=>(
-                    <td>{"1203.098"}</td>
+                    <td>{prev.prevision_production_perimetre_mensuelle}</td>
                   ))}
                 </tr>
               ))}
               {/* Region */}
-              <tr className='bg-orange-100 '><td>{nom}</td>{prevRegion.map(prev=>(<td className='font-semibold'>{prev.prevision_production_region_mensuelle}</td>))}</tr>
+              <tr className='bg-orange-100 font-semibold py-2'><td className='p-2'>{nom}</td>{prevRegion.map(prev=>(<td >{prev.prevision_production_region_mensuelle}</td>))}</tr>
             </table>
           )}
 

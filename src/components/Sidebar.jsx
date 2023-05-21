@@ -3,10 +3,11 @@ import logo from "../assets/images/logo-primary.png";
 import {AiOutlineUser} from "react-icons/ai"
 import {BiLogOut} from "react-icons/bi"
 import { NavLink } from 'react-router-dom';
-import {adminLinks, dpLinks, uniteLinks, EPLinks, XPLinks} from '../data/sideBarData'
+import {adminLinks, dpLinks, uniteLinks, labLinks,  EPLinks, XPLinks} from '../data/sideBarData'
 import { useSelector, useDispatch } from 'react-redux';
 import { Logout } from '../store/slices/userSlice'
 import { roles } from '../store/types/roles';
+import { SidebarHeader } from './SidebarHeader'
 
 const Sidebar = () => {
   const inActiveStyle = "flex flex-row items-center px-2 py-2 rounded hover:bg-gray-100"
@@ -18,6 +19,7 @@ const Sidebar = () => {
   if (user.userInfo.role === roles.Admin) Links = adminLinks;
   if (user.userInfo.role === roles.Manager) Links = dpLinks;
   if (user.userInfo.role === roles.Unite || user.userInfo.role === roles.RespUnite) Links = uniteLinks;
+  if (user.userInfo.role === roles.Lab ) Links = labLinks;
   if (user.userInfo.role === roles.EP) Links = EPLinks;
   if (user.userInfo.role === roles.XP) Links = XPLinks;
 

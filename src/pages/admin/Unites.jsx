@@ -67,10 +67,10 @@ const Unites = () => {
         <Inject services={[Page, Sort, Filter, Group]}/>
 
         <ColumnsDirective>
-        <ColumnDirective field='id' headerText='Id' textAlign='left'/>
+        <ColumnDirective field='id' headerText='Id' width="70" textAlign='left'/>
+        <ColumnDirective field='nom_region' headerText='Region' textAlign='left'/>
         <ColumnDirective field='code_unite' headerText='Code' textAlign='left'/>
         <ColumnDirective field='nom_unite' headerText='Nom' textAlign='left'/>
-        <ColumnDirective field='nom_region' headerText='Region' textAlign='left'/>
         <ColumnDirective field='modify' headerText='Config' template={temp} width="90" textAlign='left'/>
         </ColumnsDirective>
       </GridComponent>

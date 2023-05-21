@@ -5,5 +5,6 @@ export const roles = {
     EP : 'Ep', 
     RespRegion : 'Resp_Region', 
     RespUnite : 'Resp_Unite', 
-    Unite : 'Unite_Controle'
+    Unite : 'Unite_Controle',
+    Lab : 'Unite_Lab'
 }

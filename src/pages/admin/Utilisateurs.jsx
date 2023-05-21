@@ -66,7 +66,7 @@ const Utilisateurs = () => {
           <Inject services={[Page, Sort, Filter, Group, ExcelExport]}/>
 
         <ColumnsDirective>
-        <ColumnDirective field='id' headerText='Id'  textAlign='left'/>
+        <ColumnDirective field='id' headerText='Id' width="70" textAlign='left'/>
         <ColumnDirective field='nom' headerText='Nom' textAlign='left'/>
         <ColumnDirective field='prenom' headerText='Prenom' textAlign='left'/>
         <ColumnDirective field='email' headerText='E-mail' textAlign='left'/>

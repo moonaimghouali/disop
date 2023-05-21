@@ -26,7 +26,7 @@ const ControlMenu = ({dbMenu, setDbMenu}) => {
                 entites.push(entite)
             })
 
-            entites.unshift({ entite : "DIVISION PRODUCTION", id : -1 })
+            entites.unshift({ entite : "Division Production", id : -1 })
             setEntiteData(entites)
         }
         fn()

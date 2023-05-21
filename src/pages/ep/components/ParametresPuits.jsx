@@ -34,7 +34,7 @@ const ParametresPuits = ({puits}) => {
               </div>
               
               {!toggle && <FormPuits puits={puits} date={date}/>}
-              {toggle && <RealTimeData/>}
+              {/* {toggle && <RealTimeData/>} */}
               
             </div>
           )}

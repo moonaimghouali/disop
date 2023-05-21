@@ -3,18 +3,17 @@ import { AccumulationChartComponent, AccumulationSeriesCollectionDirective, Accu
 import { productionData } from '../../../data/chartsData';
 import { expeditionData } from '../../../data/chartsData';
 
-const ContributionChart = ({data}) => {
-
+const ChartContribution = ({data, type}) => {
   return (
     <div className='w-full h-full flex flex-col p-2'>
-      <div className='text-lg font-semibold w-full text-center'>Contribution Production</div>
+      <div className='text-lg font-semibold w-full text-center'>Contribution Production Par {type}</div>
 
         <AccumulationChartComponent id='pie-chart' tooltip={{ enable: true }}  >
             <Inject services={[AccumulationLegend, PieSeries,  AccumulationTooltip, AccumulationDataLabel]}/>
             
             <AccumulationSeriesCollectionDirective>
 
-              <AccumulationSeriesDirective type='Pie' dataSource={data} xName='code_region' yName='production'  
+              <AccumulationSeriesDirective type='Pie' dataSource={data} xName='code' yName='production'  
               dataLabel={{visible: true, position: 'Outside', name: 'production'}} radius='r'>
               </AccumulationSeriesDirective>
 
@@ -25,4 +24,4 @@ const ContributionChart = ({data}) => {
   )
 }
 
-export default ContributionChart
+export default ChartContribution

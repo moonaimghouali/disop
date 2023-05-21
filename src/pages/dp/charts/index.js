@@ -1,8 +1,7 @@
 export { default as GlobalInformation } from './GlobalInformation';
-export { default as ProductionRegionChart } from './ProductionRegionChart';
-export { default as ExpeditionRegionChart } from './ExpeditionRegionChart';
-export { default as ContributionChart } from './ContributionChart';
-export { default as EvolutionProduction } from './EvolutionProduction';
-export { default as RealisationDpChart } from './RealisationDpChart';
-export { default as RealisationDpCumuleesChart } from './RealisationDpCumuleesChart';
 export { default as Kpi } from './Kpi';
+export { default as ChartContribution } from './ChartContribution';
+export { default as ChartProduction } from './ChartProduction';
+export { default as ChartEvolution } from './ChartEvolution';
+export { default as ChartRealisation } from './ChartRealisation';
+export { default as ChartRealisationCumul } from './ChartRealisationCumul';

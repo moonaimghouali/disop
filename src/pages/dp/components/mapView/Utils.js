@@ -56,6 +56,12 @@ export const drawRegion = (map, regions, setShow) =>{
           "fill-opacity" : 0.60,
           'fill-outline-color': "#aaaaaa",
         },
+        // 'layout' : {
+        //   "text-field"  : ["get", "title"],
+        //   "text-font" : ["Open Sans Semibold"],
+        //   "text-offset" : [0, 1.25],
+        //   "text-anchor" : "top"
+        // }
       }); // add layer
 
         // Center the map on the coordinates of any clicked circle from the 'circle' layer.

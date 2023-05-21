@@ -22,19 +22,19 @@ const Dashboard = () => {
 
 
   return (
-    <div className="flex flex-col h-screen w-screen bg-gray-100 px-8 py-8">
-      <PageHeader pageName="Dashboard Production Global" />
+    <div className="flex flex-col h-screen w-screen bg-gray-100 px-8 pb-8 pt-4">
+      {/* <PageHeader pageName="Dashboard Production Global" /> */}
       <ControlMenu setDbMenu={setDbMenu} dbMenu={dbMenu}/>
       
-      <div className=' grid grid-rows-6 grid-cols-12 gap-2 w-full h-full rounded' >
+      <div className=' grid grid-rows-6 grid-cols-12 gap-3 w-full h-full rounded' >
       
         { error ? 
         (<div className='col-span-12 row-span-6'><NoData/></div>) : 
         (<>
         {(dbMenu.entite ===-1 && dbMenu.journalier) && (<DpJ dbMenu={dbMenu} setError={setError} />)}
-        {(dbMenu.entite ===-1 && !dbMenu.journalier) && (<DpM dbMenu={dbMenu}  />)}
-        {(dbMenu.entite !==-1 && dbMenu.journalier) && (<RegJ dbMenu={dbMenu}  />)}
-        {(dbMenu.entite !==-1 && !dbMenu.journalier) && (<RegM dbMenu={dbMenu} />)}
+        {(dbMenu.entite ===-1 && !dbMenu.journalier) && (<DpM dbMenu={dbMenu} setError={setError} />)}
+        {(dbMenu.entite !==-1 && dbMenu.journalier) && (<RegJ dbMenu={dbMenu}  setError={setError} />)}
+        {(dbMenu.entite !==-1 && !dbMenu.journalier) && (<RegM dbMenu={dbMenu} setError={setError} />)}
         </>)
         }
         

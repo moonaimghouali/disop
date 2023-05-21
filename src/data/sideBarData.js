@@ -2,10 +2,12 @@ import { FiUsers} from 'react-icons/fi'
 import { BsArrowLeftRight, BsPinMap } from 'react-icons/bs'
 import { GiOilPump} from 'react-icons/gi'
 import { TbBuildingFactory, TbReportAnalytics, TbBrandProducthunt} from 'react-icons/tb'
-import { MdOutlineModeComment, MdOutlineDashboard } from 'react-icons/md'
+import { MdOutlineModeComment, MdOutlineDashboard, MdOutlineShowChart } from 'react-icons/md'
 import { CgPerformance } from 'react-icons/cg'
 import { GoGraph } from 'react-icons/go'
 import { RiWaterFlashLine } from 'react-icons/ri'
+import { AiOutlineSetting } from 'react-icons/ai'
+import { SiGraph } from 'react-icons/si'
 
 
 
@@ -66,7 +68,38 @@ export const adminLinks = [
     },  
   ]
 
+  export const labLinks = [
+    {
+      name: 'Analyses',
+      path : "p/unite/lab/analyses",
+      icon: <RiWaterFlashLine size={18}/>,
+    },
+    {
+      name: 'Planning',
+      path : "p/unite/lab/planning",
+      icon: <BsArrowLeftRight size={18}/>,
+    },
+  ]
+
   export const uniteLinks = [
+    {
+      name: 'Mouvements',
+      path : "p/unite/mouvements",
+      icon: <BsArrowLeftRight size={18}/>,
+    },
+    {
+      name: 'Production',
+      path : "p/unite/production",
+      icon: <RiWaterFlashLine size={18}/>,
+    },
+    {
+      name: 'Stockage',
+      path : "p/unite/stock",
+      icon: <FiUsers size={18}/>,
+    },
+  ]
+
+  export const respUniteLinks = [
     {
       name: 'Mouvements',
       path : "p/unite/mouvements",
@@ -91,6 +124,11 @@ export const adminLinks = [
 
   export const EPLinks = [
     {
+      name: 'Monitoring',
+      path : "p/ep/puits-monitoring",
+      icon: <MdOutlineShowChart size={18}/>,
+    },
+    {
       name: 'Puits',
       path : "p/ep/puits",
       icon: <GiOilPump size={18}/>,
@@ -107,8 +145,8 @@ export const adminLinks = [
     },
     {
       name: 'Config. Puits',
-      path : "p/ep/config",
-      icon: <TbBrandProducthunt size={18}/>,
+      path : "p/ep/puits-config",
+      icon: <AiOutlineSetting size={18}/>,
     }
   ]
 

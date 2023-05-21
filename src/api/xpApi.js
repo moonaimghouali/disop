@@ -4,6 +4,7 @@ import axios from 'axios';
 const serverUrl = "http://localhost:5000"
 const RouteUnite= `${serverUrl}/api/unites`
 const RouteRegion= `${serverUrl}/api/regions`
+const RoutePerimetre= `${serverUrl}/api/perimetres`
 
 // ////////////////////////////////////////////////////////////////////////////////////////////////
 // Region Production
@@ -111,6 +112,14 @@ export const postUnitesRealisation = async (UniteProduction) =>{
 
 // ////////////////////////////////////////////////////////////////////////////////////////////////
 // Perimetres
+export const fetchRegionPerimetresProduction = async (RegionId, journee_production) =>  {
+    try {
+        return await axios.get(`${RouteRegion}/${RegionId}/productionData/perimetres?journee_production=${journee_production}`).then((response) => response.data.data)
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 // ////////////////////////////////////////////////////////////////////////////////////////////////
 // Previsions

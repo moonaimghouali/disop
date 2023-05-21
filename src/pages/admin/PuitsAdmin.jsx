@@ -75,11 +75,11 @@ const PuitsAdmin = () => {
         <Inject services={[Page, Sort, Filter, Group, Toolbar, ExcelExport]}/>
 
         <ColumnsDirective>
-        <ColumnDirective field='id' headerText='Id' textAlign='left'/>
-        <ColumnDirective field='code_puits' headerText='Code' textAlign='left'/>
-        <ColumnDirective field='type_puits' headerText='Code' textAlign='left'/>
-        <ColumnDirective field='nom_perimetre' headerText='Perimetre' textAlign='left'/>
+        <ColumnDirective field='id' headerText='Id' width="70" textAlign='left'/>
         <ColumnDirective field='nom_region' headerText='Region' textAlign='left'/>
+        <ColumnDirective field='nom_perimetre' headerText='Perimetre' textAlign='left'/>
+        <ColumnDirective field='code_puits' headerText='Code' textAlign='left'/>
+        <ColumnDirective field='type_puits' headerText='Type' textAlign='left'/>
         <ColumnDirective field='modify' headerText='Config' template={temp} width="90" textAlign='left'/>
         </ColumnsDirective>
       </GridComponent>

@@ -67,7 +67,7 @@ const Regions = () => {
         <Inject services={[Page, Sort, Filter, Group]}/>
 
         <ColumnsDirective>
-        <ColumnDirective field='id' headerText='Id' textAlign='left'/>
+        <ColumnDirective field='id' headerText='Id' width="70" textAlign='left'/>
         <ColumnDirective field='code_region' headerText='Code' textAlign='left'/>
         <ColumnDirective field='nom_region' headerText='Nom' textAlign='left'/>
         <ColumnDirective field='detail' headerText='Detail' textAlign='left'/>

@@ -20,6 +20,10 @@ const PrevisionsForm = ({perimetres}) => {
         setPerimetresPrevision(hashSet)
         
     },[perimetres])
+
+    useEffect(()=>{
+        console.log("rerender");
+    },[regionPrevision[0], regionPrevision[1]])
     
     const handleInputchange = (e) => {
         let inputId = e.target.id
@@ -39,10 +43,11 @@ const PrevisionsForm = ({perimetres}) => {
         }
         regPrev[month -1] = sumPrev
         setRegionPrevision(regPrev)
-        console.log(regionPrevision);
+        console.log("regionPrev", regionPrevision);
     }
 
     const handleClick = () =>{
+        setRegionPrevision([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 400])
         console.log(perimetresPrevision);
     }
 
@@ -69,9 +74,9 @@ const PrevisionsForm = ({perimetres}) => {
         ))}
         {/* Region */}
         <tr className='bg-orange-100 font-semibold'>
-            <td>{nom}</td>
+            <td className='p-2'>{nom}</td>
             {months.map( (m) =>(
-            <td className="" key={m}> {regionPrevision[m-1]} </td>
+            <td className="py-2" key={m}> {regionPrevision[m-1]} </td>
             ))} 
         </tr>
     </table>

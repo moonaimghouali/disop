@@ -3,8 +3,8 @@ import {BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Error,Login, Profile } from './pages/common';
 import { Utilisateurs, Regions, PuitsAdmin, Perimetres, Unites } from './pages/admin';
 import { Dashboard, DpProduction, Kpi, Map, Reporting } from "./pages/dp";
-import{ Mouvements, Production, Stockage, Baremage, Commentaires, MouvementBac, NouveauBac} from './pages/unite'
-import{ EpPerimetres, EpProduction, Puits, EpConfig} from './pages/ep'
+import{ Mouvements, Production, Stockage, Baremage, Commentaires, MouvementBac, NouveauBac, LabPlanning, LabAnalyses} from './pages/unite'
+import{ EpMonitoring, EpPerimetres, EpProduction, Puits, EpConfig} from './pages/ep'
 import{ XpProduction, XpUnites,XpPerimetres, Previsions} from './pages/xp'
 import { Sidebar } from './components';
 import { useSelector } from 'react-redux';
@@ -19,6 +19,7 @@ function App() {
   const isAdmin = (user.userInfo.role === roles.Admin)
   const isManager = (user.userInfo.role === roles.Manager)
   const isUnite =  (user.userInfo.role === roles.Unite)
+  const isLab =  (user.userInfo.role === roles.Lab)
   const isRespUnite =  (user.userInfo.role === roles.RespUnite)
   const isEP = (user.userInfo.role === roles.EP)
   const isXP = (user.userInfo.role === roles.XP)
@@ -34,10 +35,11 @@ function App() {
           {/* Disop Routes */}
           <Route path='/login' element = {!isSignedIn ? (<Login/>) : 
           ((isUnite || isRespUnite) ? (<Navigate to="/p/unite/mouvements" replace={true}/>) : 
+          (isLab ? (<Navigate to="/p/unite/lab/analyses" replace={true}/>) :
           (isManager ? (<Navigate to="/p/dp/dashboard" replace={true}/>) : 
           (isEP ? (<Navigate to="/p/ep/puits" replace={true}/>) : 
           (isXP ? (<Navigate to="/p/xp/production" replace={true}/>) :  
-          (isAdmin && (<Navigate to="/p/admin/utilisateurs" replace={true}/>) )))))}/>
+          (isAdmin && (<Navigate to="/p/admin/utilisateurs" replace={true}/>) ))))))}/>
 
           <Route path="/" element={<Navigate to="/login" replace/>} />
           <Route path='/profile' element={isSignedIn?  (<Profile/> ) : (<Navigate to="/login" replace/>)}/>
@@ -59,6 +61,9 @@ function App() {
           <Route path='p/unite/bacs/baremage/:id' element={isSignedIn? ((isUnite || isRespUnite) ? <Baremage/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/unite/bacs/nouveau' element={isSignedIn? ((isRespUnite) ? <NouveauBac/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/unite/commentaires' element={isSignedIn? ((isRespUnite) ? <Commentaires/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
+          
+          <Route path='p/unite/lab/planning' element={isSignedIn? ((isLab) ? <LabPlanning/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
+          <Route path='p/unite/lab/analyses' element={isSignedIn? ((isLab) ? <LabAnalyses/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
 
 
           {/* XP Routes */}
@@ -69,10 +74,11 @@ function App() {
 
 
           {/* EP Routes */}
+          <Route path='p/ep/puits-monitoring' element={isSignedIn? ((isEP) ? <EpMonitoring/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/ep/puits' element={isSignedIn? ((isEP) ? <Puits/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/ep/perimetres' element={isSignedIn? ((isEP) ? <EpPerimetres/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/ep/production' element={isSignedIn? ((isEP) ? <EpProduction/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
-          <Route path='p/ep/config' element={isSignedIn? ((isEP) ? <EpConfig/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
+          <Route path='p/ep/puits-config' element={isSignedIn? ((isEP) ? <EpConfig/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
 
 
           {/* dp Routes */}

@@ -79,6 +79,13 @@ const EpConfig = () => {
     )
   }
 
+  const statutTemplate = (props) =>(
+    props.statut_puits ? 
+    ( <div className='font-semibold text-green-600'>Ouvert</div>) : 
+    ( <div className='font-semibold text-red-600'>Ferme</div>)
+   
+  )
+
   return (
     <div className="flex flex-col h-screen w-screen bg-gray-100 px-8 py-8">
       <PageHeader subTitle="Configuration des" pageName="Puits"/>
@@ -93,10 +100,10 @@ const EpConfig = () => {
       <div className="w-full h-full flex flex-col rounded bg-white shadow-sm">
         <GridComponent dataSource={puits} allowPaging={true} pageSettings={{pageSize:9}} height={"100%"}>
           <ColumnsDirective>
-            <ColumnDirective field='id' headerText='Code' textAlign='left'></ColumnDirective>
+            <ColumnDirective field='id' headerText='Id' textAlign='left'></ColumnDirective>
             <ColumnDirective field='code_puits' headerText='Code' textAlign='left'></ColumnDirective>
             <ColumnDirective field='type_puits' headerText='Type' textAlign='left'></ColumnDirective>
-            <ColumnDirective field='statut_puits' headerText='Statut' textAlign='left'></ColumnDirective>
+            <ColumnDirective field='statut_puits' headerText='Statut' textAlign='left' template={statutTemplate}></ColumnDirective>
             <ColumnDirective field='Perimetre' headerText='Perimetre' textAlign='left' width='300' template={perimetreTemplate}></ColumnDirective>
             <ColumnDirective field='Unite' headerText='Unite' textAlign='left' template={uniteTemplate}></ColumnDirective>
           </ColumnsDirective>

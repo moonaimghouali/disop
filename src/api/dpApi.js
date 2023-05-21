@@ -5,8 +5,8 @@ import axios from 'axios';
 const serverUrl = "http://localhost:5000"
 
 const RouteDp= `${serverUrl}/api/analytics`
-// //////////////////////////////////////////////////////////////////////////////////////////////////
-// Dashboard
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 export const fetchRegions = async () =>  {
     try {
         return axios.get(`${serverUrl}/api/regions`).then((response) => response.data.data)
@@ -15,28 +15,62 @@ export const fetchRegions = async () =>  {
     }  
 }
 
+// //////////////////////////////////////////////////////////////////////////////////////////////////
+// Dashboard
+
 export const fetchDpDailyData = async (journee) =>  {
     try {
-        return axios.get(`${RouteDp}/dashboard/journalier/dp?journee=${journee}`).then((response) => response.data.data)
+        return axios.get(`${RouteDp}/dashboard/dp-daily?journee=${journee}`).then((response) => response.data)
     } catch (error) {
         console.log(error.message);   
     }  
 }
 
-export const fetchDpDailyEvolutionData = async (journee) =>  {
+export const fetchDpMonthlyData = async (journee) =>  {
     try {
-        return axios.get(`${RouteDp}/dashboard/journalier/dpEvolution?journee=${journee}`).then((response) => response.data.data)
+        return axios.get(`${RouteDp}/dashboard/dp-monthly?journee=${journee}`).then((response) => response.data)
     } catch (error) {
         console.log(error.message);   
     }  
 }
+
+export const fetchRegionDailyData = async (journee, RegionId) =>  {
+    try {
+        return axios.get(`${RouteDp}/dashboard/region-daily/${RegionId}?journee=${journee}`).then((response) => response.data)
+    } catch (error) {
+        console.log(error.message);   
+    }  
+}
+
+export const fetchRegionMonthlyData = async (journee, RegionId) =>  {
+    try {
+        return axios.get(`${RouteDp}/dashboard/region-monthly/${RegionId}?journee=${journee}`).then((response) => response.data)
+    } catch (error) {
+        console.log(error.message);   
+    }  
+}
+// export const fetchDpDailyEvolutionData = async (journee) =>  {
+//     try {
+//         return axios.get(`${RouteDp}/dashboard/journalier/dpEvolution?journee=${journee}`).then((response) => response.data.data)
+//     } catch (error) {
+//         console.log(error.message);   
+//     }  
+// }
 
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 // Production
 
-export const fetchProductionRegionByUnites = async ({start, end}) =>  {
+export const fetchDailyProduction = async (journee) =>  {
     try {
-        return axios.get(`${RouteDp}/productionRegionsByUnites?start=${start}&end=${end}`).then((response) => response.data.data)
+        return axios.get(`${RouteDp}/prod?start=${journee}&end=${journee}`).then((response) => response.data)
+    } catch (error) {
+        console.log(error.message);   
+    }  
+}
+
+export const fetchMonthlyProduction = async (start, end) =>  {
+    try {
+        return axios.get(`${RouteDp}/prod?start=${start}&end=${end}`).then((response) => response.data)
     } catch (error) {
         console.log(error.message);   
     }  
@@ -47,7 +81,7 @@ export const fetchProductionRegionByUnites = async ({start, end}) =>  {
 // Reporting
 export const fetchBilanJournalier = async (journee) =>  {
     try {
-        let response = await (axios.get(`${RouteDp}/bilans/bilanJournalier?journee=${journee}`))
+        let response = await (axios.get(`${RouteDp}/bilans/bilan-journalier?journee=${journee}`))
         return response
     } catch (error) {
         console.log(error);
@@ -61,7 +95,21 @@ export const fetchBilanSpe = async (date) =>  {
     if (mois === 12) mois=0
     console.log(date, day, annee, mois+1);
     try {
-        let response = await (axios.get(`${RouteDp}/bilans/bilanSpe?mois=${mois+1}&annee=${annee}`))
+        let response = await (axios.get(`${RouteDp}/bilans/bilan-spe?mois=${mois+1}&annee=${annee}`))
+        return response
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const fetchBilanMem = async (date) =>  {
+    let day= date.toISOString().split("T")[0]
+    let annee = parseInt(day.split("-")[0])
+    let mois = parseInt(day.split("-")[1])
+    if (mois === 12) mois=0
+    console.log(date, day, annee, mois+1);
+    try {
+        let response = await (axios.get(`${RouteDp}/bilans/bilan-mem?mois=${mois+1}&annee=${annee}`))
         return response
     } catch (error) {
         console.log(error);
