@@ -17,21 +17,22 @@ const RegionProductionData = ({productionData}) => {
     } 
   }
   
-
   const handleClick = () =>{
 
   }
     
+  // validation column template 
+  const validationTemplate = (props) => {
+    // const valdiation = props.production.validation_xp
+    return (
+      true ? <div className='py-1 px-2 w-full rounded bg-green-50 text-green-600 font-semibold hover:bg-green-100'>Validee</div> 
+      : <div className='py-1 px-2 w-full rounded bg-red-50 text-red-600 font-semibold hover:bg-red-100'>Non-Validee</div>
+      )
+    };
 
   return (
     <div className='h-full col-span-8 bg-white rounded-sm shadow-sm'> 
-    
-        {/* <div className='p-3 w-full flex flex-row justify-between'>
-          {Invalide !== 0 ? (<div>Il y'a {Invalide} unites qui n'ont pas encore cloturer la journee courante</div>) : (<div>  </div>)}
-          <div></div>
-          <button onClick={handleClick} className='py-1 px-4 rounded text-base text-white font-semibold shadow-md bg-orange-600 hover:bg-orange-700 hover:shadow-lg ease-in-out duration-150'>Cloturer la journee</button>
-        </div> */}
-      
+
          <GridComponent  dataSource={productionData} rowSelected={rowSelected} ref={g => grid = g}
          allowPaging={true} allowPdfExport={true} allowExcelExport={true} pageSettings={{pageSize:7}}>
           
@@ -42,7 +43,7 @@ const RegionProductionData = ({productionData}) => {
             <ColumnDirective field='production_region_tm' headerText='Production(TM)' textAlign='left'/>
             <ColumnDirective field='expedition_region_tm' headerText='Expedition(TM)' textAlign='left'/>
             <ColumnDirective field='stock_final_tm' headerText='Stock Final(TM)' textAlign='left'/>
-            <ColumnDirective field='validation_xp' headerText='Validation' textAlign='Center' width={"150"}/>
+            <ColumnDirective field='validation_resp' headerText='Validation' textAlign='Center' template={validationTemplate} width={"150"}/>
               
           </ColumnsDirective>
 

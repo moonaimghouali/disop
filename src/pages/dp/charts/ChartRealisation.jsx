@@ -16,10 +16,10 @@ const ChartRealisation = ({data}) => {
         <Inject services={[LineSeries, Category, Tooltip, Legend, DataLabel ]}></Inject>
 
         <SeriesCollectionDirective>
-          <SeriesDirective type="Line" drawType="Line" name="Production" dataSource={DpData} 
-          xName="mois" yName="production" marker={{dataLabel :{visible:true} , visible:true}} ></SeriesDirective>
+          <SeriesDirective type="Line" drawType="Line" name="Production" dataSource={data} 
+          xName="mois" yName="real_production" marker={{dataLabel :{visible:true} , visible:true}} ></SeriesDirective>
 
-          <SeriesDirective type="Line" drawType="Line" name="Prevision" dataSource={DpData} 
+          <SeriesDirective type="Line" drawType="Line" name="Prevision" dataSource={data} 
           xName="mois" yName="prevision" marker={{dataLabel :{visible:true}, visible:true}} ></SeriesDirective>
 
         </SeriesCollectionDirective>

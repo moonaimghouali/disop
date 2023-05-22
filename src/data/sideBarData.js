@@ -1,13 +1,14 @@
 import { FiUsers} from 'react-icons/fi'
-import { BsArrowLeftRight, BsPinMap } from 'react-icons/bs'
+import { BsArrowLeftRight, BsPinMap, BsCalendarWeek } from 'react-icons/bs'
 import { GiOilPump} from 'react-icons/gi'
-import { TbBuildingFactory, TbReportAnalytics, TbBrandProducthunt} from 'react-icons/tb'
+import { TbBuildingFactory, TbReportAnalytics, TbBrandProducthunt, TbTestPipe} from 'react-icons/tb'
 import { MdOutlineModeComment, MdOutlineDashboard, MdOutlineShowChart } from 'react-icons/md'
 import { CgPerformance } from 'react-icons/cg'
 import { GoGraph } from 'react-icons/go'
 import { RiWaterFlashLine } from 'react-icons/ri'
 import { AiOutlineSetting } from 'react-icons/ai'
 import { SiGraph } from 'react-icons/si'
+
 
 
 
@@ -72,12 +73,12 @@ export const adminLinks = [
     {
       name: 'Analyses',
       path : "p/unite/lab/analyses",
-      icon: <RiWaterFlashLine size={18}/>,
+      icon: <TbTestPipe size={18}/>,
     },
     {
       name: 'Planning',
       path : "p/unite/lab/planning",
-      icon: <BsArrowLeftRight size={18}/>,
+      icon: <BsCalendarWeek size={18}/>,
     },
   ]
 
@@ -170,5 +171,24 @@ export const adminLinks = [
       name: 'Previsions',
       path : "p/xp/previsions",
       icon: <GoGraph size={18}/>,
-    }
+    },
+    {
+      name: 'Commentaires',
+      path : "p/xp/commentaires",
+      icon: <MdOutlineModeComment size={18}/>,
+    },
+  ]
+
+  export const RespRegionLinks = [
+    {
+      name: 'Dashboard',
+      path : "p/region/dashboard",
+      icon: <MdOutlineDashboard size={18}/>,
+    },
+    {
+      name: 'Production',
+      path : "p/region/production",
+      icon: <RiWaterFlashLine size={18}/>,
+    },
+    
   ]

@@ -1,7 +1,10 @@
 import React,{useState, useEffect} from 'react'
 import {useSelector} from 'react-redux'
+import { checkPerimetresPrevisions, formatPrevisions} from '../../../utils/Previsions'
+import * as api from '../../../api/xpApi'
 
-const PrevisionsForm = ({perimetres}) => {
+const PrevisionsForm = ({perimetres, date}) => {
+
     let {id, code, nom} = useSelector((state) => state.system)
     const months = [1,2,3,4,5,6,7,8,9,10,11,12]
 
@@ -46,9 +49,18 @@ const PrevisionsForm = ({perimetres}) => {
         console.log("regionPrev", regionPrevision);
     }
 
-    const handleClick = () =>{
-        setRegionPrevision([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 400])
-        console.log(perimetresPrevision);
+    const handleClick = async () =>{
+        console.log("reg", regionPrevision);
+        console.log("per", perimetresPrevision);
+        
+        // if( ! checkPerimetresPrevisions(perimetresPrevision, perimetres)){
+        //     alert("error complete")
+        //     return
+        // }
+        // formatPrevisions(perimetresPrevision, perimetres, regionPrevision, date, id)
+        let {perimetresPrev, regionPrev } = formatPrevisions(perimetresPrevision, perimetres, regionPrevision, date, id)
+        let response = await api.postPrevisions(regionPrev, perimetresPrev, id)    
+        console.log(response);
     }
 
   return (
@@ -68,7 +80,7 @@ const PrevisionsForm = ({perimetres}) => {
         <tr className='h-10 border border-gray-200'>
             <td>{p.code_perimetre}</td>
             {months.map(m=>(
-            <td key={m}><input onChange={handleInputchange} className='w-24 h-8 border border-gray-300' type="number" id={`${p.id}-${m}`} /></td>
+            <td key={m}><input onChange={handleInputchange} className='w-24 h-8 px-1 border border-gray-300' type="number"  min={0} id={`${p.id}-${m}`} /></td>
             ))}            
         </tr>
         ))}

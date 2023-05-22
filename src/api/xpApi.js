@@ -132,3 +132,32 @@ export const fetchPrevisions = async (RegionId, year, perimetres)  =>{
         console.log(error);
     }
 }
+
+export const postPrevisions = async (regionPrevision, perimetresPrevision, RegionId)  =>{
+    try {
+        let body = {regionPrevision : regionPrevision , perimetresPrevision : perimetresPrevision}
+        const response = (await axios.post(`${RouteRegion}/${RegionId}/previsionData`, body ))
+        return response
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+// 
+// Commentaires 
+export const  fetchCommentairesRegion =  createAsyncThunk("commentairesRegion/fetchCommentairesRegion", (RegionId) =>  {
+    try {
+        return axios.get(`${RouteRegion}/${RegionId}/commentaires`).then((response) => response.data.data)
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+export const postCommentaireRegion = async (body) =>{
+    // try {
+    //     const response = (await axios.post(`${RouteCommentaires}`, body))
+    //     return response
+    // } catch (error) {
+    //     console.log(error);
+    // } 
+}

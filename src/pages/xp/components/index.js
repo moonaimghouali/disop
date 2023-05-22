@@ -5,3 +5,4 @@ export { default as PerimetreProductionData } from './PerimetreProductionData';
 export { default as UniteBilan } from './UniteBilan';
 export { default as RegionBilan } from './RegionBilan';
 export { default as PrevisionsForm } from './PrevisionsForm';
+export { default as CommentairesList } from './CommentairesList';

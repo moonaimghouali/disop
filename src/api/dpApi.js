@@ -26,9 +26,9 @@ export const fetchDpDailyData = async (journee) =>  {
     }  
 }
 
-export const fetchDpMonthlyData = async (journee) =>  {
+export const fetchDpMonthlyData = async (year) =>  {
     try {
-        return axios.get(`${RouteDp}/dashboard/dp-monthly?journee=${journee}`).then((response) => response.data)
+        return axios.get(`${RouteDp}/dashboard/dp-monthly?annee=${year}`).then((response) => response.data)
     } catch (error) {
         console.log(error.message);   
     }  

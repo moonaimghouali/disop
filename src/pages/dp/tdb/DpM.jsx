@@ -1,21 +1,26 @@
 import React, {useState, useEffect} from 'react'
 import * as api from '../../../api/dpApi'
-import {GlobalInformation, ChartRealisation, ChartRealisationCumul } from '../charts'
+import {GlobalInformation, ChartRealisation, ChartRealisationCumul, ChartContribution } from '../charts'
 
 
 const DpM = ({dbMenu, setError}) => {
 
-  const [realisationData, setRealisationData] = useState([])
+  const [realisationsData, setRealisationsData] = useState([])
+  const [realisationsCumulData, setRealisationsCumulData] = useState([])
 
   useEffect(()=>{
     const fn = async() =>{
-      let res = await api.fetchDpMonthlyData(new Date(dbMenu.date).toISOString().split("T")[0])
-      if (!res.success  || res.realisation.length === 0) {
+
+      let year = new Date(dbMenu.date).getFullYear()
+      let res = await api.fetchDpMonthlyData(year)
+      console.log("res", res);
+      if (!res.success  || res.realisations.length === 0 || res.realisationsCumulees.length === 0  ) {
         setError(true)
         return
       }
 
-      setRealisationData(res.realisation)
+      setRealisationsData(res.realisations)
+      setRealisationsCumulData(res.realisationsCumulees)
     }
     fn()
   },[dbMenu.date, dbMenu.journalier, dbMenu.entite])
@@ -27,7 +32,7 @@ const DpM = ({dbMenu, setError}) => {
       </div>
 
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4'> 
-        {/* <ContributionChart data={data}/>  */}
+        <ChartContribution data={[]} type ={"Regions"} /> 
       </div>
 
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4'> 
@@ -35,11 +40,11 @@ const DpM = ({dbMenu, setError}) => {
       </div>
       
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-6 '> 
-        <ChartRealisation data={realisationData}/> 
+        <ChartRealisation data={realisationsData}/> 
       </div>
       
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-6 '> 
-        <ChartRealisationCumul />
+        <ChartRealisationCumul data={realisationsCumulData}/>
       </div>
     </>
   )

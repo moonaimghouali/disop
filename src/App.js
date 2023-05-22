@@ -3,9 +3,10 @@ import {BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Error,Login, Profile } from './pages/common';
 import { Utilisateurs, Regions, PuitsAdmin, Perimetres, Unites } from './pages/admin';
 import { Dashboard, DpProduction, Kpi, Map, Reporting } from "./pages/dp";
+import { RegionDashboard, RegionProduction } from "./pages/region";
 import{ Mouvements, Production, Stockage, Baremage, Commentaires, MouvementBac, NouveauBac, LabPlanning, LabAnalyses} from './pages/unite'
 import{ EpMonitoring, EpPerimetres, EpProduction, Puits, EpConfig} from './pages/ep'
-import{ XpProduction, XpUnites,XpPerimetres, Previsions} from './pages/xp'
+import{ XpProduction, XpUnites,XpPerimetres, Previsions, XpCommentaires} from './pages/xp'
 import { Sidebar } from './components';
 import { useSelector } from 'react-redux';
 import { roles } from './store/types/roles';
@@ -18,6 +19,7 @@ function App() {
   const isSignedIn = user.isSignedIn 
   const isAdmin = (user.userInfo.role === roles.Admin)
   const isManager = (user.userInfo.role === roles.Manager)
+  const isRespRegion = (user.userInfo.role === roles.RespRegion)
   const isUnite =  (user.userInfo.role === roles.Unite)
   const isLab =  (user.userInfo.role === roles.Lab)
   const isRespUnite =  (user.userInfo.role === roles.RespUnite)
@@ -39,7 +41,8 @@ function App() {
           (isManager ? (<Navigate to="/p/dp/dashboard" replace={true}/>) : 
           (isEP ? (<Navigate to="/p/ep/puits" replace={true}/>) : 
           (isXP ? (<Navigate to="/p/xp/production" replace={true}/>) :  
-          (isAdmin && (<Navigate to="/p/admin/utilisateurs" replace={true}/>) ))))))}/>
+          (isRespRegion ? (<Navigate to="/p/region/dashboard" replace={true}/>) :  
+          (isAdmin && (<Navigate to="/p/admin/utilisateurs" replace={true}/>) )))))))}/>
 
           <Route path="/" element={<Navigate to="/login" replace/>} />
           <Route path='/profile' element={isSignedIn?  (<Profile/> ) : (<Navigate to="/login" replace/>)}/>
@@ -71,6 +74,7 @@ function App() {
           <Route path='p/xp/unites' element={isSignedIn? ((isXP) ? <XpUnites/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/xp/perimetres' element={isSignedIn? ((isXP) ? <XpPerimetres/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/xp/previsions' element={isSignedIn? ((isXP) ? <Previsions/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
+          <Route path='p/xp/commentaires' element={isSignedIn? ((isXP) ? <XpCommentaires/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
 
 
           {/* EP Routes */}
@@ -80,7 +84,10 @@ function App() {
           <Route path='p/ep/production' element={isSignedIn? ((isEP) ? <EpProduction/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/ep/puits-config' element={isSignedIn? ((isEP) ? <EpConfig/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
 
-
+          {/* regions Routes */}
+          <Route path='p/region/dashboard' element={isSignedIn? (isRespRegion? <RegionDashboard/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
+          <Route path='p/region/production' element={isSignedIn? (isRespRegion? <RegionProduction/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
+   
           {/* dp Routes */}
           <Route path='p/dp/dashboard' element={isSignedIn? (isManager? <Dashboard/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/dp/production' element={isSignedIn? (isManager? <DpProduction/> : <Error/>) : (<Navigate to="/login" replace/>)}/>

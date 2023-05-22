@@ -6,6 +6,7 @@ import userReducer from './slices/userSlice'
 import systemReducer from './slices/systemSlice'
 import bacsReducer from './slices/bacsSlice'
 import commentairesSlice from './slices/commentairesSlice'
+import commentairesRegionSlice from './slices/commentairesRegionSlice'
 import menusSlice from './slices/menusSlice'
 import mouvementsSlice from './slices/mouvementsSlice'
 import productionSlice from './slices/productionSlice'
@@ -46,6 +47,7 @@ export const store = configureStore({
     mouvements : mouvementsSlice,
     production : productionSlice,
     commentaires : commentairesSlice,
+    commentairesRegion : commentairesRegionSlice,
     menus : menusSlice,
     bilans : bilansSlice
   },

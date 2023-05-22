@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import * as api from '../../../api/dpApi'
-import {GlobalInformation, ChartProduction, ChartContribution, ChartEvolution } from '../charts'
+import {GlobalInformation, ChartProduction, ChartContribution, ChartEvolution, Stats } from '../charts'
 import { formatInfos } from './Utils'
 
 const DpJ = ({dbMenu, setError}) => {
@@ -8,17 +8,18 @@ const DpJ = ({dbMenu, setError}) => {
   const [infos, setInfos] = useState([])
   const [productionData, setProductionData] = useState([])
   const [evolutionData, setEvolutionData] = useState([])
+ 
 
   useEffect(()=>{
     const fn = async() =>{
       let res = await api.fetchDpDailyData(new Date(dbMenu.date).toISOString().split("T")[0])
 
       console.log("daily data",res);
-      if (!res.success  || res.evolution.length === 0 || res.production.length === 0) {
+      if (!res.success  || res.evolution.length === 0 || res.production.length === 0 || res.infos.length ===0) {
         setError(true)
         return
       }
-      setInfos(formatInfos(productionData))
+      setInfos(res.infos[0])
       setProductionData(res.production)
       setEvolutionData(res.evolution)
     }
@@ -39,6 +40,7 @@ const DpJ = ({dbMenu, setError}) => {
 
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4'> 
         {/* <Kpi />  */}
+        <Stats />
       </div>
       
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-6 '> 

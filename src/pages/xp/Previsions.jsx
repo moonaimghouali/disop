@@ -58,7 +58,7 @@ const Previsions = () => {
           )}
 
           {prevRegion.length === 0 && (
-            <PrevisionsForm perimetres={perimetres}/>
+            <PrevisionsForm perimetres={perimetres} date={menu.date}/>
           )}
 
 

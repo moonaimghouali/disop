@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react'
-import {EvolutionProductionRegion, ProductionUniteChart, ProductionPerimetreChart, ChartProduction, ChartEvolution, ChartContribution} from '../charts'
+import { ChartProduction, ChartEvolution, ChartContribution, GlobalInformation} from '../charts'
 import * as api from '../../../api/dpApi'
 
 
 const RegJ = ({dbMenu, setError}) => {
   const [toggle, SetToggle] = useState(false)
   const [toggle2, SetToggle2] = useState(false)
+  const [infos, setInfos] = useState([])
   const [perimetresProductionData, setPerimetresProductionData] = useState([])
   const [unitesProductionData, setUnitesProductionData] = useState([])
   const [evolutionData, setEvolutionData] = useState([])
@@ -16,14 +17,14 @@ const RegJ = ({dbMenu, setError}) => {
       let res = await api.fetchRegionDailyData(new Date(dbMenu.date).toISOString().split("T")[0], dbMenu.entite)
 
       console.log("daily data",res);
-      if (!res.success  || res.evolution.length === 0 || (res.perimetres.length === 0 && res.unites.length === 0)) {
+      if (!res.success  || res.evolution.length === 0 || (res.perimetres.length === 0 && res.unites.length === 0) || res.infos.length === 0) {
         setError(true)
         return
       }
+      setInfos(res.infos[0])
       setPerimetresProductionData(res.perimetres)
       setUnitesProductionData(res.unites)
       setEvolutionData(res.evolution)
-      
     }
     fn()
   },[dbMenu.date, dbMenu.journalier, dbMenu.entite])
@@ -31,7 +32,7 @@ const RegJ = ({dbMenu, setError}) => {
   return (
      <>
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4 '> 
-        {/* <GlobalInformation dbMenu={dbMenu} data={data}/> */}
+        <GlobalInformation dbMenu={dbMenu} data={infos}/>
       </div>
 
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4'> 
