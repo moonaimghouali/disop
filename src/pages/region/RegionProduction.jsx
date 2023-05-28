@@ -2,18 +2,20 @@ import React,{useEffect, useState}  from 'react'
 import {PageHeader} from '../../components'
 import { DatePickerComponent } from '@syncfusion/ej2-react-calendars'
 import {useSelector, useDispatch} from 'react-redux'
+import {RegionProductionData} from '../xp/components'
 import * as api from '../../api/xpApi'
 
 const RegionProduction = () => {
 
   let RegionId = useSelector((state) => state.system.id)
   const [menu, setMenu] = useState({date : new Date()})
+  let {loading, production, error } = useSelector(state => state.production.regionProduction)
+  const dispatch = useDispatch()
 
   useEffect(()=>{
-    const fn = async () =>{
-
-    }
-    fn()
+    
+    dispatch(api.fetchRegionProduction({RegionId : RegionId, month : menu.date}))
+    console.log(production, menu.date);
   },[menu.date])
 
   return (
@@ -27,10 +29,7 @@ const RegionProduction = () => {
           </div>
         </div>
 
-      {/* Production */}
-      <div>
-
-      </div>
+      <RegionProductionData productionData={production} />  
         
       </div> 
     </div>

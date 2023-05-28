@@ -16,7 +16,6 @@ const XpProduction = () => {
       
       dispatch(api.fetchRegionProduction({RegionId : RegionId, month : menu.date}))
       console.log(production, menu.date);
-
     },[menu.date])
         
   return (

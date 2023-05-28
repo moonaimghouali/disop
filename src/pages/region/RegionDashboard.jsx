@@ -30,8 +30,8 @@ const RegionDashboard = () => {
         { error ? 
         (<div className='col-span-12 row-span-6'><NoData/></div>) : 
         (<>
-        {(dbMenu.entite !==-1 && dbMenu.journalier) && (<RegJ dbMenu={dbMenu}  setError={setError} />)}
-        {(dbMenu.entite !==-1 && !dbMenu.journalier) && (<RegM dbMenu={dbMenu} setError={setError} />)}
+        {(dbMenu.entite !==-1 && dbMenu.journalier) && (<RegJ dbMenu={dbMenu}  setError={setError} region={true}/>)}
+        {(dbMenu.entite !==-1 && !dbMenu.journalier) && (<RegM dbMenu={dbMenu} setError={setError} region={true}/>)}
         </>)
         }
         

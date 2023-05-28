@@ -4,8 +4,8 @@ import {productionData} from "../../../data/chartsData"
 
 const ChartEvolution = ({data}) => {
   return (
-    <div className='w-full h-full flex flex-col px-2 py-1'>
-    <div className='text-lg font-semibold w-full text-center'>Evolution Production</div>
+    <div className='w-full h-full flex flex-col px-2 '>
+    <div className='text-lg font-semibold w-full text-center mt-1'>Evolution Production</div>
   
     <ChartComponent
     primaryXAxis={{valueType:"Category", labelFormat:"{category}" , labelPlacement:"OnTicks", edgeLabelPlacement:"Shift", labelIntersectAction:"MultipleRows"}}

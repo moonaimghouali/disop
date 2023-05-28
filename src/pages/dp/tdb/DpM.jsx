@@ -7,18 +7,21 @@ const DpM = ({dbMenu, setError}) => {
 
   const [realisationsData, setRealisationsData] = useState([])
   const [realisationsCumulData, setRealisationsCumulData] = useState([])
+  const [contribution, setContribution] = useState([])
 
   useEffect(()=>{
     const fn = async() =>{
 
       let year = new Date(dbMenu.date).getFullYear()
-      let res = await api.fetchDpMonthlyData(year)
+      let month = new Date(dbMenu.date).getMonth()
+
+      let res = await api.fetchDpMonthlyData(year, month+1)
       console.log("res", res);
-      if (!res.success  || res.realisations.length === 0 || res.realisationsCumulees.length === 0  ) {
+      if (!res.success  || res.realisations.length === 0 || res.realisationsCumulees.length === 0 || res.contribution.length === 0 ) {
         setError(true)
         return
       }
-
+      setContribution(res.contribution)
       setRealisationsData(res.realisations)
       setRealisationsCumulData(res.realisationsCumulees)
     }
@@ -32,7 +35,7 @@ const DpM = ({dbMenu, setError}) => {
       </div>
 
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4'> 
-        <ChartContribution data={[]} type ={"Regions"} /> 
+        <ChartContribution data={contribution} type ={"Regions"} /> 
       </div>
 
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4'> 

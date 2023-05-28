@@ -70,6 +70,7 @@ export const adminLinks = [
   ]
 
   export const labLinks = [
+    
     {
       name: 'Analyses',
       path : "p/unite/lab/analyses",
@@ -102,19 +103,24 @@ export const adminLinks = [
 
   export const respUniteLinks = [
     {
-      name: 'Mouvements',
-      path : "p/unite/mouvements",
-      icon: <BsArrowLeftRight size={18}/>,
-    },
-    {
       name: 'Production',
       path : "p/unite/production",
       icon: <RiWaterFlashLine size={18}/>,
     },
     {
+      name: 'Mouvements',
+      path : "p/unite/mouvements",
+      icon: <BsArrowLeftRight size={18}/>,
+    },
+    {
       name: 'Stockage',
       path : "p/unite/stock",
       icon: <FiUsers size={18}/>,
+    },
+    {
+      name: 'Analyses',
+      path : "p/unite/lab/analyses",
+      icon: <TbTestPipe size={18}/>,
     },
     {
       name: 'Commentaires',

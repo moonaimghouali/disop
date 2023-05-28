@@ -2,8 +2,19 @@ import React from 'react'
 import { GridComponent, ColumnsDirective, ColumnDirective, Inject, Page, Toolbar, PdfExport, ExcelExport, Edit } from '@syncfusion/ej2-react-grids'
 
 
-const Spe = ({rapport}) => {
+const Spe = ({rapport, data}) => {
     let grid;
+    let date = new Date(rapport.date)
+
+    const toolbar = ['PdfExport','ExcelExport'];
+    const toolbarClick = (args) => {
+        if (grid && args.item.id === 'grid_pdfexport') {
+            grid.pdfExport();
+        }
+        if (grid && args.item.id === 'grid_excelexport') {
+            grid.excelExport()
+        }
+    };
     
 
   return (
@@ -11,8 +22,9 @@ const Spe = ({rapport}) => {
      
       
       <div className='py-2 pl-2'> Rapport SPE du mois "<b>{rapport && rapport.date && rapport.date.toLocaleString('fr-FR', { month: 'long', year: "numeric" })}</b>"</div>
-        <GridComponent   ref={g => grid = g}
-         allowPaging={true} allowPdfExport={true} allowExcelExport={true} pageSettings={{pageSize:9}}>
+        <GridComponent   dataSource={data}
+          ref={g => grid = g} toolbar={toolbar} allowPdfExport={true} allowExcelExport={true} 
+          allowPaging={true} toolbarClick={toolbarClick}  pageSettings={{pageSize:9}}>
           
           <ColumnsDirective >
             <ColumnDirective field='code_region' headerText='Region' textAlign='left'/>

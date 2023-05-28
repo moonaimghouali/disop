@@ -2,16 +2,27 @@ import React from 'react'
 import { GridComponent, ColumnsDirective, ColumnDirective, Inject, Page, Toolbar, PdfExport, ExcelExport, Edit } from '@syncfusion/ej2-react-grids'
 
 
-const BilanJournalier = ({rapport, productionData}) => {
+const BilanJournalier = ({rapport, data}) => {
     let grid;
     let date = new Date(rapport.date)
+
+    const toolbar = ['PdfExport','ExcelExport'];
+    const toolbarClick = (args) => {
+        if (grid && args.item.id === 'grid_pdfexport') {
+            grid.pdfExport();
+        }
+        if (grid && args.item.id === 'grid_excelexport') {
+            grid.excelExport()
+        }
+    };
 
   return (
     <div className='w-full h-full bg-white rounded-sm shadow-sm'>
 
       <div className='py-2 pl-2'> Bilan Journalier de Production "<b>{rapport && rapport.date && rapport.date.toLocaleString('fr-FR').split(" ")[0]}</b>"</div>
-        <GridComponent   ref={g => grid = g} dataSource={productionData}
-         allowPaging={true} allowPdfExport={true} allowExcelExport={true} pageSettings={{pageSize:9}}>
+        <GridComponent  dataSource={data}
+         ref={g => grid = g} toolbar={toolbar} allowPdfExport={true} allowExcelExport={true} 
+         allowPaging={true} toolbarClick={toolbarClick}  pageSettings={{pageSize:9}}>
           
           <ColumnsDirective >
           <ColumnDirective field='id' headerText='Id' width={50} textAlign='left'/>

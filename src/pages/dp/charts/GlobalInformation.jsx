@@ -38,12 +38,12 @@ const GlobalInformation = ({data}) => {
                 <div className='text-xl font-bold text-black'>{data.stock_initial}</div>
             </div>
             
-            <div className='h-full w-full flex flex-row items-center row-span-1 rounded p-1 px-4 bg-orange-50'>
+            <div className='h-full w-full flex flex-row items-center row-span-1 rounded p-1 px-4 bg-gray-50'>
                 <div className='flex-1 font-semibold'>Production</div>
                 <div className='text-xl font-bold text-orange-600'>{data.production}</div>
             </div>
             
-            <div className='h-full w-full flex flex-row items-center row-span-1 rounded p-1 px-4 bg-green-50'>
+            <div className='h-full w-full flex flex-row items-center row-span-1 rounded p-1 px-4 bg-gray-50'>
                 <div className='flex-1 font-semibold'>Expedition</div>
                 <div className='text-xl font-bold text-green-600'>{data.expedition}</div>
             </div>

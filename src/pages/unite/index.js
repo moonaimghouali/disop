@@ -6,4 +6,5 @@ export { default as Commentaires } from './Commentaires';
 export { default as Baremage } from './Baremage';
 export { default as NouveauBac } from './NouveauBac';
 export { default as LabPlanning } from './LabPlanning';
+export { default as Analyses } from './Analyses';
 export { default as LabAnalyses } from './LabAnalyses';

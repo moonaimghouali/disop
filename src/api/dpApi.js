@@ -26,9 +26,9 @@ export const fetchDpDailyData = async (journee) =>  {
     }  
 }
 
-export const fetchDpMonthlyData = async (year) =>  {
+export const fetchDpMonthlyData = async (year, month) =>  {
     try {
-        return axios.get(`${RouteDp}/dashboard/dp-monthly?annee=${year}`).then((response) => response.data)
+        return axios.get(`${RouteDp}/dashboard/dp-monthly?annee=${year}&mois=${month}`).then((response) => response.data)
     } catch (error) {
         console.log(error.message);   
     }  
@@ -42,9 +42,9 @@ export const fetchRegionDailyData = async (journee, RegionId) =>  {
     }  
 }
 
-export const fetchRegionMonthlyData = async (journee, RegionId) =>  {
+export const fetchRegionMonthlyData = async (year, month, RegionId) =>  {
     try {
-        return axios.get(`${RouteDp}/dashboard/region-monthly/${RegionId}?journee=${journee}`).then((response) => response.data)
+        return axios.get(`${RouteDp}/dashboard/region-monthly/${RegionId}?annee=${year}&mois=${month}`).then((response) => response.data)
     } catch (error) {
         console.log(error.message);   
     }  

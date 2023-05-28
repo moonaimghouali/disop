@@ -10,8 +10,8 @@ import { roles } from '../store/types/roles';
 import { SidebarHeader } from './SidebarHeader'
 
 const Sidebar = () => {
-  const inActiveStyle = "flex flex-row items-center px-2 py-2 rounded hover:bg-gray-100"
-  const activeStyle = "flex flex-row items-center px-2 py-2 font-semibold rounded bg-orange-50 hover:bg-orange-100 text-orange-600"
+  const inActiveStyle = "flex flex-row items-center w-full px-2 py-2 rounded hover:bg-gray-100"
+  const activeStyle = "flex flex-row items-center w-full px-2 py-2 font-semibold rounded bg-orange-50 hover:bg-orange-100 text-orange-600"
 
   const user = useSelector((state)=> state.user);
   const system = useSelector((state)=> state.system);

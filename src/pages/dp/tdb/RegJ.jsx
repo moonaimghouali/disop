@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react'
-import { ChartProduction, ChartEvolution, ChartContribution, GlobalInformation} from '../charts'
+import { ChartProduction, ChartEvolution, ChartContribution, GlobalInformation, Stats} from '../charts'
 import * as api from '../../../api/dpApi'
+import { formatStats } from './helpful'
 
 
-const RegJ = ({dbMenu, setError}) => {
+const RegJ = ({dbMenu, setError, region}) => {
   const [toggle, SetToggle] = useState(false)
   const [toggle2, SetToggle2] = useState(false)
+  const [stats, setStats] = useState([])
   const [infos, setInfos] = useState([])
   const [perimetresProductionData, setPerimetresProductionData] = useState([])
   const [unitesProductionData, setUnitesProductionData] = useState([])
@@ -14,13 +16,16 @@ const RegJ = ({dbMenu, setError}) => {
 
   useEffect(()=>{
     const fn = async() =>{
-      let res = await api.fetchRegionDailyData(new Date(dbMenu.date).toISOString().split("T")[0], dbMenu.entite)
+      let journee = new Date(dbMenu.date).toISOString().split("T")[0]
 
-      console.log("daily data",res);
+      let res = await api.fetchRegionDailyData(journee, dbMenu.entite)      
+      
       if (!res.success  || res.evolution.length === 0 || (res.perimetres.length === 0 && res.unites.length === 0) || res.infos.length === 0) {
         setError(true)
         return
       }
+
+      setStats(formatStats(res.stats))
       setInfos(res.infos[0])
       setPerimetresProductionData(res.perimetres)
       setUnitesProductionData(res.unites)
@@ -51,7 +56,7 @@ const RegJ = ({dbMenu, setError}) => {
       </div>
 
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4'> 
-        {/* <Kpi />  */}
+        <Stats data={stats}/> 
       </div>
       
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-6 '> 

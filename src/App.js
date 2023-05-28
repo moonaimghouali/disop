@@ -4,9 +4,9 @@ import { Error,Login, Profile } from './pages/common';
 import { Utilisateurs, Regions, PuitsAdmin, Perimetres, Unites } from './pages/admin';
 import { Dashboard, DpProduction, Kpi, Map, Reporting } from "./pages/dp";
 import { RegionDashboard, RegionProduction } from "./pages/region";
-import{ Mouvements, Production, Stockage, Baremage, Commentaires, MouvementBac, NouveauBac, LabPlanning, LabAnalyses} from './pages/unite'
-import{ EpMonitoring, EpPerimetres, EpProduction, Puits, EpConfig} from './pages/ep'
-import{ XpProduction, XpUnites,XpPerimetres, Previsions, XpCommentaires} from './pages/xp'
+import { Mouvements, Production, Stockage, Analyses, Baremage, Commentaires, MouvementBac, NouveauBac, LabPlanning, LabAnalyses} from './pages/unite'
+import { EpMonitoring, EpPerimetres, EpProduction, Puits, EpConfig} from './pages/ep'
+import { XpProduction, XpUnites,XpPerimetres, Previsions, XpCommentaires} from './pages/xp'
 import { Sidebar } from './components';
 import { useSelector } from 'react-redux';
 import { roles } from './store/types/roles';
@@ -66,7 +66,8 @@ function App() {
           <Route path='p/unite/commentaires' element={isSignedIn? ((isRespUnite) ? <Commentaires/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           
           <Route path='p/unite/lab/planning' element={isSignedIn? ((isLab) ? <LabPlanning/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
-          <Route path='p/unite/lab/analyses' element={isSignedIn? ((isLab) ? <LabAnalyses/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
+          <Route path='p/unite/lab/analyses' element={isSignedIn? ((isLab || isRespUnite || isUnite) ? <Analyses/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
+          <Route path='p/unite/lab/analyses/new' element={isSignedIn? ((isLab ) ? <LabAnalyses/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
 
 
           {/* XP Routes */}

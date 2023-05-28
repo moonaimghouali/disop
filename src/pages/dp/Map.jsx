@@ -36,9 +36,9 @@ const Map = () => {
 
   return (
     <div className="flex flex-col h-screen w-screen bg-gray-100 px-8 py-8">
-      <PageHeader subTitle="" pageName="Carte Geographique" />
+      {/* <PageHeader subTitle="" pageName="Carte Geographique" /> */}
 
-      <div className='grid grid-cols-12 gap-2 w-full h-full my-8'>
+      <div className='grid grid-cols-12 gap-2 w-full h-full my-8s'>
         
         {/* Entites
         <div className='col-span-2 flex flex-col bg-white rounded-sm shadow-sm'>

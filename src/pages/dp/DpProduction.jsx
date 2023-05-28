@@ -8,8 +8,10 @@ import {GoComment} from 'react-icons/go'
 
 
 const DpProduction = () => {
+
   const [commentShow, setCommentShow] = useState(false)
   const [commentaires, setCommentaires] = useState([])
+  const [entite, setEntite] = useState({})
   const [ production, setProduction ] = useState([])
   const [ menuProd, setMenuProd] = useState({journalier : true, date : new Date( new Date() - 24*60*60*1000) })
   // const menuDateDp = useSelector((state)=>state.menus.menuDateDp)
@@ -31,6 +33,8 @@ const DpProduction = () => {
   },[menuProd.journalier, menuProd.date])
 
   const commentaireTemplate = (props) => {
+    let entite = props
+    console.log("unite",entite);
     let commentaires = props.commentaires
     if(commentaires === undefined || commentaires.length ===0){
       return(
@@ -40,7 +44,7 @@ const DpProduction = () => {
       )
     }else{
       return (
-        <button onClick={()=> {setCommentShow(true); setCommentaires(commentaires)}}
+        <button onClick={()=> { setCommentaires(commentaires); setEntite(entite); setCommentShow(true); }}
         className='w-fit px-4 py-1 rounded flex flex-row justify-center items-center bg-orange-600 text-white shadow-sm hover:cursor-pointer hover:shadow-md hover:bg-orange-700 transition-all ease-in-out duration-150'>
           <GoComment size={18} />
         </button>
@@ -74,7 +78,7 @@ const DpProduction = () => {
           <Inject services={[Page]} />
         </TreeGridComponent>
       </div>
-      {commentShow && (<CommentairesView setCommentShow={setCommentShow} commentaires={commentaires}/>)}
+      {commentShow && (<CommentairesView setCommentShow={setCommentShow} commentaires={commentaires} entite={entite}/>)}
     </div>
   )
 }

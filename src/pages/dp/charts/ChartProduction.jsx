@@ -8,7 +8,8 @@ const ChartProduction = ({data, type}) => {
     <div className='text-lg font-semibold w-full text-center'>Production par {type}</div>
       <ChartComponent  
       primaryXAxis={{valueType:"Category", labelFormat:"{category}" , labelStyle:{fontWeight:"Bold"}}}
-      primaryYAxis={{ labelFormat:"{value} TM"}} height="210"
+      primaryYAxis={{ labelFormat:"{value} TM"}} 
+      height="210"
       tooltip={{enable:true}} legendSettings={{visible:true}}> 
 
         <Inject services={[ColumnSeries, Category, Tooltip, Legend ]}></Inject>

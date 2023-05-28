@@ -45,9 +45,9 @@ const Reporting = () => {
       <div className='flex flex-col my-6 w-full h-full'>
         <RapportMenu setRapport = {setRapport} rapport={rapport}/>
 
-        {(rapport.rapport === 0 )&& (<BilanJournalier rapport={rapport} productionData={production}/>)}
-        {(rapport.rapport === 1 )&& (<Spe rapport={rapport} />)}
-        {(rapport.rapport === 2 )&& (<Mem rapport={rapport}  />)}
+        {(rapport.rapport === 0 )&& (<BilanJournalier rapport={rapport} data={production}/>)}
+        {(rapport.rapport === 1 )&& (<Spe rapport={rapport} data={production} />)}
+        {(rapport.rapport === 2 )&& (<Mem rapport={rapport} data={production} />)}
       </div>
     </div>
   )

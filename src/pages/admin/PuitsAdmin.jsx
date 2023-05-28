@@ -54,7 +54,7 @@ const PuitsAdmin = () => {
     const toolbar = ['ExcelExport'];
     const toolbarClick = (args) => {
         if (grid && args.item.id === 'grid_excelexport') {
-            grid.excelExport();
+            grid.excelExport("asklaskl");
         }
     };
 
