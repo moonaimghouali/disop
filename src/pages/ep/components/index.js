@@ -4,3 +4,6 @@ export { default as PerimetresMenu } from './PerimetresMenu';
 export { default as ParametresPuits } from './ParametresPuits';
 export { default as FormPuits } from './FormPuits';
 export { default as RealTimeData } from './RealTimeData';
+export { default as ProductionDistrubtion } from './ProductionDistrubtion';
+export { default as ProductionUnites } from './ProductionUnites';
+export { default as ProductionPerimetres } from './ProductionPerimetres';

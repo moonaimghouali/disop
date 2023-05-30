@@ -300,3 +300,71 @@ export const calculRegionProductionJournaliere = (bilansUnites, RegionId) => {
    return bilanProductionRegion
 }
 
+
+// calculer la production Journaliere de l'Unite
+export const calculProductionPuitsCorrigee = (production) => {
+    let p = production
+    
+
+    p.map((unite)=>{
+        let productionTotalePuitsUnite = 0
+        unite.puits.map((puits)=>{
+            productionTotalePuitsUnite += puits.production_unite_vm
+        })
+
+        unite.puits.map((puits)=>{
+            // puits.production_unite_vm designe la production journaliere calculee par EP
+            puits.taux_contribution = Number((puits.production_unite_vm / productionTotalePuitsUnite).toFixed(4))
+            puits.production_corrigee = Number((unite.production_unite_vm * puits.taux_contribution).toFixed(3))
+
+        })
+        unite["production_puits"] = productionTotalePuitsUnite
+    })
+
+   return p
+}
+
+export const calculProductionPerimetres = (prodPuitCorrigee, journee_production) =>{
+    let PerimetresProduction = new Map()
+
+    prodPuitCorrigee.map((unite)=>{
+        unite.puits.map((puits)=>{
+
+            let puitsContributionToPerimetre = {
+                journee_production : journee_production,
+                PerimetreId : puits.PerimetreId,
+                stock_initial_tm : Number((unite.stock_initial_tm * puits.taux_contribution).toFixed(3)),
+                stock_initial_vm : Number((unite.stock_initial_vm * puits.taux_contribution).toFixed(3)),
+                production_perimetre_tm : Number((unite.production_unite_vm * puits.taux_contribution).toFixed(3)),
+                production_perimetre_vm : Number((unite.production_unite_vm * puits.taux_contribution).toFixed(3)),
+                expedition_perimetre_tm : Number((unite.expedition_unite_vm * puits.taux_contribution).toFixed(3)),
+                expedition_perimetre_vm : Number((unite.expedition_unite_vm * puits.taux_contribution).toFixed(3)), 
+                stock_final_tm : Number((unite.stock_final_tm * puits.taux_contribution).toFixed(3)),
+                stock_final_vm : Number((unite.stock_final_vm * puits.taux_contribution).toFixed(3)),
+            }
+            
+            let perimetrePuits = PerimetresProduction.get(`p-${puits.PerimetreId}`)
+
+            if (perimetrePuits === undefined) {
+                PerimetresProduction.set(`p-${puits.PerimetreId}`, puitsContributionToPerimetre)
+            }else{
+                let temp = {...perimetrePuits}
+                temp.stock_initial_tm += puitsContributionToPerimetre.stock_initial_tm
+                temp.stock_initial_vm += puitsContributionToPerimetre.stock_initial_vm
+                temp.production_perimetre_tm += puitsContributionToPerimetre.production_perimetre_tm 
+                temp.production_perimetre_vm += puitsContributionToPerimetre.production_perimetre_vm
+                temp.expedition_perimetre_tm += puitsContributionToPerimetre.expedition_perimetre_tm
+                temp.expedition_perimetre_vm += puitsContributionToPerimetre.expedition_perimetre_vm
+                temp.stock_final_tm += puitsContributionToPerimetre.stock_final_tm
+                temp.stock_final_vm += puitsContributionToPerimetre.stock_final_tm
+
+                console.log("temp", temp)
+                PerimetresProduction.set(`p-${puits.PerimetreId}`, temp)
+            }
+        })
+    })
+
+    console.log("perimProd", PerimetresProduction)
+    return PerimetresProduction
+}
+

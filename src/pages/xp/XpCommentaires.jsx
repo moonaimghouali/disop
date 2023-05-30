@@ -8,12 +8,13 @@ import * as api from '../../api/xpApi'
 
 const XpCommentaires = () => {
   const RegionId = useSelector((state) => state.system.id)
-  const {loading, regionCommentaires, error} = useSelector(state => state.commentaires)
+  const {loading, regionCommentaires, error} = useSelector(state => state.commentairesRegion)
   const dispatch = useDispatch()
 
   useEffect(  ()=>{
     console.log(RegionId);
     dispatch(api.fetchCommentairesRegion(RegionId))
+    console.log("regionComm", regionCommentaires);
   },[])
 
   return (
@@ -21,14 +22,14 @@ const XpCommentaires = () => {
         <PageHeader subTitle="Saisi de" pageName="Commentaires"/>
 
         <div className="w-full h-full my-8 flex flex-row gap-10">
-          <CommentairesForm/>
+          <CommentairesForm type={"region"}/>
         {/* divider */}
 
           <DotLoader color={"#f5821f"} loading={loading} size={50}
           aria-label="Loading Spinner"
           data-testid="loader"
           />
-          {!loading && (<CommentairesList commentaires ={[]}/>)} 
+          {!loading && (<CommentairesList commentaires ={regionCommentaires}/>)} 
 
         </div>
     </div>

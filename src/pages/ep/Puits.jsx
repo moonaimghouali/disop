@@ -64,7 +64,7 @@ const Puits = () => {
             {puitsData.map(p=>(
               <div key={p.id} 
               onClick={() => handleClick(p)} 
-              className={(p.id === puits.id)? "w-full h-fit rounded-sm px-2 py-1 bg-orange-100 hover:cursor-pointer hover:bg-orange-200 transition-all ease-in duration-150 " : 'w-full h-fit rounded-sm px-2 py-1 bg-gray-100 hover:cursor-pointer hover:bg-gray-200 transition-all ease-in duration-150'}> 
+              className={(p.id === puits.id)? "w-full h-fit rounded-sm text-orange-500 px-2 py-4 bg-orange-50 hover:cursor-pointer hover:bg-orange-100 transition-all ease-in duration-150 " : 'w-full h-fit rounded-sm px-2 py-2 bg-gray-50 hover:cursor-pointer hover:bg-gray-100 transition-all ease-in duration-150'}> 
                 <div className='flex flex-row '>
                   <div className='font-semibold flex-1 flex flex-row items-center'>{p.code_puits} <div className='h-1 w-1 rounded-full bg-slate-300 mx-2'></div> </div>
                   {(p.statut_puits) ?  (<div className='text-green-600'>Ouvert</div>): (<div className='text-red-500'>Fermee</div>)}

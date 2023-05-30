@@ -1,22 +1,40 @@
 import React,{useState, useEffect} from 'react'
 import { TreeGridComponent,ColumnsDirective, ColumnDirective, Inject, Page, Sort } from '@syncfusion/ej2-react-treegrid'
 import {PageHeader} from '../../components'
-import {ProductionMenu} from './components'
+import {ProductionMenu, ProductionDistrubtion} from './components'
+import * as api from '../../api/epApi'
+import { useSelector } from 'react-redux'
+import {formatUnitesPuitsResponse} from '../../utils/Utils'
 
 const EpProduction = () => {
 
-  const [prodMenu, setProdMenu] = useState({perimetre : -1, date : new Date(new Date()- 86400000) })
-  const [production, setProduction] = useState([])
 
-  const handleClick = ()=>{
-    alert("production")
+  const [bilan, setBilan] = useState(false)
+  const [prodMenu, setProdMenu] = useState({perimetre : -1, date : new Date(new Date()- 86400000) })
+  const [production, setProduction] = useState({valid : false, data : [], journee_production : null})
+  const RegionId = useSelector((state)=> state.system.id)
+
+  const handleClick = async ()=>{
+    if (false) return
+
+    setBilan(true)
   }
   
   useEffect(()=>{
+    const fn = async () =>{
+      let journee_production = prodMenu.date.toISOString().split("T")[0]
+      let response = await api.fetchUnitesPuitsProduction(RegionId, journee_production)
+     
+      let {valid, res} = formatUnitesPuitsResponse(response)
+      console.log("response",journee_production, response, res, valid);
+      
+      setProduction({valid : valid , data : res, journee_production : journee_production})
 
-    console.log(prodMenu);
+      console.log("state", production.data, production.valid);
+    }
 
-  },[prodMenu.perimetre, prodMenu.date])
+    fn()
+  },[prodMenu.perimetre, prodMenu.date, bilan])
 
   return (
     <div className="flex flex-col h-screen w-screen bg-gray-100 px-8 py-8">
@@ -31,22 +49,22 @@ const EpProduction = () => {
           </button>
         </div>
 
-        <TreeGridComponent dataSource={production} allowPaging={true} pageSettings={{pageSize:9}} height={"100%"}
+        <TreeGridComponent dataSource={production.data} allowPaging={true} pageSettings={{pageSize:9}} height={"100%"}
           childMapping="puits" treeColumnIndex={0} >
             <ColumnsDirective>
+              <ColumnDirective field='id' headerText='ID' textAlign='left'></ColumnDirective>
               <ColumnDirective field='code' headerText='Code' textAlign='left'></ColumnDirective>
-              <ColumnDirective field='nom' headerText='Nom' textAlign='left'></ColumnDirective>
-              <ColumnDirective field='production_tm' headerText='Production (TM)' textAlign='left'></ColumnDirective>
-              <ColumnDirective field='production_vm' headerText='Expedition (m3)' textAlign='left'></ColumnDirective>
-              <ColumnDirective field='expedition_tm' headerText='Expedition (TM)' textAlign='left'></ColumnDirective>
-              <ColumnDirective field='expedition_vm' headerText='Expedition (m3)' textAlign='left'></ColumnDirective>
+              {/* <ColumnDirective field='nom' headerText='Nom' textAlign='left'></ColumnDirective> */}
+              <ColumnDirective field='production_unite_vm' headerText='Production (m3)' textAlign='left'></ColumnDirective>
+              <ColumnDirective field='taux_contribution' headerText='Contribution ' textAlign='left'></ColumnDirective>
+              <ColumnDirective field='production_corrigee' headerText='Production Corrigee (m3)' textAlign='left'></ColumnDirective>
             </ColumnsDirective>
           <Inject services={[Page]} />
         </TreeGridComponent>
       </div>
 
       {/* Bilan */}
-
+      {bilan && (<ProductionDistrubtion setBilan={setBilan} valid={production.valid} production={production.data} journee_production={production.journee_production} />)}
 
     </div>
   )

@@ -154,10 +154,10 @@ export const  fetchCommentairesRegion =  createAsyncThunk("commentairesRegion/fe
 })
 
 export const postCommentaireRegion = async (body) =>{
-    // try {
-    //     const response = (await axios.post(`${RouteCommentaires}`, body))
-    //     return response
-    // } catch (error) {
-    //     console.log(error);
-    // } 
+    try {
+        const response = (await axios.post(`${RouteRegion}/commentaires`, body))
+        return response
+    } catch (error) {
+        console.log(error);
+    } 
 }

@@ -42,6 +42,7 @@ const RegionBilan = ({setShowRegion}) => {
 
 
   return (
+    
     <div onClick={(e)=> e.stopPropagation()} className='h-full my-8 w-1/2 flex flex-col p-3 items-center bg-white rounded-sm shadow-sm z-50'>
       <div  className='w-full h-5/6  flex flex-col overflow-y-scroll '>
         <div className='mt-3 text-lg font-semibold'>Bilan Production Regionale Journaliere</div>

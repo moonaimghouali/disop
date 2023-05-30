@@ -40,7 +40,7 @@ const RegJ = ({dbMenu, setError, region}) => {
         <GlobalInformation dbMenu={dbMenu} data={infos}/>
       </div>
 
-      <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4'> 
+    <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4'> 
       <div className='h-[95%] w-full flex flex-col'>
         <div className='w-full h-full flex flex-row hover:cursor-pointer' onClick={()=>SetToggle2((prev) => !prev)}>
           {!toggle2 && (<ChartContribution data ={unitesProductionData} type={"unites"}/>)}
@@ -48,31 +48,31 @@ const RegJ = ({dbMenu, setError, region}) => {
         </div> 
 
         <div className='w-full flex flex-row justify-center gap-2  items-center hover:cursor-pointer'>
-            {toggle2 && (<div className='w-2 h-2 rounded-full bg-gray-300'></div>)}
-            <div className='w-2 h-2 rounded-full bg-gray-600'></div>
-            {!toggle2 && (<div className='w-2 h-2 rounded-full bg-gray-300'></div>)}
+          {toggle2 && (<div className='w-2 h-2 rounded-full bg-gray-300'></div>)}
+          <div className='w-2 h-2 rounded-full bg-gray-600'></div>
+          {!toggle2 && (<div className='w-2 h-2 rounded-full bg-gray-300'></div>)}
         </div>
       </div>
-      </div>
+    </div>
 
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4'> 
         <Stats data={stats}/> 
       </div>
       
-      <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-6 '> 
+    <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-6 '> 
+      <div className='h-[95%] w-full flex flex-col'>
         <div className='w-full h-fit flex flex-row hover:cursor-pointer' onClick={()=>SetToggle((prev) => !prev)}>
           {!toggle && (<ChartProduction data ={unitesProductionData} type={"unites"}/>)}
           {toggle && (<ChartProduction data ={perimetresProductionData} type={"perimetres"}/> )}
         </div> 
 
         <div className='w-full flex flex-row justify-center gap-2  items-center hover:cursor-pointer'>
-            {toggle && (<div className='w-2 h-2 rounded-full bg-gray-300'></div>)}
-            <div className='w-2 h-2 rounded-full bg-gray-600'></div>
-            {!toggle && (<div className='w-2 h-2 rounded-full bg-gray-300'></div>)}
+          {toggle && (<div className='w-2 h-2 rounded-full bg-gray-300'></div>)}
+          <div className='w-2 h-2 rounded-full bg-gray-600'></div>
+          {!toggle && (<div className='w-2 h-2 rounded-full bg-gray-300'></div>)}
         </div>
-        
-        {/* <ChartProduction data={[]}/>  */}
       </div>
+    </div>
       
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-6 '> 
         <ChartEvolution data={evolutionData}/>

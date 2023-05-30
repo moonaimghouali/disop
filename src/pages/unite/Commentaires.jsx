@@ -22,7 +22,7 @@ const Commentaires = () => {
       <PageHeader subTitle="Saisi de" pageName="Commentaires"/>
 
       <div className="w-full h-full my-8 flex flex-row gap-10">
-        <CommentairesForm/>
+        <CommentairesForm type={"unite"}/>
         {/* divider */}
         {/* <div className='w-px h-full bg-gray-200'></div> */}
 

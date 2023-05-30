@@ -29,8 +29,8 @@ const ParametresPuits = ({puits}) => {
           {(Object.keys(puits).length !== 0) && (
             <div className='h-full w-full flex flex-col py-2 px-4'>
               <div className='flex flex-row items-center '>
-                <div className='font-semibold text-xl flex-1'>Parametres du puits " {puits.code_puits} "</div>
-                <div className='flex flex-row gap-2 items-center'> Donnees en temp reel <ToggleSwitch toggle={toggle} setToggle={setToggle}/> </div>
+                <div className='font-semibold text-xl flex-1'>Production puits " {puits.code_puits} "</div>
+                <div className='flex flex-row gap-2 items-center'> Parametres puits <ToggleSwitch toggle={toggle} setToggle={setToggle}/> </div>
               </div>
               
               {!toggle && <FormPuits puits={puits} date={date}/>}

@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { validateCommentaireForm } from './UniteFormValidation'
 import * as api from '../api/uniteApi'
+import * as xpApi from '../api/xpApi'
 import { useDispatch, useSelector } from 'react-redux'
 
 
-const CommentairesForm = () => {
+const CommentairesForm = ({type}) => {
     const [error, setError] = useState({error:false , errorMessage:""})
     const userId = useSelector(state => state.user.userInfo.id)
     const UniteId = useSelector(state => state.system.id)
@@ -29,22 +30,36 @@ const CommentairesForm = () => {
         date_commentaire : new Date(),
         titre_commentaire : e.target.titre.value,
         contenu_commentaire : e.target.contenu.value,
-        UniteId : UniteId ,
-        UserId : userId,
+        }
+
+        let uniteBody = {
+          ...requestBody,
+          UniteId : UniteId ,
+          UserId : userId,
+        }
+        
+        let regionBody ={
+          ...requestBody,
+          RegionId : UniteId
         }
         
         // //ResponseData
         let response
         try {
-           response = await api.postCommentaire(requestBody)
+           if (type ==="unite") {
+            response = await api.postCommentaire(uniteBody)
+           }else{
+            response = await xpApi.postCommentaireRegion(regionBody)
+           }
+           
            if(response.data.success){
             var form = document.getElementById('commentaireForm');
             dispatch(api.fetchCommentaires(UniteId))
+            dispatch(xpApi.fetchCommentairesRegion(UniteId))
             form.reset()
             // console.log(UniteId);
-            
-
            }
+
         } catch (error) {
           console.log(error.message)
         }
