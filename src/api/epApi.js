@@ -29,6 +29,17 @@ export const fetchUnitesPuitsProduction = async (RegionId, journee_production) =
 }
 
 
+export const postPuitsProductions = async (puitsProduction) =>  {
+
+
+       try {
+       const response = (await axios.post(`${RoutePuits}/production`, puitsProduction))
+       return(response)
+       } catch (error) {
+           console.log(error.message);   
+       }
+}
+
 export const updatePuitsProductions = async (prodCorrigee) =>  {
 
      prodCorrigee.map(async(unite)=>{
