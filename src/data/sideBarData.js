@@ -95,6 +95,11 @@ export const adminLinks = [
       icon: <RiWaterFlashLine size={18}/>,
     },
     {
+      name: 'Planning',
+      path : "p/unite/bc/planning",
+      icon: <BsCalendarWeek size={18}/>,
+    },
+    {
       name: 'Stockage',
       path : "p/unite/stock",
       icon: <FiUsers size={18}/>,
@@ -113,9 +118,9 @@ export const adminLinks = [
       icon: <BsArrowLeftRight size={18}/>,
     },
     {
-      name: 'Stockage',
-      path : "p/unite/stock",
-      icon: <FiUsers size={18}/>,
+      name: 'Commentaires',
+      path : "p/unite/commentaires",
+      icon: <MdOutlineModeComment size={18}/>,
     },
     {
       name: 'Analyses',
@@ -123,10 +128,17 @@ export const adminLinks = [
       icon: <TbTestPipe size={18}/>,
     },
     {
-      name: 'Commentaires',
-      path : "p/unite/commentaires",
-      icon: <MdOutlineModeComment size={18}/>,
+      name: 'Stockage',
+      path : "p/unite/stock",
+      icon: <FiUsers size={18}/>,
     },
+    {
+      name: 'Planning',
+      path : "p/unite/planning",
+      icon: <BsCalendarWeek size={18}/>,
+    },
+    
+    
   ]
 
   export const EPLinks = [

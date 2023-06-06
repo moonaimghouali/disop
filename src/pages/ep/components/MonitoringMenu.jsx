@@ -3,7 +3,7 @@ import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns'
 import { useSelector } from 'react-redux'
 import * as api from '../../../api/epApi'
 
-const MonitoringMenu = ({menu, setMenu}) => {
+const MonitoringMenu = ({menu, setMenu, setPuits}) => {
 
     let RegionId = useSelector((state)=> state.system.id)
 
@@ -27,6 +27,7 @@ const MonitoringMenu = ({menu, setMenu}) => {
                 perims.push(perimetre)
             })
             setPerimetreData(perims)
+            setMenu(prev =>({perimetre : perims[0].id, puits : prev.puits }))
         }
         fn()
     },[])
@@ -34,24 +35,29 @@ const MonitoringMenu = ({menu, setMenu}) => {
     const handlePerimetreChange = async (e) =>{
         let response = await api.fetchPuits(e.value)
         if(response.length >0) setPuitsData(response)
+        else return
 
-        setMenu( prev => ({perimetre : e.value, puits : prev.puits}))
+        console.log("puits", response[0].id);
+        setMenu( prev => ({perimetre : e.value, puits : response[0].id}))
+        setPuits(response[0])
     }
 
     const handlePuitsChange = (e) =>{
         setMenu( prev => ({perimetre : prev.perimetre, puits : e.value}))
+        let puits = puitsData.filter((p)=> p.id === e.value)
+        setPuits(puits[0])
     }
   
     return (
     <div className='w-full p-2 flex flex-row bg-white shadow-sm my-4'>
 
         <div className='w-fit mr-4'>
-            <DropDownListComponent   change={handlePerimetreChange} id="perimetres" fields={perimetreFields} dataSource={perimetreData}  placeholder={"Perimetres"} ></DropDownListComponent>
+            <DropDownListComponent   change={handlePerimetreChange} id="perimetres" fields={perimetreFields} dataSource={perimetreData}  placeholder={"Perimetres"} value={menu.perimetre}></DropDownListComponent>
         </div>
 
         {/*  Journee*/}
         <div className='w-fit mr-4'> 
-            <DropDownListComponent   change={handlePuitsChange} id="puits" fields={puitsFields} dataSource={puitsData}  placeholder={"Puits"} ></DropDownListComponent>
+            <DropDownListComponent   change={handlePuitsChange} id="puits" fields={puitsFields} dataSource={puitsData}  placeholder={"Puits"} value={menu.puits}></DropDownListComponent>
 
         </div>
     </div>

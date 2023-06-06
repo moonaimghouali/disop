@@ -5,6 +5,8 @@ import "./assets/styles/index.css"
 import { store,  persistor} from './store/store'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react';
+import { ToastContainer} from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css";
 
 import App  from "./App";
 
@@ -12,9 +14,22 @@ import App  from "./App";
 registerLicense('Mgo+DSMBaFt/QHRqVVhkVFpFdEBBXHxAd1p/VWJYdVt5flBPcDwsT3RfQF5jS35Ud0BiXnpdd3NTRA==;Mgo+DSMBPh8sVXJ0S0J+XE9AflRDX3xKf0x/TGpQb19xflBPallYVBYiSV9jS31TdEVkWHpfd3FWQWlfUw==;ORg4AjUWIQA/Gnt2VVhkQlFacldJXGFWfVJpTGpQdk5xdV9DaVZUTWY/P1ZhSXxQdkdjXn5bcXNQRWhcWEY=;MTA4MjkxMkAzMjMwMmUzNDJlMzBoSkVKWmpxRGMxNEM3MjlmajIrNThYeDFLUzRrSXFXRVdQSCsxS1djVUdJPQ==;MTA4MjkxM0AzMjMwMmUzNDJlMzBIWWxzd1hTSFFldEVmczJoaVNkMU1WTCtESFhUMGNGbGZmREJBdFZBSDhjPQ==;NRAiBiAaIQQuGjN/V0Z+WE9EaFtKVmJLYVB3WmpQdldgdVRMZVVbQX9PIiBoS35RdUVhWXhfdXVSQ2NUWUx1;MTA4MjkxNUAzMjMwMmUzNDJlMzBNRkZhOGdkaGxaRnVFbTN4V0UvSXdmbXlPSDdoWGtqVlBOVzl4NUdMZXBFPQ==;MTA4MjkxNkAzMjMwMmUzNDJlMzBJaDI5QnozYklzY0xLWmhQQ2VHc090aHA5UUlQd25FdWRwTDYxWjhQYW5BPQ==;Mgo+DSMBMAY9C3t2VVhkQlFacldJXGFWfVJpTGpQdk5xdV9DaVZUTWY/P1ZhSXxQdkdjXn5bcXNQRWlaV0c=;MTA4MjkxOEAzMjMwMmUzNDJlMzBqWGZUSGUwcGxad093eTUzWEFYVEtHeksxMlUwWCtHWDk3ejZyM0t3SEN3PQ==;MTA4MjkxOUAzMjMwMmUzNDJlMzBjaHZrUy9vMlM1cEJ1MlR1dmlyRFZzeTVHdkQ4Ri9SYUErVksxVER1alpBPQ==;MTA4MjkyMEAzMjMwMmUzNDJlMzBNRkZhOGdkaGxaRnVFbTN4V0UvSXdmbXlPSDdoWGtqVlBOVzl4NUdMZXBFPQ==');
 
 ReactDOM.render(
-<Provider store={store}>
-{/* <PersistGate loading={null} persistor={persistor}>  */}
-<App/> 
-{/* </PersistGate> */}
-</Provider>,
+    <Provider store={store}>
+    {/* <PersistGate loading={null} persistor={persistor}>  */}
+    <App/> 
+    {/* </PersistGate> */}
+    
+    <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light" />
+        
+    </Provider>,
 document.getElementById("root"))

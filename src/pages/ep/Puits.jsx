@@ -27,6 +27,7 @@ const Puits = () => {
           perims.push(perimetre)
       })
       setPerimetreData(perims)
+      setPerimetre(perims[0].id)
   }
   fn()
   },[])
@@ -55,7 +56,7 @@ const Puits = () => {
       <div className='col-span-2 flex flex-col  bg-white rounded-sm shadow-sm'>
           {/* Perimetre */}
         <div className='w-fit mr-4 pl-2 pt-2'>
-            <DropDownListComponent  change={(e)=>setPerimetre(e.value)} id="entite" fields={perimetreFields} dataSource={perimetreData}  placeholder={"Perimetre"} ></DropDownListComponent>
+            <DropDownListComponent  change={(e)=>setPerimetre(e.value)} value={perimetre} id="entite" fields={perimetreFields} dataSource={perimetreData}  placeholder={"Perimetre"} ></DropDownListComponent>
         </div>
           {/* Divider */}
           <div className='h-px w-full my-2 bg-gray-300'></div>

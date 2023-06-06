@@ -8,3 +8,4 @@ export { default as RealTimeData } from './RealTimeData';
 export { default as ProductionDistrubtion } from './ProductionDistrubtion';
 export { default as ProductionUnites } from './ProductionUnites';
 export { default as ProductionPerimetres } from './ProductionPerimetres';
+export { default as MonitoringView } from './MonitoringView';

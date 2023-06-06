@@ -8,3 +8,5 @@ export { default as NouveauBac } from './NouveauBac';
 export { default as LabPlanning } from './LabPlanning';
 export { default as Analyses } from './Analyses';
 export { default as LabAnalyses } from './LabAnalyses';
+export { default as BcPlanning } from './BcPlanning';
+export { default as Planning } from './Planning';

@@ -41,9 +41,13 @@ export const fetchLastStockFinalMouvement = async ({ BacId }) =>  {
 
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 //Production
-export const fetchUniteProduction = createAsyncThunk("production/fetchUniteProduction", (UniteId) =>  {
+export const fetchUniteProduction = createAsyncThunk("production/fetchUniteProduction", ({UniteId, date}) =>  {
+    let journee = new Date(date).toISOString().split("T")[0]
+    let year = journee.split("-")[0]
+    let month = journee.split("-")[1]
+    console.log("month", year, month);
     try {
-        return axios.get(`${RouteUnite}/${UniteId}/productionData`).then((response) => response.data.data)
+        return axios.get(`${RouteUnite}/${UniteId}/productionData?annee=${year}&mois=${month}`).then((response) => response.data.data)
     } catch (error) {
         console.log(error);
     }

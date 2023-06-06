@@ -8,9 +8,12 @@ const RoutePerimetre= `${serverUrl}/api/perimetres`
 
 // ////////////////////////////////////////////////////////////////////////////////////////////////
 // Region Production
-export const fetchRegionProduction = createAsyncThunk("production/fetchRegionProduction", ({RegionId, month}) =>  {
+export const fetchRegionProduction = createAsyncThunk("production/fetchRegionProduction", ({RegionId, date}) =>  {
+    let journee_production = new Date(date).toISOString().split("T")[0]
+    let annee = journee_production.split("-")[0]
+    let mois = journee_production.split("-")[1]
     try {
-        return axios.get(`${RouteRegion}/${RegionId}/productionData`).then((response) => response.data.data)
+        return axios.get(`${RouteRegion}/${RegionId}/productionData?annee=${annee}&mois=${mois}`).then((response) => response.data.data)
     } catch (error) {
         console.log(error);
     }

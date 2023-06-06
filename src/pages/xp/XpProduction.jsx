@@ -14,7 +14,7 @@ const XpProduction = () => {
 
     useEffect(()=>{
       
-      dispatch(api.fetchRegionProduction({RegionId : RegionId, month : menu.date}))
+      dispatch(api.fetchRegionProduction({RegionId : RegionId, date : menu.date}))
       console.log(production, menu.date);
     },[menu.date])
         

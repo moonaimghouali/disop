@@ -73,8 +73,9 @@ const EpConfig = () => {
 
   const perimetreTemplate = (props) => {
     return (
-      <div className='w-full'>
-        <DropDownListComponent value={props.PerimetreId} change={handlePerimetreChange} id="entite" fields={perimetreFields} dataSource={perimetreData}  placeholder={"Perimetre"} ></DropDownListComponent>
+      <div className='w-full font-semibold'>
+        {/* <DropDownListComponent value={props.PerimetreId} change={handlePerimetreChange} id="entite" fields={perimetreFields} dataSource={perimetreData}  placeholder={"Perimetre"} ></DropDownListComponent> */}
+        {perimetreData.filter((p)=> p.id === props.PerimetreId)[0]?.nom_perimetre}
       </div>
     )
   }
@@ -89,10 +90,11 @@ const EpConfig = () => {
   return (
     <div className="flex flex-col h-screen w-screen bg-gray-100 px-8 py-8">
       <PageHeader subTitle="Configuration des" pageName="Puits"/>
+      
       {/* menu perimetres */}
       <div className='w-full flex flex-row items-center px-2 h-16 bg-white rounded-sm mt-4 mb-4 shadow-sm'>
         <div className='w-fit mr-4'>
-          <DropDownListComponent value={-1} change={(e)=>setPerimetre(e.value)} id="entite" fields={perimetreFields} dataSource={perimetreData}  placeholder={"Perimetre"} ></DropDownListComponent>
+          <DropDownListComponent value={perimetreData[0]?.id} change={(e)=>setPerimetre(e.value)} id="entite" fields={perimetreFields} dataSource={perimetreData}  placeholder={"Perimetre"} ></DropDownListComponent>
         </div>
       </div>
 
@@ -100,11 +102,11 @@ const EpConfig = () => {
       <div className="w-full h-full flex flex-col rounded bg-white shadow-sm">
         <GridComponent dataSource={puits} allowPaging={true} pageSettings={{pageSize:9}} height={"100%"}>
           <ColumnsDirective>
-            <ColumnDirective field='id' headerText='Id' textAlign='left'></ColumnDirective>
+            <ColumnDirective field='id' headerText='Id' width="70" textAlign='left'></ColumnDirective>
             <ColumnDirective field='code_puits' headerText='Code' textAlign='left'></ColumnDirective>
             <ColumnDirective field='type_puits' headerText='Type' textAlign='left'></ColumnDirective>
             <ColumnDirective field='statut_puits' headerText='Statut' textAlign='left' template={statutTemplate}></ColumnDirective>
-            <ColumnDirective field='Perimetre' headerText='Perimetre' textAlign='left' width='300' template={perimetreTemplate}></ColumnDirective>
+            <ColumnDirective field='Perimetre' headerText='Perimetre' textAlign='left'  template={perimetreTemplate}></ColumnDirective>
             <ColumnDirective field='Unite' headerText='Unite' textAlign='left' template={uniteTemplate}></ColumnDirective>
           </ColumnsDirective>
 
