@@ -5,7 +5,6 @@ import { ColumnDirective, ColumnsDirective, Filter, GridComponent, Group, Toolba
 import { Inject, Page, Sort } from '@syncfusion/ej2-react-grids';
 import { IoMdAddCircleOutline} from 'react-icons/io'
 import { MdDelete, MdEdit} from 'react-icons/md'
-import {regions} from '../../data/regionsData'
 import * as api from '../../api/adminApi'
 
 const PuitsAdmin = () => {

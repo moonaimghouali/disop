@@ -2,7 +2,6 @@ import { TreeGridComponent,ColumnsDirective, ColumnDirective, Inject, Page, Sort
 import React, {useEffect, useState} from 'react'
 import PageHeader from '../../components/PageHeader'
 import {ProdMenu, CommentairesView} from './components'
-import {data} from '../../data/TreeData'
 import * as api from '../../api/dpApi'
 import {GoComment} from 'react-icons/go'
 

@@ -39,7 +39,7 @@ function App() {
           ((isUnite || isRespUnite) ? (<Navigate to="/p/unite/mouvements" replace={true}/>) : 
           (isLab ? (<Navigate to="/p/unite/lab/analyses" replace={true}/>) :
           (isManager ? (<Navigate to="/p/dp/dashboard" replace={true}/>) : 
-          (isEP ? (<Navigate to="/p/ep/puits" replace={true}/>) : 
+          (isEP ? (<Navigate to="/p/ep/puits-monitoring" replace={true}/>) : 
           (isXP ? (<Navigate to="/p/xp/production" replace={true}/>) :  
           (isRespRegion ? (<Navigate to="/p/region/dashboard" replace={true}/>) :  
           (isAdmin && (<Navigate to="/p/admin/utilisateurs" replace={true}/>) )))))))}/>

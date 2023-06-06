@@ -12,7 +12,7 @@ export const drawRegion = (map, regions, setShow) =>{
     let color
     if (r.id ===1) { color = "#ffa500" } else { color = "#000000" }
 
-    let coord = r.coordinates
+    let coord = r.coordonnees
     let array = coord.split(";").map(p=> p.split(",").map(i=> parseFloat(i)))
     let arr = array.slice(0, array.length - 1)   
 

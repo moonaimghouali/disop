@@ -3,7 +3,6 @@ import { PageHeader } from '../../components'
 import {UniteForm} from'./Forms'
 import { ColumnDirective, ColumnsDirective, Filter, GridComponent, Group } from '@syncfusion/ej2-react-grids';
 import { Inject, Page, Sort } from '@syncfusion/ej2-react-grids';
-import {unites} from '../../data/unitesData'
 import { IoMdAddCircleOutline} from 'react-icons/io'
 import { MdDelete, MdEdit} from 'react-icons/md'
 import * as api from '../../api/adminApi'
@@ -13,6 +12,7 @@ const Unites = () => {
   const[update, setUpdate] = useState(false)
   const[form, setForm] = useState(false)
   const[data, setData] = useState([])
+  const[toUpdate, setToUpdate] = useState(null)
 
   useEffect(()=>{
     const fn = async() => {
@@ -24,6 +24,7 @@ const Unites = () => {
 
   const temp =  (props) => {
     let handleModif = () =>{
+      setToUpdate(props)
       setUpdate(true)
       setForm(true)
 
@@ -76,7 +77,7 @@ const Unites = () => {
       </GridComponent>
       </div>
 
-      {form && (<UniteForm setForm={setForm} update={update}/>)}
+      {form && (<UniteForm setForm={setForm} update={update} data={toUpdate}/>)}
     
     </div>
   )

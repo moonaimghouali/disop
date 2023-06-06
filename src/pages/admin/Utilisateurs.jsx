@@ -3,13 +3,14 @@ import { PageHeader } from '../../components'
 import {UtilisateurForm} from'./Forms'
 import { ColumnDirective, ColumnsDirective, Filter, GridComponent, Group, ExcelExport } from '@syncfusion/ej2-react-grids';
 import { Inject, Page, Sort } from '@syncfusion/ej2-react-grids';
-import {utilisateurs} from '../../data/utilisateursData';
+
 import { IoMdAddCircleOutline} from 'react-icons/io'
 import { MdDelete, MdEdit} from 'react-icons/md'
 import * as api from '../../api/adminApi'
 
 const Utilisateurs = () => {
   const[update, setUpdate] = useState(false)
+  const[toUpdate, setToUpdate] = useState(false)
   const[form, setForm] = useState(false)
   const[data, setData] = useState([])
 
@@ -23,9 +24,10 @@ const Utilisateurs = () => {
 
 
   const temp =  (props) => {
-    console.log(props);
-    let handleModif = (props, user) =>{
-      console.log("prop",props, user);
+    // console.log(props);
+    let handleModif = () =>{
+      console.log("prop",props);
+      setToUpdate(props)
       setUpdate(true)
       setForm(true)
     } 
@@ -76,7 +78,7 @@ const Utilisateurs = () => {
         </GridComponent>
     </div>
 
-    {form && (<UtilisateurForm setForm={setForm} update={update}/>)}
+    {form && (<UtilisateurForm setForm={setForm} update={update} data={toUpdate}/>)}
 
   </div>
   )

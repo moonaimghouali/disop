@@ -7,7 +7,6 @@ import { IoMdAddCircleOutline} from 'react-icons/io'
 import { MdDelete, MdEdit} from 'react-icons/md'
 import * as api from '../../api/adminApi'
 
-import {regions} from '../../data/regionsData'
 
 
 const Regions = () => {
@@ -15,6 +14,7 @@ const Regions = () => {
   const[update, setUpdate] = useState(false)
   const[form, setForm] = useState(false)
   const[data, setData] = useState([])
+  const[toUpdate, setToUpdate] = useState(null)
 
   useEffect(()=>{
     const fn = async() => {
@@ -25,7 +25,10 @@ const Regions = () => {
   },[])
 
   const temp =  (props) => {
+    
     let handleModif = () =>{
+      console.log("region", props)
+      setToUpdate(props)
       setUpdate(true)
       setForm(true)
     } 
@@ -70,14 +73,14 @@ const Regions = () => {
         <ColumnDirective field='id' headerText='Id' width="70" textAlign='left'/>
         <ColumnDirective field='code_region' headerText='Code' textAlign='left'/>
         <ColumnDirective field='nom_region' headerText='Nom' textAlign='left'/>
-        <ColumnDirective field='detail' headerText='Detail' textAlign='left'/>
+        {/* <ColumnDirective field='detail' headerText='Detail' textAlign='left'/> */}
         <ColumnDirective field='modify' headerText='Config' template={temp} width="90" textAlign='left'/>
         </ColumnsDirective>
         
       </GridComponent>
     </div>
 
-    {form && (<RegionsForm setForm={setForm} update={update}/>)}
+    {form && (<RegionsForm setForm={setForm} update={update} data ={toUpdate} />)}
     
   </div>
   )

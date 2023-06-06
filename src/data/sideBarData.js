@@ -145,11 +145,11 @@ export const adminLinks = [
       path : "p/ep/production",
       icon: <RiWaterFlashLine size={18}/>,
     },
-    {
-      name: 'Perimetres',
-      path : "p/ep/perimetres",
-      icon: <TbBrandProducthunt size={18}/>,
-    },
+    // {
+    //   name: 'Perimetres',
+    //   path : "p/ep/perimetres",
+    //   icon: <TbBrandProducthunt size={18}/>,
+    // },
     {
       name: 'Config. Puits',
       path : "p/ep/puits-config",

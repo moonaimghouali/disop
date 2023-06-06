@@ -1,6 +1,5 @@
 import React from 'react'
 import { GridComponent, ColumnsDirective, ColumnDirective, Inject, Page, Toolbar, PdfExport, ExcelExport, Edit } from '@syncfusion/ej2-react-grids'
-import {production } from '../../../data/productionData'
 import * as api from '../../../api/uniteApi'
 import { calculUniteProductionJournaliere } from '../../../utils/CalculProduction'
 import { useDispatch, useSelector } from 'react-redux'

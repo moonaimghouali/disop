@@ -65,8 +65,8 @@ const UniteProductionData = ({productionData, setShowUnite, setShowRegion}) => {
          allowPaging={true} allowPdfExport={true} allowExcelExport={true} pageSettings={{pageSize:7}}>
           
           <ColumnsDirective >
-            <ColumnDirective field='code_unite' headerText='Unite' textAlign='left'/>
             <ColumnDirective field='production.journee_production' headerText='Journee' textAlign='left'/>
+            <ColumnDirective field='code_unite' headerText='Unite' textAlign='left'/>
             <ColumnDirective field='production.stock_initial_tm' headerText='Stock Initial(TM)' textAlign='left'/>
             <ColumnDirective field='production.production_unite_tm' headerText='Production(TM)' textAlign='left'/>
             <ColumnDirective field='production.expedition_unite_tm' headerText='Expedition(TM)' textAlign='left'/>

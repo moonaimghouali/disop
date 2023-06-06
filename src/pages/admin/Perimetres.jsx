@@ -5,7 +5,6 @@ import { ColumnDirective, ColumnsDirective, Filter, GridComponent, Group } from 
 import { Inject, Page, Sort } from '@syncfusion/ej2-react-grids';
 import { IoMdAddCircleOutline} from 'react-icons/io'
 import { MdDelete, MdEdit} from 'react-icons/md'
-import {perimetres} from '../../data/perimetresData'
 import * as api from '../../api/adminApi'
 
 const Perimetres = () => {
@@ -13,6 +12,7 @@ const Perimetres = () => {
   const[update, setUpdate] = useState(false)
   const[form, setForm] = useState(false)
   const[data, setData] = useState([])
+  const[toUpdate, setToUpdate] = useState(null)
 
   useEffect(()=>{
     const fn = async() => {
@@ -24,6 +24,8 @@ const Perimetres = () => {
 
   const temp =  (props) => {
     let handleModif = () =>{
+      console.log(props)
+      setToUpdate(props)
       setUpdate(true)
       setForm(true)
     } 
@@ -66,16 +68,16 @@ const Perimetres = () => {
         <Inject services={[Page, Sort, Filter, Group]}/>
 
         <ColumnsDirective>
-        <ColumnDirective field='id' headerText='Id' textAlign='left'/>
+        <ColumnDirective field='id' headerText='Id' width="70" textAlign='left'/>
+        <ColumnDirective field='nom_region' headerText='Region' textAlign='left'/>
         <ColumnDirective field='code_perimetre' headerText='Code' textAlign='left'/>
         <ColumnDirective field='nom_perimetre' headerText='Nom' textAlign='left'/>
-        <ColumnDirective field='nom_region' headerText='Region' textAlign='left'/>
         <ColumnDirective field='modify' headerText='Config' template={temp} width="90" textAlign='left'/>
         </ColumnsDirective>
       </GridComponent>
     </div>
 
-    {form && (<PerimetreForm setForm={setForm} update={update}/>)}
+    {form && (<PerimetreForm setForm={setForm} update={update} data={toUpdate}/>)}
     
   </div>
   )
