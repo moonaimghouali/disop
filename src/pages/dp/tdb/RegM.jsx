@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import * as api from '../../../api/dpApi'
-import {GlobalInformation, ChartRealisation, ChartRealisationCumul, ChartContribution } from '../charts'
+import {MonthlyStats, ChartRealisation, ChartRealisationCumul, ChartContribution } from '../charts'
 
 
 
@@ -12,6 +12,7 @@ const RegM = ({dbMenu, setError, region}) => {
   const [realisationsData, setRealisationsData] = useState([])
   const [realisationsCumulData, setRealisationsCumulData] = useState([])
   const [perimetres, setPerimetres] = useState([])
+  const [monthlyStats, setMonthlyStats] = useState([])
 
   useEffect(()=>{
     const fn = async() =>{
@@ -23,10 +24,11 @@ const RegM = ({dbMenu, setError, region}) => {
       let res =  await api.fetchRegionMonthlyData(year, month+1, dbMenu.entite)
 
       console.log("res", res);
-      if (!res.success  || res.realisations.length === 0 || res.realisationsCumulees.length === 0 || res.perimetres.length === 0 ) {
+      if (!res.success  || res.realisations.length === 0 || res.realisationsCumulees.length === 0 || res.perimetres.length === 0 || res.monthlyStats.length === 0 ) {
         setError(true)
         return
       }
+      setMonthlyStats(res.monthlyStats)
       setPerimetres(res.perimetres)
       setRealisationsData(res.realisations)
       setRealisationsCumulData(res.realisationsCumulees)
@@ -46,7 +48,8 @@ const RegM = ({dbMenu, setError, region}) => {
       </div>
 
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4'> 
-        {/* <PerimetresEffeciency /> */}
+        <MonthlyStats data={monthlyStats} />
+
       </div>
       
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-6 '> 

@@ -31,10 +31,10 @@ const DpProduction = () => {
     fetchData()
   },[menuProd.journalier, menuProd.date])
 
-  const commentaireTemplate = (props) => {
-    let entite = props
-    console.log("unite",entite);
-    let commentaires = props.commentaires
+  const CommentaireTemplate = (props) => {
+    
+    const [ commentaires, setCommentaires] = useState(props.commentaires)
+    // let commentaires = props.commentaires
     if(commentaires === undefined || commentaires.length ===0){
       return(
         <div className='w-fit px-4 py-1 rounded flex flex-row justify-center items-center bg-gray-200 text-gray-500'>
@@ -71,7 +71,7 @@ const DpProduction = () => {
               <ColumnDirective field='production_tm' headerText='Production' textAlign='left'></ColumnDirective>
               <ColumnDirective field='expedition_tm' headerText='Expedition' textAlign='left'></ColumnDirective>
               <ColumnDirective field='stock_final_tm' headerText='Stock Final' textAlign='left'></ColumnDirective> 
-              <ColumnDirective field='commnetaires' headerText='Commentaires' textAlign='left'  template={commentaireTemplate}></ColumnDirective> 
+              <ColumnDirective field='commnetaires' headerText='Commentaires' textAlign='left'  template={CommentaireTemplate}></ColumnDirective> 
             </ColumnsDirective>
 
           <Inject services={[Page]} />

@@ -6,3 +6,4 @@ export { default as ChartProduction } from './ChartProduction';
 export { default as ChartEvolution } from './ChartEvolution';
 export { default as ChartRealisation } from './ChartRealisation';
 export { default as ChartRealisationCumul } from './ChartRealisationCumul';
+export { default as MonthlyStats } from './MonthlyStats';
