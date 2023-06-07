@@ -1,16 +1,18 @@
 import React,{useState, useEffect} from 'react'
 import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import * as api from '../../../api/epApi'
 
 const MonitoringMenu = ({menu, setMenu, setPuits}) => {
 
+    const dispatch = useDispatch()
     let RegionId = useSelector((state)=> state.system.id)
 
     const [perimetreData, setPerimetreData] = useState([]) 
+    const [puitsData, setPuitsData] = useState([])
     const perimetreFields = {text : "perimetre" , value :"id" }
 
-    const [puitsData, setPuitsData] = useState([]) 
+    const {loading, perimetrePuits, error} = useSelector(state => state.puits)
     const puitsFields = {text : "code_puits" , value :"id" }
 
     
@@ -33,13 +35,13 @@ const MonitoringMenu = ({menu, setMenu, setPuits}) => {
     },[])
 
     const handlePerimetreChange = async (e) =>{
-        let response = await api.fetchPuits(e.value)
-        if(response.length >0) setPuitsData(response)
+        dispatch(api.fetchPuits(e.value))
+        if(perimetrePuits.length >0) setPuitsData(perimetrePuits)
         else return
 
-        console.log("puits", response[0].id);
-        setMenu( prev => ({perimetre : e.value, puits : response[0].id}))
-        setPuits(response[0])
+        console.log("puits", perimetrePuits[0].id);
+        setMenu( prev => ({perimetre : e.value, puits : perimetrePuits[0].id}))
+        setPuits(perimetrePuits[0])
     }
 
     const handlePuitsChange = (e) =>{

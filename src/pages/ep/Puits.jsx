@@ -1,14 +1,18 @@
 import React,{useState, useEffect} from 'react'
 import {PageHeader} from '../../components'
 import {DropDownListComponent } from '@syncfusion/ej2-react-dropdowns'
-import {useSelector } from 'react-redux'
+import {useSelector, useDispatch } from 'react-redux'
 import {ParametresPuits} from './components'
 import * as api from '../../api/epApi'
 
 const Puits = () => {
 
+  const dispatch = useDispatch()
+
   const perimetreFields = {text : "perimetre" , value :"id" }
   let RegionId = useSelector((state)=> state.system.id)
+
+  const {loading, perimetrePuits, error} = useSelector(state => state.puits)
 
   const [perimetreData, setPerimetreData] = useState([])
   const [perimetre, setPerimetre] = useState(-1)  
@@ -33,11 +37,12 @@ const Puits = () => {
   },[])
 
   useEffect(()=>{
-    const fn = async() =>{
-      let response = await api.fetchPuits(perimetre)
-      if(response.length >0) setPuitsData(response)
-    }
-    fn()
+    // const fn = async() =>{
+    //   let response = await api.fetchPuits({PerimetreId : perimetre})
+    //   // if(response.length >0) setPuitsData(response)
+    // }
+    // fn()
+    dispatch(api.fetchPuits(perimetre))
   },[perimetre])
 
 
@@ -62,7 +67,7 @@ const Puits = () => {
           <div className='h-px w-full my-2 bg-gray-300'></div>
 
           <div className='h-full w-full flex flex-col gap-1 px-2 overflow-x-scroll'>
-            {puitsData.map(p=>(
+            {perimetrePuits?.map(p=>(
               <div key={p.id} 
               onClick={() => handleClick(p)} 
               className={(p.id === puits.id)? "w-full h-fit rounded-sm text-orange-500 px-2 py-4 bg-orange-50 shadow-md hover:cursor-pointer hover:bg-orange-100 transition-all ease-in duration-150 " : 'w-full h-fit rounded-sm px-2 py-2 bg-gray-50 hover:cursor-pointer hover:bg-gray-100 transition-all ease-in duration-150'}> 
@@ -78,7 +83,7 @@ const Puits = () => {
 
         {/* Paramtres Puits */}
         <div className='col-span-10  bg-white rounded-sm shadow-sm'>
-          <ParametresPuits puits={puits}/>
+          <ParametresPuits puits={puits} setPuits={setPuits} />
         </div>
       </div>
     </div>

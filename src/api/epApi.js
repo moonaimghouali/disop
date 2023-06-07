@@ -9,13 +9,13 @@ const RouteUnite= `${serverUrl}/api/unites`
 
 // //////////////////////////////////////////////////////////////////////////////
 // Puits
-export const fetchPuits = async (perimetreId) =>  {
+export const fetchPuits = createAsyncThunk("puits/fetchPuits", (perimetreId) =>  {
     try {
         return axios.get(`${RoutePuits}?perimetre=${perimetreId}`).then((response) => response.data.data)
     } catch (error) {
-        console.log(error.message);   
-    }  
-}
+        console.log(error);
+    }
+})
 
 // //////////////////////////////////////////////////////////////////////////////
 // PuitsProduction
@@ -28,15 +28,21 @@ export const fetchUnitesPuitsProduction = async (RegionId, journee_production) =
     }  
 }
 
+export const fetchPuitsProduction = async (PuitId, journee_production) =>  {
+    try {
+        return axios.get(`${RoutePuits}/${PuitId}/production?journee_production=${journee_production}`).then((response) => response.data.data)
+    } catch (error) {
+        console.log(error.message);   
+    }  
+}
+
 
 export const postPuitsProductions = async (puitsProduction) =>  {
-
-
        try {
        const response = (await axios.post(`${RoutePuits}/production`, puitsProduction))
        return(response)
        } catch (error) {
-           console.log(error.message);   
+           console.log(error);   
        }
 }
 
@@ -55,6 +61,48 @@ export const updatePuitsProductions = async (prodCorrigee) =>  {
         })
     })  
 }
+
+// //////////////////////////////////////////////////////////////////////////////////////////
+// Puits parametres
+
+export const fetchPuitsParametres = async (PuitId, journee_production) =>  {
+    try {
+        return axios.get(`${RoutePuits}/${PuitId}/parametres?journee_production=${journee_production}`).then((response) => response.data.data)
+    } catch (error) {
+        console.log(error.message);   
+    }  
+}
+
+export const updatePuitsStatut = async (PuitId, statut_puits) =>  {
+    try {
+        const response = (await axios.put(`${RoutePuits}/${PuitId}`, {statut_puits : statut_puits}))
+        return(response)
+    } catch (error) {
+        console.log(error.message);   
+    }
+}
+
+export const updatePuitsType = async (PuitId, type_puits) =>  {
+    try {
+        const response = (await axios.put(`${RoutePuits}/${PuitId}`, {type_puits : type_puits}))
+        return(response)
+    } catch (error) {
+        console.log(error.message);   
+    }
+}
+
+export const postPuitsParametres = async (PuitsParametres) =>  {
+    try {
+    const response = (await axios.post(`${RoutePuits}/parametres`, PuitsParametres))
+    return(response)
+    } catch (error) {
+        console.log(error);   
+    }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Perimetres 
 
 export const postPerimetresProduction = async (prodPerimetres, perimetres, journee_production) =>  {
 
@@ -94,16 +142,6 @@ export const postPerimetresProduction = async (prodPerimetres, perimetres, journ
         }
     })
 }
-
-export const fetchPuitsProduction = async (PuitId, journee_production) =>  {
-    try {
-        return axios.get(`${RoutePuits}/${PuitId}/production?journee_production=${journee_production}`).then((response) => response.data.data)
-    } catch (error) {
-        console.log(error.message);   
-    }  
-}
-
-
 
 
 // //////////////////////////////////////////////////////////////////////////////

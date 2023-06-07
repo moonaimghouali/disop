@@ -1,31 +1,93 @@
 import React,{useState, useEffect, useRef} from 'react'
 import * as api from '../../../api/epApi'
 import {ToggleSwitch} from '../../../components'
+import { toast } from 'react-toastify'
+import { useDispatch } from 'react-redux'
 
-const FormPuitsParametres = ({puits, date , toggle, setToggle}) => {
+const FormPuitsParametres = ({puits, setPuits, date , toggle, setToggle}) => {
 
-  const [ouvert, setOuvert] = useState(false)
+  const dispatch = useDispatch()
+
+  const [ouvert, setOuvert] = useState(puits.statut_puits)
+  // const [statutModif, setStatutModif] = useState(puits.status_puits)
+  const [puitsParam, setPuitsParam] = useState({pression_pipe:0, pression_tete : 0, temperature_pipe : 0, temperature_tete : 0, gor : 0, coeff_k : 0})
   const [gasLift, setGasLift] = useState(false)
+  const [glParam, setGlParam] = useState ({debit_gl : 0, pression_gl : 0})
   const [eau, setEau] = useState(false)
+  const [wParam, setWParam] = useState ({debit_eau : 0, pression_eau : 0})
 
   useEffect(()=>{
-    setOuvert(false)
+    console.log("puits," , puits, ouvert)
+    setOuvert(puits.statut_puits)
     setEau(false)
     setGasLift(false)
 
     if(puits.type_puits === "PPHS" || puits.type_puits === "PPHSGL") setEau(true)
     if(puits.type_puits === "PPHGL" || puits.type_puits === "PPHSGL") setGasLift(true)
-    if (puits.statut_puits === true) setOuvert(true)
-
+    // if (puits.statut_puits === true) setOuvert(true)
     let fn = async () =>{
      
     }
     fn()
   }, [puits] )
 
-  const handleSubmit = (e) =>{
-    e.preventDefault()
-   
+  useEffect(()=>{
+    const fn = async ()=>{
+      if( puits.statut_puits === ouvert) return
+      
+      let response = await api.updatePuitsStatut(puits.id, ouvert)
+      if (response.status === 204) {
+        dispatch(api.fetchPuits(puits.PerimetreId))
+        toast.success(`Le statut de puits "${puits.code_puits}" est changee.`)
+        setPuits(prev =>({...puits, statut_puits : ouvert}))
+      }else{
+        toast.error("Une erreur s'est produite, veiullez repeter l'operation")
+      }
+    }
+    fn()
+  },[ouvert])
+
+  const handleSubmit = async (e) =>{
+    
+    e.preventDefault() 
+    let day = new Date().toISOString().split("T")[0] 
+    let body = {...puitsParam, ...glParam, ...wParam, journee_production : day, PuitId : puits.id}
+    
+
+    if(gasLift && (puits.type_puits === "PPHS" || puits.type_puits === "PPH")){
+      body = {...body,  date_reprise_gl : new Date().toISOString().split("T")[0]}
+    }
+    
+    if(eau && (puits.type_puits === "PPHGL" || puits.type_puits === "PPH")){
+      body = {...body,  date_reprise_eau : new Date().toISOString().split("T")[0]}
+    }
+    if((puits.type_puits === "PPHS" || puits.type_puits === "PPHSGL") && (!eau)){ 
+      body = {...body, date_arret_eau : new Date().toISOString().split("T")[0]}
+    }
+    if((puits.type_puits === "PPHGL" || puits.type_puits === "PPHSGL") && (!gasLift)){ 
+      body = {...body,  date_arret_gl : new Date().toISOString().split("T")[0]}
+    }
+
+    let response = await api.postPuitsParametres(body)
+    if (response.data.success){ 
+      if (gasLift) {
+        if (eau) {
+          let response = await api.updatePuitsType(puits.id, "PPHSGL")
+        }else{
+          let response = await api.updatePuitsType(puits.id, "PPHGL")
+        }
+      }else{
+        if (eau) {
+          let response = await api.updatePuitsType(puits.id, "PPHS")
+        }else{
+          let response = await api.updatePuitsType(puits.id, "PPH")
+        }
+      }
+      toast.success('Les parametres journalier de puits sont enregistres.')
+      dispatch(api.fetchPuits(puits.PerimetreId))
+    }
+    else toast.warn("Une erreur s'est produite, veuillez répéter la tâche")
+    
   }
 
   return (
@@ -55,37 +117,37 @@ const FormPuitsParametres = ({puits, date , toggle, setToggle}) => {
 
             <div className='col-span-4'>Press Pipe </div>            
             <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='hh:mm' type="number"
-            required 
+            value={puitsParam.pression_pipe} onChange={(e)=> setPuitsParam(prev => ({...puitsParam, pression_pipe : e.target.value}))}
             id="pression_pipe" name='pression_pipe' />
             <div className='col-span-1 pt-2 text-gray-700'>kg/cm2</div>
 
             <div className='col-span-4'>Temp Pipe </div>            
             <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='hh:mm' type="number"
-            // required  disabled={disabled} onChange={handleChange} ref={heuresRef}
+            value={puitsParam.temperature_pipe} onChange={(e)=> setPuitsParam(prev => ({...puitsParam, temperature_pipe : e.target.value}))}
             id="temperature_pipe" name='temperature_pipe' />
             <div className='col-span-1 pt-2 text-gray-700'>C</div>
 
             <div className='col-span-4'>Press Tete </div>            
             <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='hh:mm' type="number"
-            // required  disabled={disabled} onChange={handleChange} ref={heuresRef}
+            value={puitsParam.pression_tete} onChange={(e)=> setPuitsParam(prev => ({...puitsParam, pression_tete : e.target.value}))}
             id="pression_tete" name='pression_tete' />
             <div className='col-span-1 pt-2 text-gray-700'>kg/cm2</div>
 
-            <div className='col-span-4'>Temp Pipe  </div>            
+            <div className='col-span-4'>Temp Tete  </div>            
             <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='hh:mm' type="number"
-            // required  disabled={disabled} onChange={handleChange} ref={heuresRef}
+            value={puitsParam.temperature_tete} onChange={(e)=> setPuitsParam(prev => ({...puitsParam, temperature_tete : e.target.value}))}
             id="temperature_tete" name='temperature_tete' />
             <div className='col-span-1 pt-2 text-gray-700'>C</div>
 
             <div className='col-span-4'>GOR  </div>            
             <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='hh:mm' type="number"
-            // required  disabled={disabled} onChange={handleChange} ref={heuresRef}
+            value={puitsParam.gor} onChange={(e)=> setPuitsParam(prev => ({...puitsParam, gor : e.target.value}))}
             id="gor" name='gor' />
             <div className='col-span-1 pt-2 text-gray-700'>m3/m3</div>
 
             <div className='col-span-4'>coef K  </div>            
             <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='hh:mm' type="number"
-            // required  disabled={disabled} onChange={handleChange} ref={heuresRef}
+            value={puitsParam.coeff_k} onChange={(e)=> setPuitsParam(prev => ({...puitsParam, coeff_k : e.target.value}))}
             id="coeff_k" name='coeff_k' />
             <div className='col-span-1 pt-2 text-gray-700'></div>
 
@@ -95,13 +157,13 @@ const FormPuitsParametres = ({puits, date , toggle, setToggle}) => {
           {gasLift && (<div className='w-full h-fit grid grid-cols-11 gap-1 pr-2 border-r-1 border-gray-200'>  
             <div className='col-span-4'>Debit G-L  </div>            
             <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='hh:mm' type="number"
-            // required  disabled={disabled} onChange={handleChange} ref={heuresRef}
+            value={glParam.debit_gl} onChange={(e)=> setGlParam(prev => ({...glParam, debit_gl : e.target.value}))}
             id="debit_gl" name='debit_gl' />
             <div className='col-span-1 pt-2 text-gray-700'>m3/d</div>
 
             <div className='col-span-4'>Pression G-L </div>            
             <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='hh:mm' type="number"
-            // required  disabled={disabled} onChange={handleChange} ref={heuresRef}
+            value={glParam.pression_gl} onChange={(e)=> setGlParam(prev => ({...glParam, pression_gl : e.target.value}))}
             id="pression_gl" name='pression_gl' />
             <div className='col-span-1 pt-2 text-gray-700'>Bar</div>
           </div>)}
@@ -110,13 +172,13 @@ const FormPuitsParametres = ({puits, date , toggle, setToggle}) => {
           {eau && (<div className='w-full h-fit grid grid-cols-11 gap-1 '>
             <div className='col-span-4'>Debit Eau  </div>            
             <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='hh:mm' type="number"
-            // required  disabled={disabled} onChange={handleChange} ref={heuresRef}
+            value={wParam.debit_eau} onChange={(e)=> setWParam(prev => ({...wParam, debit_eau : e.target.value}))}
             id="debit_gl" name='debit_gl' />
             <div className='col-span-1 pt-2 text-gray-700'>m3/d</div>
 
             <div className='col-span-4'>Pression Eau </div>            
             <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='hh:mm' type="number"
-            // required  disabled={disabled} onChange={handleChange} ref={heuresRef}
+            value={wParam.pression_eau} onChange={(e)=> setWParam(prev => ({...wParam, pression_eau : e.target.value}))}
             id="pression_eau" name='pression_eau' />
             <div className='col-span-1 pt-2 text-gray-700'>Bar</div>
           </div>)}

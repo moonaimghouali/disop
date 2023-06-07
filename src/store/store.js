@@ -5,6 +5,7 @@ import storage from 'redux-persist/lib/storage';
 import userReducer from './slices/userSlice'
 import systemReducer from './slices/systemSlice'
 import bacsReducer from './slices/bacsSlice'
+import puitsReducer from './slices/puitsSlice'
 import commentairesSlice from './slices/commentairesSlice'
 import commentairesRegionSlice from './slices/commentairesRegionSlice'
 import menusSlice from './slices/menusSlice'
@@ -43,6 +44,7 @@ export const store = configureStore({
   reducer: {
     user : userReducer,
     bacs : bacsReducer,
+    puits : puitsReducer,
     system : systemReducer,
     mouvements : mouvementsSlice,
     production : productionSlice,

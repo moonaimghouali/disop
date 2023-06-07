@@ -1,11 +1,13 @@
 import React, { useState, useEffect} from 'react'
 import {PageHeader} from '../../components'
-import { MonitoringMenu, MonitoringView } from './components'
+import { MonitoringMenu, MonitoringView, HistoricView } from './components'
+import { ToggleSwitch } from '../../components/'
 
 const EpMonitoring = () => {
     const [menu, setMenu] = useState({perimetre : -1, puits : -1})
     const [puits, setPuits] = useState(null)
     const [ show, setShow ] = useState(false)
+    const [toggle, setToggle] = useState(false)
 
     useEffect(()=>{
         if (menu.puits !== -1) {
@@ -28,9 +30,11 @@ const EpMonitoring = () => {
               <div className='px-2 py-1  bg-orange-500 text-white'>{puits?.code_puits}</div>  
               {(puits?.statut_puits === true) ? (<div className='px-2 py-1 bg-green-600 text-white'>Ouvert</div>) : (<div className='px-2 py-1 bg-red-600 text-white'>Ferme</div>)}
               <div className='px-2 py-1  bg-gray-800 text-white'>{puits?.type_puits}</div>
+              <div className='ml-12 flex flex-row items-center gap-4 justify-center'> <div>vue Historique</div> <ToggleSwitch toggle={toggle} setToggle={setToggle} /></div>
             </div>
 
-            <MonitoringView puits={puits} />
+            {!toggle && (<MonitoringView puits={puits} setToggle={setToggle} />)}
+            {toggle && (<HistoricView puits={puits} setToggle={setToggle} />)}
             
         </div>
       )}

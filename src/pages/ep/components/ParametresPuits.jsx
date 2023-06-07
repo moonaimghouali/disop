@@ -3,7 +3,7 @@ import { DatePickerComponent } from '@syncfusion/ej2-react-calendars'
 import { FormPuitsProduction, FormPuitsParametres} from '../components'
 import {ToggleSwitch} from '../../../components'
 
-const ParametresPuits = ({puits}) => {
+const ParametresPuits = ({puits, setPuits}) => {
   const [date, setDate] = useState(new Date(new Date() - 24*60*60*1000))
   const [toggle, setToggle] = useState(false)
 
@@ -30,7 +30,7 @@ const ParametresPuits = ({puits}) => {
             <div className='h-full w-full flex flex-col py-2 px-4'>
               
               {!toggle && <FormPuitsProduction puits={puits} date={date} toggle={toggle} setToggle={setToggle} />}
-              {toggle && <FormPuitsParametres puits={puits} date={date}  toggle={toggle} setToggle={setToggle} />}
+              {toggle && <FormPuitsParametres puits={puits} setPuits={setPuits} date={date}  toggle={toggle} setToggle={setToggle} />}
               {/* {toggle && <RealTimeData/>} */}
               
             </div>
