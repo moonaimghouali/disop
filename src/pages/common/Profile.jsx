@@ -26,8 +26,8 @@ const Profile = () => {
             <div className='w-20 h-20'><img src={avatar} /></div>
             <div className='flex flex-col'>
               <div className='font-semibold text-xl'>{user.userInfo.nom} {user.userInfo.prenom} </div>
-              <div className='font-medium text-lg flex flex-row items-center gap-2 mt-1'><HiOutlineMail size={18}/> {user.userInfo.email} </div>
-              <div className='flex flex-row gap-4 items-baseline'> <div className='font-semibold mt-2 text-orange-600'>{user.userInfo.role}</div> <div className='h-2 w-2 rounded-full bg-gray-300' /><div className='font-semibold mt-2'>{systeme.nom}</div></div>
+              <div className='flex flex-row gap-2 items-baseline mt-1'> <div className='font-semibold  text-orange-600  px-3 rounded-2xl bg-orange-100'>{user.userInfo.role}</div> <div className='h-2 w-2 rounded-full bg-gray-300' /><div className='font-semibold mt-2 px-3 rounded-2xl bg-orange-100'>{systeme.nom}</div></div>
+              <div className='font-medium text-lg flex flex-row items-center gap-2 mt-3'><HiOutlineMail size={18}/> {user.userInfo.email} </div>
             </div>
           </div> 
 

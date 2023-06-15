@@ -22,7 +22,7 @@ const DpProduction = () => {
         // console.log(journee);
         let repsonse = await api.fetchDailyProduction(journee)
         setProduction(repsonse.res)
-        // console.log(repsonse);
+        console.log("prod",repsonse);
       }else{
         console.log(menuProd.date);
         // endOfMonth = ne
@@ -33,8 +33,8 @@ const DpProduction = () => {
 
   const CommentaireTemplate = (props) => {
     
-    const [ commentaires, setCommentaires] = useState(props.commentaires)
-    // let commentaires = props.commentaires
+    // const [ commentaires, setCommentaires] = useState(props.commentaires)
+    let commentaires = props.commentaires
     if(commentaires === undefined || commentaires.length ===0){
       return(
         <div className='w-fit px-4 py-1 rounded flex flex-row justify-center items-center bg-gray-200 text-gray-500'>
@@ -43,7 +43,7 @@ const DpProduction = () => {
       )
     }else{
       return (
-        <button onClick={()=> { setCommentaires(commentaires); setEntite(entite); setCommentShow(true); }}
+        <button onClick={()=> { setCommentaires(commentaires); setEntite(props); setCommentShow(true); }}
         className='w-fit px-4 py-1 rounded flex flex-row justify-center items-center bg-orange-600 text-white shadow-sm hover:cursor-pointer hover:shadow-md hover:bg-orange-700 transition-all ease-in-out duration-150'>
           <GoComment size={18} />
         </button>
@@ -61,7 +61,7 @@ const DpProduction = () => {
       
       <div className='flex w-full h-full mt-2 rounded bg-white shadow-sm' >
 
-        <TreeGridComponent dataSource={production} allowPaging={true} pageSettings={{pageSize:9}} height={"100%"}
+        <TreeGridComponent dataSource={production} allowPaging={true} pageSettings={{pageSize:9}} height={"100%"}  statelessTemplates={['directiveTemplates']}
           childMapping="unites" treeColumnIndex={0} >
 
             <ColumnsDirective>

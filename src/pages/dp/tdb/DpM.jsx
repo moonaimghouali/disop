@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import * as api from '../../../api/dpApi'
-import {MonthlyStats, ChartRealisation, ChartRealisationCumul, ChartContribution } from '../charts'
+import {RealPrevisions, MonthlyStats, ChartRealisation, ChartRealisationCumul, ChartContribution } from '../charts'
 
 
 const DpM = ({dbMenu, setError}) => {
@@ -9,6 +9,7 @@ const DpM = ({dbMenu, setError}) => {
   const [realisationsCumulData, setRealisationsCumulData] = useState([])
   const [contribution, setContribution] = useState([])
   const [monthlyStats, setMonthlyStats] = useState([])
+  const [realPrevisions, setRealPrevisions] = useState([])
 
   useEffect(()=>{
     const fn = async() =>{
@@ -18,11 +19,12 @@ const DpM = ({dbMenu, setError}) => {
 
       let res = await api.fetchDpMonthlyData(year, month+1)
       console.log("res", res);
-      if (!res.success  || res.realisations.length === 0 || res.realisationsCumulees.length === 0 || res.contribution.length === 0 || res.monthlyStats.length === 0) {
+      if (!res.success  || res.realisations.length === 0 || res.realisationsCumulees.length === 0 || res.contribution.length === 0 || res.monthlyStats.length === 0 || res.realPrevisions.length === 0) {
         setError(true)
         return
       }
       setMonthlyStats(res.monthlyStats)
+      setRealPrevisions(res.realPrevisions)
       setContribution(res.contribution)
       setRealisationsData(res.realisations)
       setRealisationsCumulData(res.realisationsCumulees)
@@ -33,7 +35,7 @@ const DpM = ({dbMenu, setError}) => {
   return (
     <>
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4 '> 
-        {/* <GlobalInformation /> */}
+        <MonthlyStats data={ monthlyStats }/>
       </div>
 
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4'> 
@@ -41,7 +43,7 @@ const DpM = ({dbMenu, setError}) => {
       </div>
 
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4'> 
-        <MonthlyStats data={ monthlyStats }/>
+        <RealPrevisions data={realPrevisions} type='Regions'/>
       </div>
       
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-6 '> 

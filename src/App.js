@@ -1,9 +1,9 @@
 import './assets/styles/App.css';
 import {BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { Error,Login, Profile } from './pages/common';
+import { Test, Error,Login, Profile } from './pages/common';
 import { Utilisateurs, Regions, PuitsAdmin, Perimetres, Unites } from './pages/admin';
 import { Dashboard, DpProduction, Kpi, Map, Reporting } from "./pages/dp";
-import { RegionDashboard, RegionProduction } from "./pages/region";
+import { RegionDashboard, RegionProduction, RegionKPI } from "./pages/region";
 import { Mouvements, Production, Stockage, Analyses, Baremage, Commentaires, MouvementBac, NouveauBac, LabPlanning, LabAnalyses, BcPlanning, Planning} from './pages/unite'
 import { EpMonitoring, EpPerimetres, EpProduction, Puits, EpConfig} from './pages/ep'
 import { XpProduction, XpUnites,XpPerimetres, Previsions, XpCommentaires} from './pages/xp'
@@ -53,7 +53,7 @@ function App() {
           <Route path='*' element = {!isSignedIn ? (<Navigate to="/login" replace/>) : (<Error/>)}/>
 
           {/* Admin Routes */}
-          <Route path='p/admin/utilisateurs' element={isSignedIn? (isAdmin? <Utilisateurs/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
+          <Route path='p/admin/utilisateurs' element={isSignedIn? (isAdmin? <Test/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/admin/regions' element={isSignedIn? (isAdmin? <Regions/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/admin/puits' element={isSignedIn? (isAdmin? <PuitsAdmin/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/admin/perimetres' element={isSignedIn? (isAdmin? <Perimetres/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
@@ -94,6 +94,7 @@ function App() {
           {/* regions Routes */}
           <Route path='p/region/dashboard' element={isSignedIn? (isRespRegion? <RegionDashboard/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/region/production' element={isSignedIn? (isRespRegion? <RegionProduction/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
+          <Route path='p/region/performance' element={isSignedIn? (isRespRegion? <RegionKPI/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
    
           {/* dp Routes */}
           <Route path='p/dp/dashboard' element={isSignedIn? (isManager? <Dashboard/> : <Error/>) : (<Navigate to="/login" replace/>)}/>

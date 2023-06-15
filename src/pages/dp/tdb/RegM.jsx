@@ -1,18 +1,17 @@
 import React, {useState, useEffect} from 'react'
 import * as api from '../../../api/dpApi'
-import {MonthlyStats, ChartRealisation, ChartRealisationCumul, ChartContribution } from '../charts'
+import {RealPrevisions, MonthlyStats, ChartRealisation, ChartRealisationCumul, ChartContribution } from '../charts'
 
 
 
 const RegM = ({dbMenu, setError, region}) => {
 
-  
-  
   const [toggle, SetToggle] = useState(false)
   const [realisationsData, setRealisationsData] = useState([])
   const [realisationsCumulData, setRealisationsCumulData] = useState([])
   const [perimetres, setPerimetres] = useState([])
   const [monthlyStats, setMonthlyStats] = useState([])
+  const [realPrevisions, setRealPrevisions] = useState([])
 
   useEffect(()=>{
     const fn = async() =>{
@@ -24,11 +23,12 @@ const RegM = ({dbMenu, setError, region}) => {
       let res =  await api.fetchRegionMonthlyData(year, month+1, dbMenu.entite)
 
       console.log("res", res);
-      if (!res.success  || res.realisations.length === 0 || res.realisationsCumulees.length === 0 || res.perimetres.length === 0 || res.monthlyStats.length === 0 ) {
+      if (!res.success  || res.realisations.length === 0 || res.realisationsCumulees.length === 0 || res.perimetres.length === 0 || res.monthlyStats.length === 0 || res.realPrevisions.length === 0) {
         setError(true)
         return
       }
       setMonthlyStats(res.monthlyStats)
+      setRealPrevisions(res.realPrevisions)
       setPerimetres(res.perimetres)
       setRealisationsData(res.realisations)
       setRealisationsCumulData(res.realisationsCumulees)
@@ -40,7 +40,7 @@ const RegM = ({dbMenu, setError, region}) => {
   return (
      <>
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4 '> 
-        {/* <GlobalInformation dbMenu={dbMenu} data={data}/> */}
+        <MonthlyStats data={monthlyStats} />
       </div>
 
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4'> 
@@ -48,8 +48,7 @@ const RegM = ({dbMenu, setError, region}) => {
       </div>
 
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-4'> 
-        <MonthlyStats data={monthlyStats} />
-
+        <RealPrevisions data={realPrevisions} type='Perimetres'/>
       </div>
       
       <div className='bg-white rounded-sm shadow-sm row-span-3 col-span-6 '> 

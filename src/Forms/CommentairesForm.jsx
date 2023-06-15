@@ -24,22 +24,20 @@ const CommentairesForm = ({type}) => {
       else{
         setError({error:false , errorMessage:""})
 
-        //requestBody
-        const requestBody = {
-        id : null,
-        date_commentaire : new Date(),
-        titre_commentaire : e.target.titre.value,
-        contenu_commentaire : e.target.contenu.value,
-        }
-
         let uniteBody = {
-          ...requestBody,
+          id : null,
+          date_commentaire : new Date(),
+          titre_commentaire : e.target.titre.value,
+          contenu_commentaire : e.target.contenu.value,
           UniteId : UniteId ,
           UserId : userId,
         }
         
         let regionBody ={
-          ...requestBody,
+          id : null,
+          date_comm_r : new Date(),
+          titre_comm_r: e.target.titre.value,
+          contenu_comm_r : e.target.contenu.value,
           RegionId : UniteId
         }
         

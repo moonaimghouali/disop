@@ -9,8 +9,9 @@ const MonitoringMenu = ({menu, setMenu, setPuits}) => {
     let RegionId = useSelector((state)=> state.system.id)
 
     const [perimetreData, setPerimetreData] = useState([]) 
-    const [puitsData, setPuitsData] = useState([])
     const perimetreFields = {text : "perimetre" , value :"id" }
+    
+    const [puitsData, setPuitsData] = useState([])
 
     const {loading, perimetrePuits, error} = useSelector(state => state.puits)
     const puitsFields = {text : "code_puits" , value :"id" }
@@ -29,6 +30,7 @@ const MonitoringMenu = ({menu, setMenu, setPuits}) => {
                 perims.push(perimetre)
             })
             setPerimetreData(perims)
+            
             setMenu(prev =>({perimetre : perims[0].id, puits : prev.puits }))
         }
         fn()

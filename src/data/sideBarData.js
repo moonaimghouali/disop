@@ -208,5 +208,9 @@ export const adminLinks = [
       path : "p/region/production",
       icon: <RiWaterFlashLine size={18}/>,
     },
-    
+    {
+      name: 'KPI',
+      path : "p/region/performance",
+      icon: <CgPerformance size={18}/>,
+    },
   ]

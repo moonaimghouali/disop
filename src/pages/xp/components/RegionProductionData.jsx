@@ -33,7 +33,7 @@ const RegionProductionData = ({productionData}) => {
   return (
     <div className='h-full col-span-8 bg-white rounded-sm shadow-sm'> 
 
-         <GridComponent  dataSource={productionData} rowSelected={rowSelected} ref={g => grid = g}
+         <GridComponent  dataSource={productionData} rowSelected={rowSelected} ref={g => grid = g} statelessTemplates={['directiveTemplates']}
          allowPaging={true} allowPdfExport={true} allowExcelExport={true} pageSettings={{pageSize:7}}>
           
           <ColumnsDirective >

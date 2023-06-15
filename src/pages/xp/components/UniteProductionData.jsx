@@ -61,7 +61,7 @@ const UniteProductionData = ({productionData, setShowUnite, setShowRegion}) => {
           {(emptyBilans === 0 && invalidBilans === 0) && (<button onClick={handleClick} className='py-2 px-4 rounded text-base text-white font-semibold shadow-md bg-orange-600 hover:bg-orange-700 hover:shadow-lg ease-in-out duration-150'>Cloturer La Journee</button>)}
         </div>
       
-         <GridComponent  dataSource={productionData} rowSelected={rowSelected} ref={g => grid = g}
+         <GridComponent  dataSource={productionData} rowSelected={rowSelected} ref={g => grid = g} statelessTemplates={['directiveTemplates']}
          allowPaging={true} allowPdfExport={true} allowExcelExport={true} pageSettings={{pageSize:7}}>
           
           <ColumnsDirective >

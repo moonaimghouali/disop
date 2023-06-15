@@ -29,7 +29,7 @@ const XpCommentaires = () => {
           aria-label="Loading Spinner"
           data-testid="loader"
           />
-          {!loading && (<CommentairesList commentaires ={regionCommentaires}/>)} 
+          {!loading && (<CommentairesList commentaires ={regionCommentaires} type="Region"/>)} 
 
         </div>
     </div>

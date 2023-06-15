@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { PopupBG } from '../../../components'
 
 const CommentairesView = ({setCommentShow , commentaires, entite}) => {
 
+  useEffect(()=>{
+    console.log('heeer', commentaires, entite)
+  },[])
     
   return (
     <PopupBG setShow={setCommentShow}>
