@@ -110,7 +110,7 @@ export const fetchBilanMem = async (date) =>  {
     console.log(date, day, annee, mois+1);
     try {
         let response = await (axios.get(`${RouteDp}/bilans/bilan-mem?mois=${mois+1}&annee=${annee}`))
-        return response
+        return response.data.res
     } catch (error) {
         console.log(error);
     }

@@ -1,5 +1,6 @@
 import React from 'react'
-import { GridComponent, ColumnsDirective, ColumnDirective, Inject, Page, Toolbar, PdfExport, ExcelExport, Edit } from '@syncfusion/ej2-react-grids'
+// import { TreeGridComponent, GridComponent, ColumnsDirective, ColumnDirective, Inject, Page, Toolbar, PdfExport, ExcelExport, Edit } from '@syncfusion/ej2-react-grids'
+import { TreeGridComponent,ColumnsDirective, ColumnDirective, Inject, Page, Toolbar, PdfExport, ExcelExport, Edit } from '@syncfusion/ej2-react-treegrid'
 
 
 const Mem = ({rapport, data}) => {
@@ -20,27 +21,27 @@ const Mem = ({rapport, data}) => {
     <div className='w-full h-full bg-white rounded-sm shadow-sm'>
 
       <div className='py-2 pl-2'> Rapport MEM du mois "<b>{rapport && rapport.date && rapport.date.toLocaleString('fr-FR', { month: 'long', year: "numeric" })}</b>"</div>
-        <GridComponent  dataSource={data}
-          ref={g => grid = g} toolbar={toolbar} allowPdfExport={true} allowExcelExport={true} 
-          allowPaging={true} toolbarClick={toolbarClick}  pageSettings={{pageSize:9}}>
+        <TreeGridComponent  dataSource={data}
+          ref={g => grid = g} toolbar={toolbar} allowPdfExport={true} allowExcelExport={true} childMapping="perimetres" treeColumnIndex={0} 
+          allowPaging={true} toolbarClick={toolbarClick}  pageSettings={{pageSize:6}} >
           
           <ColumnsDirective >
-            <ColumnDirective field='code_region' headerText='Region' textAlign='left'/>
-            <ColumnDirective field='stock_initial_tm' headerText={`Prev.${rapport && rapport.date && rapport.date.getFullYear()-1}`} textAlign='left'/>
-            <ColumnDirective field='stock_initial_vm' headerText= {`Real.${rapport && rapport.date && rapport.date.getFullYear()-1}`} textAlign='left'/>
-            <ColumnDirective field='production_unite_tm' headerText={`Ecart.${rapport && rapport.date && rapport.date.getFullYear()-1}`} textAlign='left'/>
-            <ColumnDirective field='production_unite_vm' headerText={`%Real.${rapport && rapport.date && rapport.date.getFullYear()-1}`} textAlign='left'/>
-            <ColumnDirective field='production_unite_vm' headerText={`Exped.${rapport && rapport.date && rapport.date.getFullYear()-1}`} textAlign='left'/>
-            <ColumnDirective field='stock_initial_tm' headerText={`Prev.${rapport && rapport.date && rapport.date.getFullYear()}`} textAlign='left'/>
-            <ColumnDirective field='stock_initial_vm' headerText= {`Real.${rapport && rapport.date && rapport.date.getFullYear()}`} textAlign='left'/>
-            <ColumnDirective field='production_unite_tm' headerText={`Ecart.${rapport && rapport.date && rapport.date.getFullYear()}`} textAlign='left'/>
-            <ColumnDirective field='production_unite_vm' headerText={`%Real.${rapport && rapport.date && rapport.date.getFullYear()}`} textAlign='left'/>
-            <ColumnDirective field='production_unite_vm' headerText={`Exped.${rapport && rapport.date && rapport.date.getFullYear()}`} textAlign='left'/>
+            <ColumnDirective field='code' headerText='Region' textAlign='left'/>
+            <ColumnDirective field='lastPrev' headerText={`Prev.${rapport && rapport.date && rapport.date.getFullYear()-1}`} textAlign='left'/>
+            <ColumnDirective field='lastReal' headerText= {`Real.${rapport && rapport.date && rapport.date.getFullYear()-1}`} textAlign='left'/>
+            <ColumnDirective field='lastEcart' headerText={`Ecart.${rapport && rapport.date && rapport.date.getFullYear()-1}`} textAlign='left'/>
+            <ColumnDirective field='lastPourcentage' headerText={`%Real.${rapport && rapport.date && rapport.date.getFullYear()-1}`} textAlign='left'/>
+            <ColumnDirective field='lastExpedition' headerText={`Exped.${rapport && rapport.date && rapport.date.getFullYear()-1}`} textAlign='left'/>
+            <ColumnDirective field='Prev' headerText={`Prev.${rapport && rapport.date && rapport.date.getFullYear()}`} textAlign='left'/>
+            <ColumnDirective field='Real' headerText= {`Real.${rapport && rapport.date && rapport.date.getFullYear()}`} textAlign='left'/>
+            <ColumnDirective field='Ecart' headerText={`Ecart.${rapport && rapport.date && rapport.date.getFullYear()}`} textAlign='left'/>
+            <ColumnDirective field='Pourcentage' headerText={`%Real.${rapport && rapport.date && rapport.date.getFullYear()}`} textAlign='left'/>
+            <ColumnDirective field='Expedition' headerText={`Exped.${rapport && rapport.date && rapport.date.getFullYear()}`} textAlign='left'/>
           </ColumnsDirective>
 
           <Inject services={[Page, PdfExport, ExcelExport, Toolbar, Edit]} />
 
-         </GridComponent>
+         </TreeGridComponent>
 
     </div>
   )

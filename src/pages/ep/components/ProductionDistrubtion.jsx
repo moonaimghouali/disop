@@ -5,6 +5,7 @@ import { ProductionUnites, ProductionPerimetres } from '../components'
 import { AiOutlineClose } from 'react-icons/ai'
 import * as api from '../../../api/epApi'
 import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 
 const ProductionDistrubtion = ({setBilan, valid, production , journee_production}) => {
 
@@ -23,8 +24,10 @@ const ProductionDistrubtion = ({setBilan, valid, production , journee_production
       console.log("perimetres",response)
 
       let result = calculProductionPuitsCorrigee(production)
+      
       let perimetresProd = calculProductionPerimetres(result, journee_production)
 
+      console.log("res", result, "prodperim",perimetresProd)
       setProdCorrigee(result)
       setProdPerimetres(perimetresProd)
     }
@@ -38,17 +41,19 @@ const ProductionDistrubtion = ({setBilan, valid, production , journee_production
   
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // console.log("before", prodCorrigee)
-    // await api.updatePuitsProductions(prodCorrigee)
-    await api.postPerimetresProduction(prodPerimetres, perimetres, journee_production)
+    console.log("before", prodCorrigee)
+    let res = await api.updatePuitsProductions(prodCorrigee)
+    if(res) {
+      toast.success("La production corrigees des puits est enregistres.")
+    }
+    // await api.postPerimetresProduction(prodPerimetres, perimetres, journee_production)
     // alert("submitted")
   }
 
   return (
-    <PopupBG setShow={setBilan}>
-      <div onClick={(e)=> e.stopPropagation()} className="h-[95%] w-[95%] bg-white shadow-md p-2 rounded flex flex-col">
-      {valid ? 
-      (
+  <PopupBG setShow={setBilan}>
+    <div onClick={(e)=> e.stopPropagation()} className="h-[95%] w-[95%] bg-white shadow-md p-2 rounded flex flex-col">
+    
       <div className='flex flex-col h-full w-full'>
       
         <div className='flex-1 '>
@@ -59,17 +64,9 @@ const ProductionDistrubtion = ({setBilan, valid, production , journee_production
           <div className='w-full h-px bg-gray-300 my-3'> </div>
             
           <div className='h-[95%] w-full flex flex-col'>
-            <div className='w-full h-[90%] flex flex-col hover:cursor-pointer' onClick={()=>setToggle((prev) => !prev)}>
-              {!toggle && (<ProductionUnites prodCorrigee={prodCorrigee} />)}
-              {toggle && (<ProductionPerimetres perimetres={perimetres} prod={prodPerimetres} />)}
-            </div> 
-
-            <div className='w-full flex flex-row justify-center gap-2  items-center hover:cursor-pointer'>
-                {toggle && (<div className='w-2 h-2 rounded-full bg-gray-300'></div>)}
-                <div className='w-2 h-2 rounded-full bg-gray-600'></div>
-                {!toggle && (<div className='w-2 h-2 rounded-full bg-gray-300'></div>)}
-            </div>
+            <ProductionUnites prodCorrigee={prodCorrigee} />
           </div>
+
         </div>
 
       {/* Form Buttons */}
@@ -79,11 +76,9 @@ const ProductionDistrubtion = ({setBilan, valid, production , journee_production
         </div>
 
       </div>
-      ) : 
-      (<div className=''>non valide</div>)}
-    
-  </div>
-    </PopupBG>
+      
+    </div>
+  </PopupBG>
   )
 }
 

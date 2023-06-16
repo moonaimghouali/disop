@@ -7,6 +7,7 @@ const ToggleSwitch = ({toggle, setToggle}) => {
         if(toggle) setStyle ("p-1 w-14 rounded-xl bg-green-500 flex flex-row-reverse transition-all ease-in-out duration-300")
         else setStyle("p-1  w-14 rounded-xl bg-gray-400 flex flex-row transition-all ease-in-out duration-300")
     },[toggle])
+    
     const handleClick = () =>{
         setToggle(prev => !prev)
     }

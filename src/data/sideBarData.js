@@ -162,11 +162,11 @@ export const adminLinks = [
     //   path : "p/ep/perimetres",
     //   icon: <TbBrandProducthunt size={18}/>,
     // },
-    {
-      name: 'Config. Puits',
-      path : "p/ep/puits-config",
-      icon: <AiOutlineSetting size={18}/>,
-    }
+    // {
+    //   name: 'Config. Puits',
+    //   path : "p/ep/puits-config",
+    //   icon: <AiOutlineSetting size={18}/>,
+    // }
   ]
 
   export const XPLinks = [

@@ -59,7 +59,9 @@ export const updatePuitsProductions = async (prodCorrigee) =>  {
             console.log(error.message);   
         }
         })
-    })  
+    })
+    
+    return true;
 }
 
 // //////////////////////////////////////////////////////////////////////////////////////////

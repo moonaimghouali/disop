@@ -78,7 +78,7 @@ const FormPuitsParametres = ({puits, setPuits, date , toggle, setToggle}) => {
   const handleSubmit = async (e) =>{
     
     e.preventDefault() 
-    let day = new Date().toISOString().split("T")[0] 
+    let day = new Date(date).toISOString().split("T")[0] 
     let body = {...puitsParam, ...glParam, ...wParam, journee_production : day, PuitId : puits.id}
     
 

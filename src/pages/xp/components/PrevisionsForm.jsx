@@ -2,6 +2,7 @@ import React,{useState, useEffect} from 'react'
 import {useSelector} from 'react-redux'
 import { checkPerimetresPrevisions, formatPrevisions} from '../../../utils/Previsions'
 import * as api from '../../../api/xpApi'
+import { toast } from 'react-toastify'
 
 const PrevisionsForm = ({perimetres, date}) => {
 
@@ -60,7 +61,11 @@ const PrevisionsForm = ({perimetres, date}) => {
         // formatPrevisions(perimetresPrevision, perimetres, regionPrevision, date, id)
         let {perimetresPrev, regionPrev } = formatPrevisions(perimetresPrevision, perimetres, regionPrevision, date, id)
         let response = await api.postPrevisions(regionPrev, perimetresPrev, id)    
-        console.log(response);
+        if (response.data.success) {
+            toast.success("Les previsions sont chargees avec success.")
+        }else{
+            toast.error("Le chargement des previsions n'a pas reussi, veiullez reassyer ulterieuremnt.")
+        }
     }
 
   return (

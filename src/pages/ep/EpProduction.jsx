@@ -30,11 +30,11 @@ const EpProduction = () => {
       let response = await api.fetchUnitesPuitsProduction(RegionId, journee_production)
      
       let {valid, res} = formatUnitesPuitsResponse(response)
-      console.log("response",journee_production, response, res, valid);
+      // console.log("response",journee_production, response, res, valid);
       
       setProduction({valid : valid , data : res, journee_production : journee_production})
 
-      console.log("state", production.data, production.valid);
+      // console.log("state", production.data, production.valid);
     }
 
     fn()

@@ -32,7 +32,9 @@ const Reporting = () => {
         
       }
       if (rapport.rapport === 2) {
-        
+        let response = await api.fetchBilanMem(rapport.date)
+        console.log("mem",response);
+        setProduction(response)
       }
     }
     fetcData()

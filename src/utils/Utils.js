@@ -1,4 +1,6 @@
 export const formatUnitesPuitsResponse = (res) =>{
+
+    console.log("res", res);
     let response = []
     let valid = true
 
