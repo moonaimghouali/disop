@@ -5,6 +5,7 @@ import {ProductionMenu, ProductionDistrubtion} from './components'
 import * as api from '../../api/epApi'
 import { useSelector } from 'react-redux'
 import {formatUnitesPuitsResponse} from '../../utils/Utils'
+import { toast } from 'react-toastify'
 
 const EpProduction = () => {
 
@@ -15,7 +16,10 @@ const EpProduction = () => {
   const RegionId = useSelector((state)=> state.system.id)
 
   const handleClick = async ()=>{
-    if (false) return
+    if (!production.valid) {
+      toast.warn("vous ne pouvez pas calculer la production corrigees des puits. verifier toutes les donnees existent")
+      return;
+    }
 
     setBilan(true)
   }
@@ -49,10 +53,10 @@ const EpProduction = () => {
           </button>
         </div>
 
-        <TreeGridComponent dataSource={production.data} allowPaging={true} pageSettings={{pageSize:9}} height={"100%"}
+        <TreeGridComponent dataSource={production.data} allowPaging={true} pageSettings={{pageSize:7}} height={"100%"}
           childMapping="puits" treeColumnIndex={0} >
             <ColumnsDirective>
-              <ColumnDirective field='id' headerText='ID' textAlign='left'></ColumnDirective>
+              <ColumnDirective field='id' headerText='ID' textAlign='left' width='70'></ColumnDirective>
               <ColumnDirective field='code' headerText='Code' textAlign='left'></ColumnDirective>
               {/* <ColumnDirective field='nom' headerText='Nom' textAlign='left'></ColumnDirective> */}
               <ColumnDirective field='production_unite_vm' headerText='Production (m3)' textAlign='left'></ColumnDirective>

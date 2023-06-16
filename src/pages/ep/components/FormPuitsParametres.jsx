@@ -16,6 +16,9 @@ const FormPuitsParametres = ({puits, setPuits, date , toggle, setToggle}) => {
   const [eau, setEau] = useState(false)
   const [wParam, setWParam] = useState ({debit_eau : 0, pression_eau : 0})
 
+  const [disabled, setDisabled] = useState(false)
+  const [ show, setShow] = useState(false)
+
   useEffect(()=>{
     console.log("puits," , puits, ouvert)
     setOuvert(puits.statut_puits)
@@ -25,11 +28,36 @@ const FormPuitsParametres = ({puits, setPuits, date , toggle, setToggle}) => {
     if(puits.type_puits === "PPHS" || puits.type_puits === "PPHSGL") setEau(true)
     if(puits.type_puits === "PPHGL" || puits.type_puits === "PPHSGL") setGasLift(true)
     // if (puits.statut_puits === true) setOuvert(true)
+
+    setPuitsParam({pression_pipe:0, pression_tete : 0, temperature_pipe : 0, temperature_tete : 0, gor : 0, coeff_k : 0})
+    setGlParam({debit_gl : 0, pression_gl : 0})
+    setWParam({debit_eau : 0, pression_eau : 0})
+
     let fn = async () =>{
+      setShow(false)
+      let journee_production = new Date(date).toISOString().split("T")[0]
+      
+      let response = await api.fetchPuitsParametres(puits.id, journee_production )
+      console.log("params", response);
+
+      if(! response.length)  {
+        setPuitsParam({pression_pipe:0, pression_tete : 0, temperature_pipe : 0, temperature_tete : 0, gor : 0, coeff_k : 0})
+        setGlParam({debit_gl : 0, pression_gl : 0})
+        setWParam({debit_eau : 0, pression_eau : 0}) 
+        // setProd(0)
+        setShow(true)
+        setDisabled(false)
+      }else{
+        setPuitsParam({pression_pipe: response[0].pression_pipe, pression_tete : response[0].pression_tete, temperature_pipe : response[0].temperature_pipe, temperature_tete : response[0].temperature_tete, gor : response[0].gor, coeff_k : response[0].coeff_k})
+        setGlParam({debit_gl : response[0].debit_gl, pression_gl : response[0].pression_gl})
+        setWParam({debit_eau : response[0].debit_eau, pression_eau : response[0].debit_eau})
+        setShow(false)
+        setDisabled(true)
+      }
      
     }
     fn()
-  }, [puits] )
+  }, [puits, date] )
 
   useEffect(()=>{
     const fn = async ()=>{
@@ -118,37 +146,37 @@ const FormPuitsParametres = ({puits, setPuits, date , toggle, setToggle}) => {
             <div className='col-span-4'>Press Pipe </div>            
             <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='hh:mm' type="number"
             value={puitsParam.pression_pipe} onChange={(e)=> setPuitsParam(prev => ({...puitsParam, pression_pipe : e.target.value}))}
-            id="pression_pipe" name='pression_pipe' />
+            id="pression_pipe" name='pression_pipe' disabled={disabled}/>
             <div className='col-span-1 pt-2 text-gray-700'>kg/cm2</div>
 
             <div className='col-span-4'>Temp Pipe </div>            
             <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='hh:mm' type="number"
             value={puitsParam.temperature_pipe} onChange={(e)=> setPuitsParam(prev => ({...puitsParam, temperature_pipe : e.target.value}))}
-            id="temperature_pipe" name='temperature_pipe' />
+            id="temperature_pipe" name='temperature_pipe' disabled={disabled}/>
             <div className='col-span-1 pt-2 text-gray-700'>C</div>
 
             <div className='col-span-4'>Press Tete </div>            
             <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='hh:mm' type="number"
             value={puitsParam.pression_tete} onChange={(e)=> setPuitsParam(prev => ({...puitsParam, pression_tete : e.target.value}))}
-            id="pression_tete" name='pression_tete' />
+            id="pression_tete" name='pression_tete' disabled={disabled}/>
             <div className='col-span-1 pt-2 text-gray-700'>kg/cm2</div>
 
             <div className='col-span-4'>Temp Tete  </div>            
             <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='hh:mm' type="number"
             value={puitsParam.temperature_tete} onChange={(e)=> setPuitsParam(prev => ({...puitsParam, temperature_tete : e.target.value}))}
-            id="temperature_tete" name='temperature_tete' />
+            id="temperature_tete" name='temperature_tete' disabled={disabled}/>
             <div className='col-span-1 pt-2 text-gray-700'>C</div>
 
             <div className='col-span-4'>GOR  </div>            
             <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='hh:mm' type="number"
             value={puitsParam.gor} onChange={(e)=> setPuitsParam(prev => ({...puitsParam, gor : e.target.value}))}
-            id="gor" name='gor' />
+            id="gor" name='gor' disabled={disabled}/>
             <div className='col-span-1 pt-2 text-gray-700'>m3/m3</div>
 
             <div className='col-span-4'>coef K  </div>            
             <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='hh:mm' type="number"
             value={puitsParam.coeff_k} onChange={(e)=> setPuitsParam(prev => ({...puitsParam, coeff_k : e.target.value}))}
-            id="coeff_k" name='coeff_k' />
+            id="coeff_k" name='coeff_k' disabled={disabled}/>
             <div className='col-span-1 pt-2 text-gray-700'></div>
 
           </div>
@@ -158,13 +186,13 @@ const FormPuitsParametres = ({puits, setPuits, date , toggle, setToggle}) => {
             <div className='col-span-4'>Debit G-L  </div>            
             <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='hh:mm' type="number"
             value={glParam.debit_gl} onChange={(e)=> setGlParam(prev => ({...glParam, debit_gl : e.target.value}))}
-            id="debit_gl" name='debit_gl' />
+            id="debit_gl" name='debit_gl' disabled={disabled}/>
             <div className='col-span-1 pt-2 text-gray-700'>m3/d</div>
 
             <div className='col-span-4'>Pression G-L </div>            
             <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='hh:mm' type="number"
             value={glParam.pression_gl} onChange={(e)=> setGlParam(prev => ({...glParam, pression_gl : e.target.value}))}
-            id="pression_gl" name='pression_gl' />
+            id="pression_gl" name='pression_gl' disabled={disabled}/>
             <div className='col-span-1 pt-2 text-gray-700'>Bar</div>
           </div>)}
 
@@ -173,13 +201,13 @@ const FormPuitsParametres = ({puits, setPuits, date , toggle, setToggle}) => {
             <div className='col-span-4'>Debit Eau  </div>            
             <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='hh:mm' type="number"
             value={wParam.debit_eau} onChange={(e)=> setWParam(prev => ({...wParam, debit_eau : e.target.value}))}
-            id="debit_gl" name='debit_gl' />
+            id="debit_gl" name='debit_gl' disabled={disabled}/>
             <div className='col-span-1 pt-2 text-gray-700'>m3/d</div>
 
             <div className='col-span-4'>Pression Eau </div>            
             <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='hh:mm' type="number"
             value={wParam.pression_eau} onChange={(e)=> setWParam(prev => ({...wParam, pression_eau : e.target.value}))}
-            id="pression_eau" name='pression_eau' />
+            id="pression_eau" name='pression_eau' disabled={disabled}/>
             <div className='col-span-1 pt-2 text-gray-700'>Bar</div>
           </div>)}
         </div>
@@ -188,12 +216,13 @@ const FormPuitsParametres = ({puits, setPuits, date , toggle, setToggle}) => {
 
 
         {/* Button */}
+        {show && (
         <div  className='mt-4 w-full flex flex-row'> 
           <button type='submit' className='py-2 px-12  rounded text-base text-white font-semibold shadow-md bg-orange-600 hover:bg-orange-700 hover:shadow-lg ease-in-out duration-150'>
             Valider
           </button>
         </div>
-         
+        )}
       </form> 
       )} 
     </div>

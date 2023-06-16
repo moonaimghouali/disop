@@ -6,9 +6,9 @@ import { toast } from 'react-toastify'
 const FormPuitsProduction = ({puits, date , toggle, setToggle}) => {
 
     const [disabled, setDisabled] = useState(false)
+    const [ show, setShow] = useState(false)
     const [error, setError] =useState({error: false, message : ""})
     const [ouvert, setOuvert] = useState(false)
-    const [ show, setShow] = useState(false)
     // const [ heuresDecimal, setHeuresDecimal] = useState(0)
     const [puitsProd, setPuitsProd] =useState({heures_de_marche : 0, heures_de_marche_string: "", debit_horaire : 0, production_puits : 0, taux_contribution : 0, production_corrigee : 0})
     const heuresRef = useRef(null);

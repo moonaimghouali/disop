@@ -12,7 +12,7 @@ const Planning = () => {
 
     return (
     <div className="flex flex-col h-screen w-screen bg-gray-100 px-8 py-8">
-      <PageHeader subTitle="Planning des" pageName="Prelevements"/>
+      <PageHeader subTitle="Planning des" pageName="Activites"/>
         
         <div className='flex flex-row my-6 items-center px-2 py-2 w-full h-14 bg-white rounded-sm shadow-sm'>
             {/* Bacs Selector */}

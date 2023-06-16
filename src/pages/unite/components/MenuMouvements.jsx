@@ -10,6 +10,7 @@ const MenuMouvements = ({type}) => {
   
   const {loading, uniteBacs, error} = useSelector(state => state.bacs)
   const UniteId = useSelector((state) => state.system.id)
+  
 
   // operations data
   let operationsData = [{id:"All" , operation: "Tous"}, {id:"StockFinal" , operation: "Stock Final"}, 

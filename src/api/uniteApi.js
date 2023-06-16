@@ -161,3 +161,23 @@ export const postCommentaire = async (body) =>{
         console.log(error);
     } 
 }
+
+// ////////////////////////////////////////////////////////////////////////////////////////////////
+//Caracteristiques
+
+export const  fetchCaracteristiques =  (UniteId) =>  {
+    try {
+        return axios.get(`${RouteUnite}/${UniteId}/commentaires`).then((response) => response.data.data)
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const postCaracteristiques = async (body) =>{
+    try {
+        const response = (await axios.post(`${RouteCommentaires}`, body))
+        return response
+    } catch (error) {
+        console.log(error);
+    } 
+}
