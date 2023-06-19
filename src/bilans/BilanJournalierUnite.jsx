@@ -54,8 +54,9 @@ const BilanJournalierUnite = ({data, setBilan}) => {
         <table className='mt-3'>
           <tr className='h-10 bg-gray-50'><th></th> <th>Tonne </th> <th>m3</th> </tr>
           <tr className='h-8 border-b border-gray-100'><td className='font-semibold '>Stock Initial</td> <td>{data.stock_initial_tm}</td> <td>{data.stock_initial_vm}</td></tr>
-          <tr className='h-8 border-b border-gray-100'><td className='font-semibold'>Expedition</td>    <td>{data.expedition_unite_tm}</td> <td>{data.expedition_unite_vm}</td></tr>
           <tr className='h-8 border-b border-gray-100'><td className='font-semibold'>Production</td>    <td>{data.production_unite_tm}</td> <td>{data.production_unite_vm}</td></tr>
+          <tr className='h-8 border-b border-gray-100'><td className='font-semibold'>Expedition</td>    <td>{data.expedition_unite_tm}</td> <td>{data.expedition_unite_vm}</td></tr>
+          <tr className='h-8 border-b border-gray-100'><td className='font-semibold'>Purge</td>    <td>{data.purge_unite_tm}</td> <td>{data.purge_unite_vm}</td></tr>
           <tr className='h-8 border-b border-gray-100'><td className='font-semibold'>Stock Final</td>   <td>{data.stock_final_tm}</td> <td>{data.stock_final_vm}</td></tr>
         </table>
 

@@ -13,20 +13,24 @@ const Mouvements = () => {
   const menuMouvements = useSelector((state) =>state.menus.menuMouvementsValue)
   const {loading, mouvements, error} = useSelector((state) =>state.mouvements)
   const editOptions = { allowEditing: true, allowAdding: true, allowDeleting: true };
+
+  const [MouvementsMenu, setMouvementsMenu] = useState({operation : "All", bac: -1})
   
   const dispatch = useDispatch()
 
   // runs once the component is created 
-  useEffect(()=>{
-    dispatch(updateMenuMouvements({operation : "All" , bac: -1}))
-    dispatch(api.fetchMouvements({operation : menuMouvements.operation , bac :menuMouvements.bac, UniteId}))
-    console.log(mouvements);
-  },[])
+  // useEffect(()=>{
+  //   // dispatch(updateMenuMouvements({operation : "All" , bac: -1}))
+  //   dispatch(api.fetchMouvements({operation : MenuMouvements.operation , bac :MenuMouvements.bac, UniteId}))
+  //   // console.log(mouvements);
+  // },[])
 
   // runs everytime the menumouvements changes
+  
+
   useEffect(()=>{
-    dispatch(api.fetchMouvements({operation : menuMouvements.operation , bac :menuMouvements.bac, UniteId}))
-  },[ menuMouvements.operation , menuMouvements.bac])
+    dispatch(api.fetchMouvements({operation : MouvementsMenu.operation , bac : MouvementsMenu.bac, UniteId}))
+  },[ MouvementsMenu.operation , MouvementsMenu.bac])
 
 
   return (
@@ -35,7 +39,7 @@ const Mouvements = () => {
 
       <div className='h-full w-full my-8 flex flex-col gap-6'>
         {/* Menu de Controle */}
-        <MenuMouvements type={true} />
+        <MenuMouvements type={true} MouvementsMenu={MouvementsMenu} setMouvementsMenu={setMouvementsMenu}/>
 
         {/* table de mouvements */}
         <div className='w-full h-full bg-white'>

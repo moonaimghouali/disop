@@ -6,10 +6,10 @@ import { updateBilanMouvement } from '../store/slices/BilansSlice'
 import { useSelector , useDispatch} from 'react-redux'
 import { calculResultatMouvement, calculResultatJournee } from '../utils/CalculProduction'
 
-const MouvementForm = () => {
+const MouvementForm = ({MouvementsMenu, setMouvementsMenu}) => {
 
     const [error, setError] = useState({error:false , errorMessage:""})
-    let menuMouvements = useSelector((state) =>state.menus.menuMouvementsValue)
+    // let menuMouvements = useSelector((state) =>state.menus.menuMouvementsValue)
     const dispatch = useDispatch()
 
     // useEffect(()=>{    
@@ -21,16 +21,15 @@ const MouvementForm = () => {
 
         e.preventDefault()
         // verify the user has selected an operation and a bac
-        if(menuMouvements.operation ==="NAN"){
+        if(MouvementsMenu.operation ==="NAN"){
             setError({error:true , errorMessage:"Veiullez choisir une operation."})
             return
         }
-        if(menuMouvements.bac ==="NAN") {
+        if(MouvementsMenu.bac ==="NAN") {
             setError({error:true , errorMessage:"Veiullez choisir un bac."})
             return
         }
-
-            setError({error:false , errorMessage:""})
+            
         let FormValues = {
             initiale_densite : e.target.initiale_densite.value,
             initiale_cote : e.target.initiale_cote.value,
@@ -41,21 +40,24 @@ const MouvementForm = () => {
         }
          
         // validate the inputs
-        // validateMouvementForm()
-        // if error set error 
-        // else delete all errors
-        let resultat;
-        if(menuMouvements.operation === "StockFinal") {
-            resultat = await calculResultatJournee(FormValues, menuMouvements.bac)
-        }else{
-            resultat = await calculResultatMouvement(FormValues, menuMouvements.bac)
+        let {error, errorMessage} = validateMouvementForm(FormValues, MouvementsMenu.operation)
+        if (error) {
+            setError({error : error, errorMessage : errorMessage})
+            return
         }
-
+        setError({error:false , errorMessage:""})
+        
+        let resultat;
+        if(MouvementsMenu.operation === "StockFinal") {
+            resultat = await calculResultatJournee(FormValues, MouvementsMenu.bac)
+        }else{
+            resultat = await calculResultatMouvement(FormValues, MouvementsMenu.bac)
+        }
         // suvgarder le bilan dans state
         let bilan = {
             id : null,
             date_operation : new Date(),
-            type_operation : menuMouvements.operation,
+            type_operation : MouvementsMenu.operation,
             initiale_cote : resultat.valeursInitiales.cote,
             initiale_temperature : resultat.valeursInitiales.temperature,
             initiale_densite : resultat.valeursInitiales.densite,
@@ -72,7 +74,7 @@ const MouvementForm = () => {
             finale_masse_standard : Number (resultat.valeursFinales.masse_standard),
             resultat_volume_standard : Number (resultat.resultat_volume_standard ),
             resultat_masse_standard : Number (resultat.resultat_masse_standard),
-            BacId : menuMouvements.bac
+            BacId : MouvementsMenu.bac
         }
         console.log(bilan);
         dispatch(updateBilanMouvement({bilan : bilan , hide: false}))
@@ -82,9 +84,9 @@ const MouvementForm = () => {
     <div className='h-full w-1/2 '>
         <form className='h-full w-full flex flex-col gap-6' method='POST' onSubmit={handleSubmit}>
             
-            <MenuMouvements type={false}/>
+            <MenuMouvements type={false} MouvementsMenu={MouvementsMenu} setMouvementsMenu={setMouvementsMenu} />
             {error.error && (<div className=' text-red-600 text-base font-semibold'>{error.errorMessage}</div>)}
-            <MouvementMesuresForm />
+            <MouvementMesuresForm MouvementsMenu={MouvementsMenu} setMouvementsMenu={setMouvementsMenu}/>
             {/* Button  */}
             <div className='flex w-full items-center justify-center px-20'>
                 <button type="submit" className='h-10 w-full rounded-sm text-lg text-white font-semibold shadow-md bg-green-600 hover:bg-green-700 hover:shadow-lg ease-in-out duration-150'>

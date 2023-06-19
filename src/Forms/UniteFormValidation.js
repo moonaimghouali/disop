@@ -20,9 +20,25 @@ export const validateCommentaireForm = (titre, contenu) =>{
     }
 }
 
-export const validateMouvementForm = () =>{
-    console.log("validation")
-    
+export const validateMouvementForm = (fv, op) =>{
+    if (op !== "StockFinal") {
+        if ((fv.initiale_densite <0.5) || (fv.initiale_densite > 0.6 && fv.initiale_densite < 0.690) || (fv.initiale_densite > 0.87)) {
+            return {error:true, errorMessage:"Veuillez verifier la valeur de la densite initiale."} 
+        }
+        
+        if ((fv.initiale_temperature <0) || (fv.initiale_temperature > 75 ) ) {
+            return {error:true, errorMessage:"Veuillez verifier la valeur de la temperature initiale."} 
+        }
+    }
+
+    if ((fv.finale_densite <0.5) || (fv.finale_densite > 0.6 && fv.finale_densite < 0.690) || (fv.finale_densite > 0.87)) {
+        return {error:true, errorMessage:"Veuillez verifier la valeur de la densite finale."} 
+    }
+    if ((fv.finale_temperature <0) || (fv.finale_temperature > 75 ) ) {
+        return {error:true, errorMessage:"Veuillez verifier la valeur de la temperature initiale."} 
+    }
+
+    return {error:false, errorMessage:""}
 }
 
 export const validateNouveauBacForm = (formValues) =>{

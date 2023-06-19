@@ -2,9 +2,9 @@ import React from 'react'
 import InputField from '../../../components/InputField'
 import { useSelector } from 'react-redux'
 
-const MouvementMesuresForm = () => {
-  let menuMouvements = useSelector((state) => state.menus.menuMouvementsValue)
-  let hide = (menuMouvements.operation ==="StockFinal")? true : false; 
+const MouvementMesuresForm = ({MouvementsMenu, setMouvementsMenu}) => {
+  // let menuMouvements = useSelector((state) => state.menus.menuMouvementsValue)
+  let hide = (MouvementsMenu.operation ==="StockFinal")? true : false; 
 
   return (
     <div className='bg-white w-full h-fit px-3 py-4 rounded-sm shadow-sm grid grid-cols-3 gap-4 gap-x-7'>

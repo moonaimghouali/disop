@@ -87,8 +87,9 @@ export const printBilanJournalierUnite = (data,nom_region, nom_unite, code_unite
     var tableData = [
     ["", "m3", "Tonne metrique"],
     ["Stock Initial", `${data.stock_initial_vm}`, `${data.stock_initial_tm}`],
-    ["Expedition", `${data.expedition_unite_vm}`, `${data.expedition_unite_tm}`],
     ["Production", `${data.production_unite_vm}`, `${data.production_unite_tm}`],
+    ["Expedition", `${data.expedition_unite_vm}`, `${data.expedition_unite_tm}`],
+    ["Purge", `${data.purge_unite_vm}`, `${data.purge_unite_tm}`],
     ["Stock Final", `${data.stock_final_vm}`, `${data.stock_final_tm}`],
     ];
 
@@ -105,8 +106,8 @@ export const printBilanJournalierUnite = (data,nom_region, nom_unite, code_unite
     }
 
     doc.setFontSize(12);
-    doc.text(`Le Directeur Explotation`, 20, doc.internal.pageSize.height - 20);
+    doc.text(`Le Responsable d'Unite`, 20, doc.internal.pageSize.height - 20);
 
     // Save the PDF
-    doc.save(`Bilan_Unite-${code_unite}-${data.journee_production}.pdf`);
+    doc.save(`Bilan-Unite-${code_unite}-${data.journee_production}.pdf`);
 }

@@ -6,15 +6,17 @@ import {useDispatch, useSelector} from 'react-redux'
 import { updateMenuMouvements, initializerMenuMouvement } from '../../../store/slices/menusSlice'
 import * as api from '../../../api/uniteApi'
 
-const MenuMouvements = ({type}) => {
+const MenuMouvements = ({type, MouvementsMenu, setMouvementsMenu}) => {
   
   const {loading, uniteBacs, error} = useSelector(state => state.bacs)
+  // const uniteBacs = []
   const UniteId = useSelector((state) => state.system.id)
   
 
   // operations data
   let operationsData = [{id:"All" , operation: "Tous"}, {id:"StockFinal" , operation: "Stock Final"}, 
   {id:"Expedition" , operation: "Expedition"}, {id:"Purge" , operation: "Purge"}]
+
   if(!type){operationsData = operationsData.filter(operation => operation.id !== "All")}
   let operationsFields = { text: 'operation', value: 'id' };
 
@@ -59,7 +61,7 @@ const MenuMouvements = ({type}) => {
         value={-1}
         dataSource={bacsData} 
         placeholder={"Choisir un bac"}
-        change={(e) => dispatch(updateMenuMouvements({bac : e.value}))}/>
+        change={(e) => setMouvementsMenu(prev=>({operation: prev.operation, bac : e.value  }))}/>
         
         </div>
     
@@ -71,7 +73,7 @@ const MenuMouvements = ({type}) => {
         value={"All"}
         dataSource={operationsData} 
         placeholder={"type de mouvement"}
-        change={(e) => dispatch(updateMenuMouvements({operation : e.value }))}/>
+        change={(e) => setMouvementsMenu(prev=>({operation: e.value, bac : prev.bac  }))}/>
         </div>
 
 

@@ -65,14 +65,15 @@ const rowSelected = ()=>{
           
           <ColumnsDirective >
             <ColumnDirective field='journee_production' headerText='Journee' textAlign='left'/>
-            <ColumnDirective field='stock_initial_tm' headerText='Stock Initial(m3)' textAlign='left'/>
-            <ColumnDirective field='stock_initial_vm' headerText='Stock Initial(m3)' textAlign='left'/>
+            <ColumnDirective field='stock_initial_tm' headerText='Stock Initial(TM)' textAlign='left'/>
+            {/* <ColumnDirective field='stock_initial_vm' headerText='Stock Initial(m3)' textAlign='left'/> */}
             <ColumnDirective field='production_unite_tm' headerText='Production (TM)' textAlign='left'/>
-            <ColumnDirective field='production_unite_vm' headerText='Production (m3)' textAlign='left'/>
+            {/* <ColumnDirective field='production_unite_vm' headerText='Production (m3)' textAlign='left'/> */}
             <ColumnDirective field='expedition_unite_tm' headerText='Expedition (TM)' textAlign='left'/>
-            <ColumnDirective field='expedition_unite_vm' headerText='Expedition (m3)' textAlign='left'/>
-            <ColumnDirective field='stock_final_tm' headerText='Stock FJ(m3)' textAlign='left'/>
-            <ColumnDirective field='stock_final_vm' headerText='Stock FJ(m3)' textAlign='left'/>
+            <ColumnDirective field='purge_unite_tm' headerText='Purge (TM)' textAlign='left'/>
+            {/* <ColumnDirective field='expedition_unite_vm' headerText='Expedition (m3)' textAlign='left'/> */}
+            <ColumnDirective field='stock_final_tm' headerText='Stock Final(TM)' textAlign='left'/>
+            {/* <ColumnDirective field='stock_final_vm' headerText='Stock FJ(m3)' textAlign='left'/> */}
             <ColumnDirective field='validation_xp' headerText='Validation' textAlign='Center' template={validationTemplate} width={"150"} />
               
           </ColumnsDirective>

@@ -12,8 +12,6 @@ const Baremage = () => {
   let [baremeTable, setBaremeTable] = useState([])
   let [bareme, setBareme] = useState({})
   
-
-
   useEffect( ()=>{
   let fn = async () =>{
     //setBaremeTable([])
@@ -25,7 +23,6 @@ const Baremage = () => {
         try {
           let responseBareme = await api.fetchBareme(bac[0].id);
           if(responseBareme.data.success) {
-            console.log("here");
             setBareme(responseBareme.data.data[0])
           }
           
@@ -40,7 +37,7 @@ const Baremage = () => {
       let temp = []
       let array = []
 
-        values.map((item) =>{
+        values.map((item) => {
           // row[`mm_valeur_${j}0`] = item.volume_apparent
           temp.push(item.volume_apparent)
           j++
@@ -72,8 +69,8 @@ const Baremage = () => {
       <div className='w-1/2 h-32 flex flex-col my-4 rounded-sm shadow-sm bg-white py-2 px-3' >
         <div className='text-xl font-semibold mt-1'>Bac "{id}"</div>
         <div className='mt-2 flex flex-row gap-8'>
-          <div>etablie le : <b >{new Date(bareme.date_mis_a_jour).toISOString().split("T")[0]}</b> </div>
-          <div>a mettre a jour le : <b>{new Date(bareme.date_mis_a_jour).toISOString().split("T")[0]}</b></div>
+          <div>etablie le : <b >{/*new Date(bareme.date_creation).toISOString().split("T")[0]*/ bareme.date_creation}</b> </div>
+          <div>a mettre a jour le : <b>{/*new Date(bareme.date_mis_a_jour).toISOString().split("T")[0]*/ bareme.date_mis_a_jour}</b></div>
         </div>
         <div className='mt-2 '> etablie par : <b >{bareme.etablie_par}</b></div>
       </div>

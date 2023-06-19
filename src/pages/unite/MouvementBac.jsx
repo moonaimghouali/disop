@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import MenuMouvements from './components/MenuMouvements';
 import MouvementForm from "../../Forms/MouvementForm";
 import MouvementBilan from "./components/MouvementBilan";
@@ -10,10 +10,11 @@ import {calculCoeffCorrection} from '../../utils/CalculProduction'
 
 const MouvementBac = () => {
   const dispatch = useDispatch() 
+  const [MouvementsMenu, setMouvementsMenu] = useState({operation : "NAN", bac: "NAN"})
 
-  useEffect(() =>{
-    dispatch(updateMenuMouvements({operation : "NAN" , bac: "NAN"}))
-  }, [])
+  // useEffect(() =>{
+  //   dispatch(updateMenuMouvements({operation : "NAN" , bac: "NAN"}))
+  // }, [])
 
   return (
     <div className="flex flex-col h-screen w-screen bg-gray-100 px-8 pb-8 pt-14">
@@ -29,7 +30,7 @@ const MouvementBac = () => {
       </div> */}
 
       <div className="flex flex-row h-full w-full my-6 gap-6 ">
-        <MouvementForm/>
+        <MouvementForm MouvementsMenu={MouvementsMenu} setMouvementsMenu={setMouvementsMenu}/>
         <MouvementBilan/>
       </div>
 

@@ -83,10 +83,10 @@ const MouvementBilan = () => {
               <div>Cote : <b>{bilan.initiale_cote.coteDm}</b>d <b> {bilan.initiale_cote.coteMm}</b>m</div>
               <div>Temperature : <b>{bilan.initiale_temperature}</b>C</div>
               <div>Densite : <b>{bilan.initiale_densite}</b></div>
-              <div className=' text-ls font-medium'>Volume Apparent : <b>{bilan.initiale_volume_apparent}</b> m3</div>
+              <div className=' text-ls font-medium'>Volume Apparent : <b>{bilan.initiale_volume_apparent} m3</b> </div>
               <div className=' text-ls font-medium'>Coeff Correction k : <b>{bilan.initiale_coef_correction}</b></div>
-              <div className=' text-ls font-medium'>Volume Standard : <b>{bilan.initiale_volume_standard}</b> m3</div>
-              <div className=' text-ls font-medium'>Masse Standard : <b>{bilan.initiale_masse_standard}</b> T</div>
+              <div className=' text-ls font-medium'>Volume Standard : <b>{bilan.initiale_volume_standard} m3</b> </div>
+              <div className=' text-ls font-medium'>Masse Standard : <b>{bilan.initiale_masse_standard} T</b> </div>
               </div>
             )}
             {/* Resultat Finale */}
@@ -95,13 +95,18 @@ const MouvementBilan = () => {
               <div>Cote : <b>{bilan.finale_cote.coteDm}</b>d <b> {bilan.finale_cote.coteMm}</b>m</div>
               <div>Temperature : <b>{bilan.finale_temperature}</b>C</div>
               <div>Densite : <b>{bilan.finale_densite}</b></div>
-              <div className=' text-ls font-medium'>Volume Apparent : <b>{bilan.finale_volume_apparent}</b> m3</div>
+              <div className=' text-ls font-medium'>Volume Apparent : <b>{bilan.finale_volume_apparent} m3</b> </div>
               <div className=' text-ls font-medium'>Coeff Correction k : <b>{bilan.finale_coef_correction}</b></div>
-              <div className=' text-ls font-medium'>Volume Standard : <b>{bilan.finale_volume_standard}</b> m3</div>
-              <div className=' text-ls font-medium'>Masse Standard : <b>{bilan.finale_masse_standard}</b> T</div>
-              </div>
+              <div className=' text-ls font-medium'>Volume Standard : <b>{bilan.finale_volume_standard} m3</b> </div>
+              <div className=' text-ls font-medium'>Masse Standard : <b>{bilan.finale_masse_standard} T</b> </div>
+              {bilan.type_operation !== "StockFinal" && (
+              <>
+              <div className='mt-4 text-base font-medium'>Resultat de mouvement en m3 : <b>{bilan.resultat_volume_standard} m3</b></div>
+              <div className='mt-1 text-base font-medium'>Resultat de mouvement en m3 : <b>{bilan.resultat_masse_standard} T</b></div>
+              </>
+              )}
             </div>
-
+          </div>
         </div>
 
         {/* Button */}
