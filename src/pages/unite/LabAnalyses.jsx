@@ -44,7 +44,7 @@ const LabAnalyses = () => {
     }
 
     let Body = { analyse : analyseBody, anomalie : anomalieBody}
-    console.log("body", Body);
+    // console.log("body", Body);
     let res = await api.postAnalyses(Body)
     if (res.data.success) {
       toast.success("Les caracteristiques sont enregistrees.")
@@ -78,28 +78,28 @@ const LabAnalyses = () => {
 
             <div className='col-span-4'>Densite </div>            
             <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='__.__' type="number"
-            id="densite" name='densite' />
-            <div className='col-span-1 pt-2 text-gray-700'>kg/cm2</div>
+            id="densite" name='densite' required min={0} step=".01"/>
+            <div className='col-span-1 pt-2 text-gray-700'>kg/m3</div>
 
             <div className='col-span-4'>Temperature </div>            
             <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='__.__' type="number"
-            id="temperature" name='temperature' />
-            <div className='col-span-1 pt-2 text-gray-700'>kg/cm2</div>
+            id="temperature" name='temperature' required min={0} step=".01"/>
+            <div className='col-span-1 pt-2 text-gray-700'>C</div>
 
             <div className='col-span-4'>Salinite </div>            
             <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='__.__' type="number"
-            id="salinite" name='salinite' />
-            <div className='col-span-1 pt-2 text-gray-700'>kg/cm2</div>
+            id="salinite" name='salinite' required min={0} step=".01"/>
+            <div className='col-span-1 pt-2 text-gray-700'>mg/l</div>
 
             <div className='col-span-4'>TVR </div>            
             <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='__.__' type="number"
-            id="tvr" name='tvr' />
+            id="tvr" name='tvr' required min={0} step=".01"/>
             <div className='col-span-1 pt-2 text-gray-700'>kg/cm2</div>
 
             <div className='col-span-4'>BSW </div>            
             <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='__.__' type="number"
-            id="bsw" name='bsw' />
-            <div className='col-span-1 pt-2 text-gray-700'>kg/cm2</div>
+            id="bsw" name='bsw' required min={0} step=".001"/>
+            <div className='col-span-1 pt-2 text-gray-700'>%</div>
           </div>
 
           <div className='flex w-full items-center justify-center mt-8'>

@@ -7,7 +7,7 @@ const EpMonitoring = () => {
     const [menu, setMenu] = useState({perimetre : -1, puits : -1})
     const [puits, setPuits] = useState(null)
     const [ show, setShow ] = useState(false)
-    const [toggle, setToggle] = useState(true)
+    const [toggle, setToggle] = useState(false)
 
     useEffect(()=>{
         if (menu.puits !== -1) {

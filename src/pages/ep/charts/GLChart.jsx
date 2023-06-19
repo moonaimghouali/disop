@@ -1,6 +1,6 @@
 import React from 'react'
 import { ChartComponent, SeriesCollectionDirective, SeriesDirective, LineSeries,   Inject, Tooltip, ColumnSeries,  Category, Legend, DataLabel } from '@syncfusion/ej2-react-charts'
-import {productionData} from "../../../data/chartsData"
+import {glData} from "../../../data/epData"
 
 const GLChart = ({data}) => {
   return (
@@ -9,7 +9,7 @@ const GLChart = ({data}) => {
       <div>
         <div className='text-lg font-semibold w-full text-center mt-1'>GL Injection</div>  
         <ChartComponent
-        primaryXAxis={{valueType:"Category", labelFormat:"{category}" , labelPlacement:"OnTicks", edgeLabelPlacement:"Shift", labelIntersectAction:"MultipleRows"}}
+        primaryXAxis={{valueType:"DateTime", labelFormat:'hm' , labelPlacement:"OnTicks", edgeLabelPlacement:"Shift", labelIntersectAction:"MultipleRows"}}
         primaryYAxis={{ labelFormat:"{value} m3/j"}} 
         height="210"
         tooltip={{enable:true}} legendSettings={{visible:true}}> 
@@ -18,8 +18,8 @@ const GLChart = ({data}) => {
 
           <SeriesCollectionDirective>
 
-            <SeriesDirective type="Line" drawType="Line" name="Pression" dataSource={data} 
-            xName="temps" yName="debit_gl" marker={{dataLabel :{visible:true}, visible:true}} ></SeriesDirective>
+            <SeriesDirective type="Line" drawType="Line" name="Pression" dataSource={glData} 
+            xName="temps" yName="inj" marker={{dataLabel :{visible:true}, visible:true}} ></SeriesDirective>
 
           </SeriesCollectionDirective>
 
@@ -31,7 +31,7 @@ const GLChart = ({data}) => {
         <div className='text-lg font-semibold w-full text-center mt-1'>Pression GL</div>
         
         <ChartComponent
-        primaryXAxis={{valueType:"Category", labelFormat:"{category}" , labelPlacement:"OnTicks", edgeLabelPlacement:"Shift", labelIntersectAction:"MultipleRows"}}
+        primaryXAxis={{valueType:"DateTime", labelFormat:'hm', labelPlacement:"OnTicks", edgeLabelPlacement:"Shift", labelIntersectAction:"MultipleRows"}}
         primaryYAxis={{ labelFormat:"{value} Bars"}} 
         height="210"
         tooltip={{enable:true}} legendSettings={{visible:true}}> 
@@ -40,7 +40,7 @@ const GLChart = ({data}) => {
 
           <SeriesCollectionDirective>
             <SeriesDirective type="Line" drawType="Line" name="Temperature" dataSource={data} 
-            xName="temps" yName="pression_gl" marker={{dataLabel :{visible:true}, visible:true}} ></SeriesDirective>
+            xName="temps" yName="pression" marker={{dataLabel :{visible:true}, visible:true}} ></SeriesDirective>
           </SeriesCollectionDirective>
 
         </ChartComponent>

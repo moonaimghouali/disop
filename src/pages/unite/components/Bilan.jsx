@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateBilanUnite }from '../../../store/slices/BilansSlice'
 import * as api from '../../../api/uniteApi'
 import jsPDF from 'jspdf';
+import { toast } from 'react-toastify';
 
-const Bilan = () => {
+const Bilan = ({setPopUp}) => {
   const [error, setError] = useState({error:false , errorMessage:""})
   const nomUnite = useSelector(state =>state.system.nom)
   const user = useSelector((state)=> state.user.userInfo)
@@ -13,46 +14,35 @@ const Bilan = () => {
   const dispatch = useDispatch()
 
   
-
-  const handleImpression = () =>{
-    const doc = new jsPDF({
-			format: 'a4',
-			unit: 'px',
-		});
-
-		// Adding the fonts.
-		doc.setFont('Inter-Regular', 'normal');
-
-		doc.html(reportTemplateRef.current, {
-			async callback(doc) {
-				await doc.save('document');
-			},
-		});
-
-  }
+  useEffect(()=>{
+    console.log("data", hide , bilanProductionUnite , bilanProductionBacs, bacsOperations );
+  },[])
 
   const handleAnnulment = () =>{
     dispatch(updateBilanUnite({bilanProductionUnite : {}, bilanProductionBacs : [], bacsOperations : [], hide: true}))
     setError({error:false , errorMessage:""})
+    setPopUp(false)
   }
 
   const handleValidation = async () =>{
     let body  = {...bilanProductionUnite, validation_resp_unite : true , validation_xp : false}
     let response = await api.postUniteProduction(body)
     if (response.data.success) {
+      toast.success("La production Journaliere de l'unite est enregistree.")
       setError({error:false , errorMessage:""})
-      dispatch(api.fetchUniteProduction(body.UniteId))
       dispatch(updateBilanUnite({bilanProductionUnite : {}, bilanProductionBacs : [], bacsOperations : [], hide: true}))
+      dispatch(api.fetchUniteProduction(body.UniteId, new Date()))
+      setPopUp(false)
     }else{
       setError({error:true , errorMessage:response.data.message})
     }
   }
 
-  useEffect(()=>{
+  // useEffect(()=>{
     
-    dispatch(updateBilanUnite({bilanProductionUnite : {}, bilanProductionBacs : [], bacsOperations:[], hide: true}))
+  //   dispatch(updateBilanUnite({bilanProductionUnite : {}, bilanProductionBacs : [], bacsOperations:[], hide: true}))
     
-  },[])
+  // },[])
 
   return (
     <div onClick={(e)=> e.stopPropagation()} className='h-full my-8 w-1/2 flex flex-col p-3 items-center bg-white rounded-sm shadow-sm z-50'>
@@ -105,7 +95,7 @@ const Bilan = () => {
         
         ))}
       </div>
-      <div className=' py-3 w-full flex flex-row items-center justify-center gap-4'>
+      <div className=' py-3 bottom-0 w-full flex flex-row items-center justify-center gap-4'>
         <button onClick={handleValidation} className='h-10 w-full rounded-sm text-lg text-white font-semibold shadow-md bg-green-600 hover:bg-green-700 hover:shadow-lg ease-in-out duration-150'>Valider</button>
         <button onClick={handleAnnulment} className='h-10 w-full rounded-sm text-lg text-white font-semibold shadow-md bg-red-600 hover:bg-red-700 hover:shadow-lg ease-in-out duration-150'>Annuler</button>
 

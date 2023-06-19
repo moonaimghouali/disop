@@ -18,19 +18,18 @@ const Mouvements = () => {
   
   const dispatch = useDispatch()
 
-  // runs once the component is created 
-  // useEffect(()=>{
-  //   // dispatch(updateMenuMouvements({operation : "All" , bac: -1}))
-  //   dispatch(api.fetchMouvements({operation : MenuMouvements.operation , bac :MenuMouvements.bac, UniteId}))
-  //   // console.log(mouvements);
-  // },[])
-
-  // runs everytime the menumouvements changes
-  
-
   useEffect(()=>{
     dispatch(api.fetchMouvements({operation : MouvementsMenu.operation , bac : MouvementsMenu.bac, UniteId}))
   },[ MouvementsMenu.operation , MouvementsMenu.bac])
+
+  const DateTemp = (props) =>{
+    let date = new Date ( props.date_operation)
+    let output = date.toLocaleString("fr-FR",{month : "numeric", day : "numeric", hour : "2-digit", minute : "2-digit"})
+
+    return (
+      <div className='font-semibold'>{output}</div>
+    )
+  }
 
 
   return (
@@ -47,7 +46,7 @@ const Mouvements = () => {
              <GridComponent height={"100%"} dataSource={mouvements} editOptions={editOptions} allowPaging={true} allowPdfExport={true} allowExcelExport={true} pageSettings={{pageSize:9}}>
           
              <ColumnsDirective >
-               <ColumnDirective field='date_operation' headerText='Date' textAlign='left'/>
+               <ColumnDirective field='date_operation' headerText='Date' template={DateTemp} textAlign='left'/>
                <ColumnDirective field='type_operation' headerText='Mouvement' textAlign='left' />
                <ColumnDirective field='Bac.code_bacs' headerText='Bac' textAlign='left'/>
                {/* <ColumnDirective field='initiale_cote' headerText='Cote' textAlign='left'/>

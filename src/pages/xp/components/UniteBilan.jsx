@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {updateBilanUniteRegion} from '../../../store/slices/BilansSlice'
 import * as api from '../../../api/xpApi'
+import { toast } from 'react-toastify'
 
 const UniteBilan = ({setShowUnite}) => {
 
@@ -12,17 +13,19 @@ const UniteBilan = ({setShowUnite}) => {
   const handleValidation = async ()=> {
     
     let obj = {UniteId : bilanProductionUnite.id, UniteProductionId :bilanProductionUnite.production.id }
-    console.log(obj);
+    // console.log(obj);
       let response = await api.updateUnitesProductionValidation(obj)     
-      dispatch(api.fetchRegionUnitesProduction({RegionId : bilanProductionUnite.RegionId , journee_production : bilanProductionUnite.production.journee_production}))   
       let response2 = await api.postUnitesRealisation(bilanProductionUnite) 
       
       console.log("validation", response , "realisation", response2);
-  }
+      toast.success("La production journaliere de l'unite est validee.")
+      dispatch(api.fetchRegionUnitesProduction({RegionId : bilanProductionUnite.RegionId , journee_production : bilanProductionUnite.production.journee_production}))   
+      setShowUnite(prev => false)
+    }
 
   const handleAnnulment = ()=> {
     dispatch(updateBilanUniteRegion({hide : true , bilanProductionUnite : {}, mouvements : []}))
-    setShowUnite(prev => !prev)
+    setShowUnite(prev => false)
   }
 
   return (

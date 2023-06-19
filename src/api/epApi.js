@@ -17,6 +17,14 @@ export const fetchPuits = createAsyncThunk("puits/fetchPuits", (perimetreId) => 
     }
 })
 
+export const fetchPerimetrePuits =  (perimetreId) =>  {
+    try {
+        return axios.get(`${RoutePuits}?perimetre=${perimetreId}`).then((response) => response.data.data)
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 // //////////////////////////////////////////////////////////////////////////////
 // PuitsProduction
 

@@ -39,17 +39,18 @@ const rowSelected = ()=>{
   const handleClick = async () =>{
     
     let response = await api.fetchUniteProductionJournaliere(UniteId)
+    let Bacs = response.data.data
 
-    if (response.data.data.length === 0) {
-      toast.error("Vous ne pouvez pas cloturer la production, Aucun mouvement trouvee pour la journee courante")
-      return
-    }
+    // if (!validateBacsOperations(Bacs)) {
+    //   toast.error("Vous ne pouvez pas cloturer la production, Aucun mouvement trouvee pour la journee courante")
+    //   return
+    // }
 
     let resultat = await calculUniteProductionJournaliere(response.data.data)
-    
-    if (resultat) {
-      setPopUp(prev => !prev)
-      dispatch(updateBilanUnite({bilanProductionUnite : resultat.bilanProductionUnite, bilanProductionBacs : resultat.bilanProductionBacs, bacsOperations : response.data.data, hide: false}))
+
+    if (true) {
+      dispatch(updateBilanUnite({bilanProductionUnite : resultat.bilanProductionUnite, bilanProductionBacs : resultat.bilanProductionBacs, bacsOperations : Bacs, hide: false}))
+      setPopUp(true)
     }else{
       toast.warn("Vous ne pouvez pas cloturer la production, veiullez verifier les mouvements de la journee precedente")
       return

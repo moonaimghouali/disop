@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateBilanUniteRegion, updateBilanRegion } from '../../../store/slices/BilansSlice';
 import { fetchUniteProductionJournaliere } from '../../../api/uniteApi';
 import { calculRegionProductionJournaliere } from '../../../utils/CalculProduction';
+import { toast } from 'react-toastify';
 
 const UniteProductionData = ({productionData, setShowUnite, setShowRegion}) => {
 
@@ -33,7 +34,7 @@ const UniteProductionData = ({productionData, setShowUnite, setShowRegion}) => {
           setShowUnite(prev => !prev)
 
         }else{
-          alert("empty")
+          toast.warn("Les donnees de production de cette unites ne sont pas disponible.")
         }     
       } 
     }

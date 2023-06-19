@@ -10,6 +10,7 @@ const Previsions = () => {
   const [menu, setMenu] = useState({date : new Date()})
   const [prevRegion, setPrevRegion] = useState([])
   const [perimetres, setPerimetres] = useState([])
+  
 
   useEffect(()=>{
 
@@ -30,7 +31,7 @@ const Previsions = () => {
       <div className='mt-4 w-full h-full flex flex-col gap-4'>
         <div className='w-full flex flex-row items-center p-2 h-fit bg-white rounded-sm mb-2 shadow-sm'>
           <div className='w-fit mr-4'>
-            <DatePickerComponent format="yyyy" start='Decade' depth='Decade' placeholder='Choisir une date' value={menu.date}  change={e=> setMenu({date : e.value})}></DatePickerComponent>
+            <DatePickerComponent format="yyyy" start='Decade' depth='Decade' max={2024} placeholder='Choisir une date' value={menu.date}  change={e=> setMenu({date : e.value})}></DatePickerComponent>
           </div>
         </div>
 

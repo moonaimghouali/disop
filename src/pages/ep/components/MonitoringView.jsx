@@ -12,8 +12,8 @@ const MonitoringView = ({puits, setToggle}) => {
        {puits.statut_puits? 
        ( 
         <>
-        <PuitsChart data ={[]}/>
-        {(puits?.type_puits === "PPHGL" || puits?.type_puits === "PPHSGL") && (<GLChart data={[]}/>)}
+        {/* <PuitsChart data ={[]}/> */}
+        {/* {(puits?.type_puits === "PPHGL" || puits?.type_puits === "PPHSGL") && (<GLChart data={[]}/>)} */}
         </>
        ) : 
        (

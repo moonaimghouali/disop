@@ -14,18 +14,18 @@ const MouvementMesuresForm = ({MouvementsMenu, setMouvementsMenu}) => {
       
       {/* Cote */}
       <div className='text-sm font-medium text-end align-middle'>Cote (mm)</div> 
-      <InputField label="" required={true} type="number" id="initiale_cote" name="initiale_cote" placeholder="Inserer la cote du bac"  isDisabled={hide}/>
-      <InputField label="" required={true} type="number" id="finale_cote" name="finale_cote" placeholder="Inserer la cote du bac"  />
+      <InputField label="" required={true} type="number" id="initiale_cote" name="initiale_cote" placeholder="Inserer la cote du bac"  isDisabled={hide} min={0}/>
+      <InputField label="" required={true} type="number" id="finale_cote" name="finale_cote" placeholder="Inserer la cote du bac" min={0}  />
       
       {/* Temperature */}
       <div className='text-sm font-medium text-end align-middle'>Temperature (C)</div> 
-      <InputField label="" required={true} type="number" id="initiale_temperature" name="initiale_temperature" placeholder="Inserer la cote du bac" isDisabled={hide}/>
-      <InputField label="" required={true} type="number" id="finale_temperature" name="finale_temperature" placeholder="Inserer la cote du bac" />
+      <InputField label="" required={true} type="number" id="initiale_temperature" name="initiale_temperature" placeholder="Inserer la cote du bac" isDisabled={hide} min={0} step=".01"/>
+      <InputField label="" required={true} type="number" id="finale_temperature" name="finale_temperature" placeholder="Inserer la cote du bac" min={0} step=".01" />
       
       {/* Densite */}
       <div className='text-sm font-medium text-end align-middle'>Densite (15 C)</div> 
-      <InputField label="" required={true} type="number" id="initiale_densite" name="initiale_densite" placeholder="Inserer la densite du bac" isDisabled={hide}/>
-      <InputField label="" required={true} type="number" id="finale_densite" name="finale_densite" placeholder="Inserer la densite du bac" />
+      <InputField label="" required={true} type="number" id="initiale_densite" name="initiale_densite" placeholder="Inserer la densite du bac" isDisabled={hide} min={0.500} step=".001"/>
+      <InputField label="" required={true} type="number" id="finale_densite" name="finale_densite" placeholder="Inserer la densite du bac" min={0.500} step=".001"/>
           
     </div>
   )

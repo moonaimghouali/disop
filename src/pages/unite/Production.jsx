@@ -34,7 +34,7 @@ const Production = () => {
         </div>
 
         <ProductionData uniteProduction = {production} setPopUp={setPopUp}/>
-        {popUp && (<PopupBG setShow={setPopUp}> <Bilan/> </PopupBG>)}
+        {popUp && (<PopupBG setShow={setPopUp}> <Bilan setPopUp={setPopUp}/> </PopupBG>)}
         {/* <Bilan/> */}
         
       </div>

@@ -14,6 +14,7 @@ const EpProduction = () => {
   const [prodMenu, setProdMenu] = useState({perimetre : -1, date : new Date(new Date()- 86400000) })
   const [production, setProduction] = useState({valid : false, data : [], journee_production : null})
   const RegionId = useSelector((state)=> state.system.id)
+  const [valid, setValid] = useState({valid : true, missing : 0})
 
   const handleClick = async ()=>{
     if (!production.valid) {
@@ -27,14 +28,17 @@ const EpProduction = () => {
   useEffect(()=>{
     const fn = async () =>{
       let journee_production = prodMenu.date.toISOString().split("T")[0]
+      let unites = await api.fetchUnites(RegionId)
       let response = await api.fetchUnitesPuitsProduction(RegionId, journee_production)
      
       let {valid, res} = formatUnitesPuitsResponse(response)
-      // console.log("response",journee_production, response, res, valid);
+      console.log("response",journee_production, response, unites, res, valid);
+
+      if(unites.length != response.length){
+        setValid({valid : false, missing : (unites.length - response.length)})
+      }
       
       setProduction({valid : valid , data : res, journee_production : journee_production})
-
-      // console.log("state", production.data, production.valid);
     }
 
     fn()
@@ -47,10 +51,11 @@ const EpProduction = () => {
       <ProductionMenu prodMenu={prodMenu} setProdMenu={setProdMenu}/>
 
       <div className='w-full h-full flex flex-col rounded bg-white shadow-sm' >
-        <div div className='py-2 px-4 w-full flex flex-row-reverse'> 
-          <button onClick={handleClick} className='py-2 px-4 rounded text-base text-white font-semibold shadow-md bg-orange-600 hover:bg-orange-700 hover:shadow-lg ease-in-out duration-150'>
+        <div div className='py-2 px-4 w-full flex flex-row'> 
+          {!valid.valid && (<div className=''> Il y'a <b>{valid.missing}</b> unites qui n'ont pas encore cloturer la journee courante.</div>)}
+          {valid.valid &&(<button onClick={handleClick} className='py-2 px-4 rounded text-base text-white font-semibold shadow-md bg-orange-600 hover:bg-orange-700 hover:shadow-lg ease-in-out duration-150'>
             Calculer la production Corrigee
-          </button>
+          </button>)}
         </div>
 
         <TreeGridComponent dataSource={production.data} allowPaging={true} pageSettings={{pageSize:7}} height={"100%"}

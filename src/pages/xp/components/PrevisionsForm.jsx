@@ -10,6 +10,7 @@ const PrevisionsForm = ({perimetres, date}) => {
     const months = [1,2,3,4,5,6,7,8,9,10,11,12]
 
     const [regionPrevision, setRegionPrevision] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+    // const [regionPrevision, setRegionPrevision] = useState({m1:0, m2:0, m3:0, m4:0, m5:0, m6:0, m7:0, m8:0, m9:0, m10:0, m11:0, m12:0,})
     // const [ perimetresPrevision, setPerimetresPrevision] = useState(perimetres.map(p=> ({id : p.id, regionPrevision: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]})))
     const [ perimetresPrevision, setPerimetresPrevision] = useState(new Map())
 
@@ -94,7 +95,8 @@ const PrevisionsForm = ({perimetres, date}) => {
         <tr className='bg-orange-100 font-semibold'>
             <td className='p-2'>{nom}</td>
             {months.map( (m) =>(
-            <td className="py-2" key={m}> <input className='w-24 h-8 px-1 border border-gray-300'  disabled={true} value={regionPrevision[m-1]}/></td>
+            <td className="py-2" key={m}> {regionPrevision[m-1]} 
+            </td>
             ))} 
             
         </tr>
