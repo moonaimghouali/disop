@@ -26,6 +26,7 @@ const NouveauBacForm = () => {
       let creation = new Date(e.target.date_creation.value)
       let mis_a_jour = new Date(creation)
       mis_a_jour.setFullYear(creation.getFullYear() + 10)
+      
       let requestBody = {
         code_bacs : e.target.code_bacs.value,
         type_bacs : e.target.type_bacs.value,

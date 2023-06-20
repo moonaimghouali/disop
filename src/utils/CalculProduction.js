@@ -137,8 +137,8 @@ export const calculResultatMouvement = async (v, BacId) =>{
     let valeursInitiales = await calculVolumeStandard(v.initiale_cote , v.initiale_densite, v.initiale_temperature, BacId)
     let valeursFinales = await calculVolumeStandard(v.finale_cote , v.finale_densite, v.finale_temperature, BacId)
 
-    let resultat_volume_standard = Math.abs(valeursFinales.volume_standard - valeursInitiales.volume_standard)
-    let resultat_masse_standard = resultat_volume_standard * valeursFinales.densite
+    let resultat_volume_standard = parseFloat(Math.abs(valeursFinales.volume_standard - valeursInitiales.volume_standard).toFixed(3))
+    let resultat_masse_standard = parseFloat((resultat_volume_standard * valeursFinales.densite).toFixed(3))
 
     return {
         valeursInitiales, 
@@ -153,11 +153,11 @@ export const calculResultatJournee = async (v, BacId) => {
     let valeursFinales = await calculVolumeStandard(v.finale_cote , v.finale_densite, v.finale_temperature, BacId)
     let valeursInitiales = await calculVolumeStandard(0 , 0, 0,BacId)
 
-    console.log("I" , valeursInitiales);
-    console.log("F" , valeursFinales);
-    let resultat_volume_standard = Math.abs(valeursFinales.volume_standard  )
-    console.log(resultat_volume_standard * valeursFinales.densite);
-    let resultat_masse_standard = resultat_volume_standard * valeursFinales.densite
+    // console.log("I" , valeursInitiales);
+    // console.log("F" , valeursFinales);
+    let resultat_volume_standard = parseFloat(Math.abs(valeursFinales.volume_standard).toFixed(3))
+    // console.log(resultat_volume_standard * valeursFinales.densite);
+    let resultat_masse_standard = parseFloat((resultat_volume_standard * valeursFinales.densite).toFixed(3))
 
     return {
         valeursInitiales,
