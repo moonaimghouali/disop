@@ -110,7 +110,7 @@ export const calculVolumeStandard = async(coteValue, densiteValue , temperatureV
             
         let response = await fetchVolumeApparent({BacId : BacId, dm_valeur :cote.coteDm , mm_valeur : cote.coteMm}) 
         if(response.data.success) {
-            volume_apparent = response.data.data[0].volume_apparent
+            volume_apparent = response.data.data?.BacsBareme?.TableBaremages[0]?.volume_apparent
         }
     }
     } catch (error) {

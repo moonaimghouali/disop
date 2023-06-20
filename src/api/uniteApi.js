@@ -8,6 +8,7 @@ const RouteUnite= `${serverUrl}/api/unites`
 const RouteMouvements = `${serverUrl}/api/bacOperations`
 const RouteBacs = `${serverUrl}/api/bacs`
 const RouteTableBaremages= `${serverUrl}/api/tableBaremage`
+const RouteBaremes= `${serverUrl}/api/bacsbaremes/`
 const RouteCommentaires = `${serverUrl}/api/commentaires/`
 const RouteAnalyses = `${serverUrl}/api/analyses`
 
@@ -102,15 +103,24 @@ export const updateBacStorage = async ({ BacId, stockage_actuel}) =>{
     }
 }
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////
-// TableBaremage 
-export const  fetchTableBaremage =  async (id) =>{
+export const postBac = async (body) =>{
     try {
-        const response = (await axios.get(`${RouteBacs}/${id}/tableBaremage`))
-        return response  
+        const response = (await axios.post(`${RouteBacs}`, body))
+        return response
     } catch (error) {
         console.log(error);
     }
+}
+// /////////////////////////////////////////////////////////////////////////////////////////////////
+// Baremes
+
+export const  fetchBaremes =  async (id) =>{
+    try {
+        const response = (await axios.get(`${RouteBaremes}`))
+        return response
+    } catch (error) {
+        console.log(error);
+    }  
 }
 
 export const  fetchBareme =  async (id) =>{
@@ -119,8 +129,25 @@ export const  fetchBareme =  async (id) =>{
         return response
     } catch (error) {
         console.log(error);
+    }  
+}
+
+export const postBareme = async (body) =>{
+    try {
+        const response = (await axios.post(`${RouteBaremes}`, body))
+        return response
+    } catch (error) {
+        console.log(error);
+    }   
+}
+
+export const  fetchTableBaremage =  async (id) =>{
+    try {
+        const response = (await axios.get(`${RouteBacs}/${id}/tableBaremage`))
+        return response  
+    } catch (error) {
+        console.log(error);
     }
-    
 }
 
 export const postTableBaremage = async (body) =>{
@@ -134,7 +161,7 @@ export const postTableBaremage = async (body) =>{
 
 export const  fetchVolumeApparent =  async (body) =>{
     try {
-        console.log(body);
+        // console.log(body);
         const response = (await axios.post(`${RouteTableBaremages}/volume`, body))
         return response
     } catch (error) {

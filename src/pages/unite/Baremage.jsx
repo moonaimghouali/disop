@@ -5,12 +5,14 @@ import { GridComponent, ColumnsDirective, ColumnDirective, Inject, Page, Toolbar
 import {  useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux'
 import * as api from '../../api/uniteApi'
+import { toast} from 'react-toastify'
 
 const Baremage = () => {
   let {id} =  useParams();
   let uniteBacs = useSelector((state)=>state.bacs.uniteBacs)
   let [baremeTable, setBaremeTable] = useState([])
-  let [bareme, setBareme] = useState({})
+  let [bareme, setBareme] = useState({}) 
+  let [affich, setAffich] = useState(false) 
   
   useEffect( ()=>{
   let fn = async () =>{
@@ -20,42 +22,42 @@ const Baremage = () => {
     try {
       let response  = await api.fetchTableBaremage(bac[0].id);
       if(response.data.success){
-        try {
-          let responseBareme = await api.fetchBareme(bac[0].id);
-          if(responseBareme.data.success) {
-            setBareme(responseBareme.data.data[0])
-          }
-          
-          
-        } catch (error) {
-          console.log(error.message)
-        }
+        
+        let tmp = response.data.data?.BacsBareme
+        let date_creation = new Date(tmp.date_creation).toISOString().split("T")[0]
+        let date_mis_a_jour = new Date(tmp.date_mis_a_jour).toISOString().split("T")[0]
+        setBareme({...tmp, date_creation : date_creation, date_mis_a_jour : date_mis_a_jour})
+      }else{
+        toast.warn("Couldnt load the Table.")
       }
-      let values = response.data.data
+      
+      let values = response.data.data?.BacsBareme?.TableBaremages
+
       // var row = {dm_valeur : -1, mm_valeur_00 : -1,  mm_valeur_10 : -1, mm_valeur_20 : -1, mm_valeur_30 : -1, mm_valeur_40 : -1, mm_valeur_50 : -1, mm_valeur_60 : -1, mm_valeur_70 : -1, mm_valeur_80 : -1, mm_valeur_90 : -1, }
       let j = 0
       let temp = []
       let array = []
 
-        values.map((item) => {
-          // row[`mm_valeur_${j}0`] = item.volume_apparent
-          temp.push(item.volume_apparent)
-          j++
-          if (j === 10 ) {
-            let row = {dm_valeur : item.dm_valeur, mm_valeur_00 : temp[0],  mm_valeur_10 : temp[1], mm_valeur_20 : temp[2], mm_valeur_30 : temp[3], mm_valeur_40 : temp[4], mm_valeur_50 : temp[5], mm_valeur_60 : temp[6], mm_valeur_70 : temp[7], mm_valeur_80 : temp[8], mm_valeur_90 : temp[9] }
-            array.push(row)
-            temp = []
-            j=0
-          } 
-        })
+      values.map((item) => {
+        // row[`mm_valeur_${j}0`] = item.volume_apparent
+        temp.push(item.volume_apparent)
+        j++
+        if (j === 10 ) {
+          let row = {dm_valeur : item.dm_valeur, mm_valeur_00 : temp[0],  mm_valeur_10 : temp[1], mm_valeur_20 : temp[2], mm_valeur_30 : temp[3], mm_valeur_40 : temp[4], mm_valeur_50 : temp[5], mm_valeur_60 : temp[6], mm_valeur_70 : temp[7], mm_valeur_80 : temp[8], mm_valeur_90 : temp[9] }
+          array.push(row)
+          temp = []
+          j=0
+        } 
+      })
       
       setBaremeTable(array)
-
     } catch (error) {
       console.log(error);
     }
   }
   fn()
+  setAffich(true)
+
   },[])
 
 
@@ -66,14 +68,17 @@ const Baremage = () => {
       <div className='text-3xl font-bold'>Table de baremage du bac {id}</div>   
       </div>
       {/* Info Section */}
-      <div className='w-1/2 h-32 flex flex-col my-4 rounded-sm shadow-sm bg-white py-2 px-3' >
-        <div className='text-xl font-semibold mt-1'>Bac "{id}"</div>
-        <div className='mt-2 flex flex-row gap-8'>
-          <div>etablie le : <b >{/*new Date(bareme.date_creation).toISOString().split("T")[0]*/ bareme.date_creation}</b> </div>
-          <div>a mettre a jour le : <b>{/*new Date(bareme.date_mis_a_jour).toISOString().split("T")[0]*/ bareme.date_mis_a_jour}</b></div>
+      {affich && (
+        <div className='w-1/2 h-32 flex flex-col my-4 rounded-sm shadow-sm bg-white py-2 px-3' >
+          <div className='text-xl font-semibold mt-1'>Bac "{id}"</div>
+          <div className='mt-2 flex flex-row gap-8'>
+            <div>etablie le : <b >{/*new Date(bareme.date_creation).toISOString().split("T")[0]*/ bareme?.date_creation }</b> </div>
+            <div>a mettre a jour le : <b>{/*new Date(bareme.date_mis_a_jour).toISOString().split("T")[0]*/ bareme?.date_mis_a_jour }</b></div>
+          </div>
+          <div className='mt-2 '> etablie par : <b >{bareme?.etablie_par}</b></div>
         </div>
-        <div className='mt-2 '> etablie par : <b >{bareme.etablie_par}</b></div>
-      </div>
+      )}
+      
 
       {/* Table Baremage */}
       <div className='w-full h-full flex flex-col bg-white rounded-sm shadow-sm '>
