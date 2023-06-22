@@ -52,7 +52,7 @@ const EpProduction = () => {
 
       <div className='w-full h-full flex flex-col rounded bg-white shadow-sm' >
         <div div className='py-2 px-4 w-full flex flex-row'> 
-          {!valid.valid && (<div className=''> Il y'a <b>{valid.missing}</b> unites qui n'ont pas encore cloturer la journee courante.</div>)}
+          {!valid.valid ? (<div className='flex-1'> Il y'a <b>{valid.missing}</b> unites qui n'ont pas encore cloturer la journee courante.</div>) : (<div className='flex-1'></div>)}
           {valid.valid &&(<button onClick={handleClick} className='py-2 px-4 rounded text-base text-white font-semibold shadow-md bg-orange-600 hover:bg-orange-700 hover:shadow-lg ease-in-out duration-150'>
             Calculer la production Corrigee
           </button>)}

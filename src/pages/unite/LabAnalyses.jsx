@@ -46,7 +46,12 @@ const LabAnalyses = () => {
     let Body = { analyse : analyseBody, anomalie : anomalieBody}
     // console.log("body", Body);
     let res = await api.postAnalyses(Body)
+    
     if (res.data.success) {
+      if (res.data.data.analyse[1] === false) {
+        toast.warn("Les analyses de ce bac sont deja sauvegardees pour la journee courante.")
+        return
+      }
       toast.success("Les caracteristiques sont enregistrees.")
     }else{
       toast.error("L'enregistrement n'a pas reussi, veuillez réessayer ultérieurement.")

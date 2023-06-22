@@ -5,12 +5,15 @@ import { NavLink } from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import { updateMenuMouvements, initializerMenuMouvement } from '../../../store/slices/menusSlice'
 import * as api from '../../../api/uniteApi'
+import { roles } from "./../../../store/types/roles";
 
 const MenuMouvements = ({type, MouvementsMenu, setMouvementsMenu}) => {
   
   const {loading, uniteBacs, error} = useSelector(state => state.bacs)
   // const uniteBacs = []
   const UniteId = useSelector((state) => state.system.id)
+
+  const role = useSelector((state) => state.user.userInfo.role)
   
 
   // operations data
@@ -77,7 +80,7 @@ const MenuMouvements = ({type, MouvementsMenu, setMouvementsMenu}) => {
         </div>
 
 
-        {type && (
+        {(type && (role === roles.Unite)) && (
         <>
             <div  onClick={handleClick} className='flex-1'></div>
             <NavLink  className='px-2 py-1 text-white font-semibold bg-blue-600 rounded shadow hover:bg-blue-700 hover:shadow-md flex flex-row items-center'

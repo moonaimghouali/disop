@@ -25,10 +25,6 @@ const PrevisionsForm = ({perimetres, date}) => {
         setPerimetresPrevision(hashSet)
         
     },[perimetres])
-
-    useEffect(()=>{
-        console.log("rerender");
-    },[ regionPrevision])
     
     const handleInputchange = (e) => {
         let inputId = e.target.id
@@ -52,14 +48,6 @@ const PrevisionsForm = ({perimetres, date}) => {
     }
 
     const handleClick = async () =>{
-        console.log("reg", regionPrevision);
-        console.log("per", perimetresPrevision);
-        
-        // if( ! checkPerimetresPrevisions(perimetresPrevision, perimetres)){
-        //     alert("error complete")
-        //     return
-        // }
-        // formatPrevisions(perimetresPrevision, perimetres, regionPrevision, date, id)
         let {perimetresPrev, regionPrev } = formatPrevisions(perimetresPrevision, perimetres, regionPrevision, date, id)
         let response = await api.postPrevisions(regionPrev, perimetresPrev, id)    
         if (response.data.success) {
@@ -67,6 +55,19 @@ const PrevisionsForm = ({perimetres, date}) => {
         }else{
             toast.error("Le chargement des previsions n'a pas reussi, veiullez reassyer ulterieuremnt.")
         }
+    }
+
+    const PrevRegion = ({regionPrevision})=>{
+        return (
+        <tr className='bg-orange-100 font-semibold'>
+            <td>{nom}</td>
+            {   
+                regionPrevision.map((prev)=>(
+                    <td>{prev}</td>
+                ))
+            }
+        </tr>
+        )
     }
 
   return (
@@ -91,19 +92,11 @@ const PrevisionsForm = ({perimetres, date}) => {
         </tr>
         ))}
         {/* Region */}
-        
-        <tr className='bg-orange-100 font-semibold'>
-            <td className='p-2'>{nom}</td>
-            {months.map( (m) =>(
-            <td className="py-2" key={m}> {regionPrevision[m-1]} 
-            </td>
-            ))} 
             
-        </tr>
+        <PrevRegion regionPrevision={regionPrevision}/>
+        
     </table>
-
     </div>
-    
   )
 }
 

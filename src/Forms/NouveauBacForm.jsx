@@ -86,8 +86,6 @@ const NouveauBacForm = () => {
     const handleSubmit = async(e) =>{
       e.preventDefault()
 
-      
-      
       let bacBody = {
         code_bacs : e.target.code_bacs.value,
         type_bacs : e.target.type_bacs.value,
@@ -127,6 +125,7 @@ const NouveauBacForm = () => {
             let res2 = await api.postTableBaremage(baremeTable[i][j])
           } 
         }
+        toast.success("Le chargement de la table de baremage est terminee.")
       }
 
       let response = await api.postBac(bacBody)

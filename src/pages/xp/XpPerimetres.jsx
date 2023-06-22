@@ -21,6 +21,8 @@ const XpPerimetres = () => {
   const [ prodCorrigee, setProdCorrigee] = useState([])
   const [ perimetres , setPerimetres] = useState([])
   const [ prodPerimetres, setProdPerimetres] = useState([])
+  
+  const [hide, setHide] = useState(false)
 
 
   useEffect(()=>{
@@ -28,8 +30,8 @@ const XpPerimetres = () => {
       let journee = new Date(menuDate.date).toISOString().split("T")[0]
       setJournee(journee)
       let response = await api.fetchRegionPerimetresProduction(RegionId, journee)
-      console.log(response);
       setProductionData(response)
+      if (Object.hasOwn(response[0].production, 'PerimetreId')) setHide(true)
     }
     fn()
   },[menuDate.date])
@@ -76,9 +78,11 @@ const XpPerimetres = () => {
 
       <div className='w-full h-full flex flex-col rounded bg-white shadow-sm' >
         <div div className='py-2 px-4 w-full flex flex-row-reverse'> 
-          <button onClick={handleClick} className='py-2 px-4 rounded text-base text-white font-semibold shadow-md bg-orange-600 hover:bg-orange-700 hover:shadow-lg ease-in-out duration-150'>
-            Calculer la Production par Perimetres 
-          </button>
+          {!hide && ( 
+            <button onClick={handleClick} className='py-2 px-4 rounded text-base text-white font-semibold shadow-md bg-orange-600 hover:bg-orange-700 hover:shadow-lg ease-in-out duration-150'>
+              Calculer la Production par Perimetres 
+            </button>
+            )}
         </div>
 
         <TreeGridComponent dataSource={productionData} allowPaging={true} pageSettings={{pageSize:7}} height={"100%"}
