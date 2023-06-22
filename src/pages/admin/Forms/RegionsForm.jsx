@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { PopupBG } from '../../../components'
+import * as api from '../../../api/adminApi'
+import { toast } from 'react-toastify'
 
 const RegionsForm = ({setForm, update, data}) => {
 
@@ -12,9 +14,21 @@ const RegionsForm = ({setForm, update, data}) => {
     setForm(false)
   }
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    alert("submitted")
+    let body = { 
+      code_region : e.target.code_region.value,
+      nom_region : e.target.nom_region.value,
+      coordonnees : e.target.coordonnees.value,
+    }
+   
+    let res = await api.addRegion(body)
+    if (res.data.success) {
+      toast.success("La region est ajoutee.")
+      setForm(false)
+    }else{
+      toast.error("L'ajout d'une region n'a pas reussi, veuillez réessayer ultérieurement.")
+    }
   }
 
   const handleUpdate = (e) => {

@@ -3,6 +3,7 @@ import { PopupBG } from '../../../components'
 import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns'
 import {fetchRegions} from '../../../api/dpApi'
 import * as api from '../../../api/adminApi'
+import { toast } from 'react-toastify'
 
 const UtilisateurForm = ({setForm, update, data}) => {
   
@@ -14,9 +15,11 @@ const UtilisateurForm = ({setForm, update, data}) => {
 
   const[regions, setRegions] = useState([])
   const regionsFields = {text : "nom_region" , value :"id" }
+  const [ regionChoisi, setRegionChoisi] = useState(-1)
 
   const[unites, setUnites] = useState([])
   const unitesFields = {text : "nom_unite" , value :"id" }
+  const [ uniteChoisi, setUniteChoisi] = useState(-1)
 
 
   const [nom, setNom] =useState(data?.nom)
@@ -30,6 +33,9 @@ const UtilisateurForm = ({setForm, update, data}) => {
 
   useEffect(()=>{
     const fn = async()=>{
+      
+      setRegionChoisi(-1)
+      setUniteChoisi(-1)
       if (role !== "Manager" ) {  
         let response = await fetchRegions()
         setRegions(response)
@@ -42,13 +48,46 @@ const UtilisateurForm = ({setForm, update, data}) => {
   },[role])
 
   const handleAnnulment = () => {
-   
     alert("Annuler")
   }
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    alert("submitted")
+
+    if (regionChoisi === -1 && uniteChoisi === -1 && role !== "Manager") {
+      toast.warn("vous devez choisir une affectation pour l'utilisateur.")
+      return
+    }
+
+    let body = null
+    let b = {
+      nom : e.target.nom.value,
+      prenom : e.target.prenom.value,
+      email : e.target.email.value,
+      password : "pd",
+      role : role,
+    }
+
+    if (role ==="Manager") {
+      body = {...b, affectation : "DP", affectation_id : -1}
+    }
+
+    if (role ==="Resp_Region" || role ==="Xp" || role ==="Ep") {
+      body = {...b, affectation : "Region", affectation_id : regionChoisi}
+    }
+
+    if (role ==="Resp_Unite" || role ==="Unite_Controle" || role ==="Unite_Lab") {
+      body = {...b, affectation : "Unite", affectation_id : uniteChoisi}
+    }
+
+    let res = await api.addUtilisateur(body)
+    if (res.data.success) {
+      toast.success("L'utilisateur est ajoute.")
+      setForm(false)
+    }else{
+      toast.error("L'ajout d'un utilisateur n'a pas reussi, veuillez réessayer ultérieurement.")
+    }
+
   }
 
   const handleUpdate = () => {
@@ -90,14 +129,14 @@ const UtilisateurForm = ({setForm, update, data}) => {
             {(role === "Xp" || role === "Ep" || role === "Resp_Region" ) && (
               <>
               <div className='col-span-2 font-semibold'>Region </div>            
-              <div className='col-span-8 pl-2'><DropDownListComponent  id="Affectation" placeholder={"Affectations"} dataSource={regions} fields={regionsFields} ></DropDownListComponent></div>     
+              <div className='col-span-8 pl-2'><DropDownListComponent value={regionChoisi} onChange={(e)=> setRegionChoisi(e.value)} id="Affectation" placeholder={"Affectations"} dataSource={regions} fields={regionsFields} ></DropDownListComponent></div>     
               </>
             )}
            
             {(role === "Resp_Unite" || role === "Unite_Controle" || role === "Unite_Lab") && (
               <>
               <div className='col-span-2 font-semibold'>Unite </div>            
-              <div className='col-span-8 pl-2'><DropDownListComponent  id="Affectation" placeholder={"Affectations"} dataSource={unites} fields={unitesFields} ></DropDownListComponent></div>       
+              <div className='col-span-8 pl-2'><DropDownListComponent  value={uniteChoisi} onChange={(e)=> setUniteChoisi(e.value)}  id="Affectation" placeholder={"Affectations"} dataSource={unites} fields={unitesFields} ></DropDownListComponent></div>       
               </>
             )}  
           </div>

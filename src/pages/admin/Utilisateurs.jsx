@@ -17,6 +17,7 @@ const Utilisateurs = () => {
   useEffect(()=>{
     const fn = async() => {
       let response = await api.fetchUtilisateurs()
+      console.log("resp", response);
       setData(response)
     }
     fn()
@@ -64,7 +65,7 @@ const Utilisateurs = () => {
       </div>
 
         <GridComponent height={"100%"} dataSource={data} allowPaging={true}  allowSorting={true} allowFiltering={true} allowExcelExport={true}
-        pageSettings={{pageSize:8}} >
+        pageSettings={{pageSize:8}} statelessTemplates={['directiveTemplates']} >
           <Inject services={[Page, Sort, Filter, Group, ExcelExport]}/>
 
         <ColumnsDirective>

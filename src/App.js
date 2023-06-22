@@ -53,7 +53,7 @@ function App() {
           <Route path='*' element = {!isSignedIn ? (<Navigate to="/login" replace/>) : (<Error/>)}/>
 
           {/* Admin Routes */}
-          <Route path='p/admin/utilisateurs' element={isSignedIn? (isAdmin? <Test/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
+          <Route path='p/admin/utilisateurs' element={isSignedIn? (isAdmin? <Utilisateurs/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/admin/regions' element={isSignedIn? (isAdmin? <Regions/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/admin/puits' element={isSignedIn? (isAdmin? <PuitsAdmin/> : <Error/>) : (<Navigate to="/login" replace/>)}/>
           <Route path='p/admin/perimetres' element={isSignedIn? (isAdmin? <Perimetres/> : <Error/>) : (<Navigate to="/login" replace/>)}/>

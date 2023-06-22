@@ -17,6 +17,7 @@ const Perimetres = () => {
   useEffect(()=>{
     const fn = async() => {
       let response = await api.fetchPerimetres()
+      console.log("resp", response);
       setData(response)
     }
     fn()
@@ -64,12 +65,12 @@ const Perimetres = () => {
         </div>
 
       <GridComponent dataSource={data} allowPaging={true}  allowSorting={true} allowFiltering={true} 
-      pageSettings={{pageSize:8}} height={"100%"}>
-        <Inject services={[Page, Sort, Filter, Group]}/>
+      pageSettings={{pageSize:8}} height={"100%"} statelessTemplates={['directiveTemplates']} >
+        <Inject services={[Page, Sort, Filter, Group]} />
 
         <ColumnsDirective>
         <ColumnDirective field='id' headerText='Id' width="70" textAlign='left'/>
-        <ColumnDirective field='nom_region' headerText='Region' textAlign='left'/>
+        <ColumnDirective field='Region.nom_region' headerText='Region' textAlign='left'/>
         <ColumnDirective field='code_perimetre' headerText='Code' textAlign='left'/>
         <ColumnDirective field='nom_perimetre' headerText='Nom' textAlign='left'/>
         <ColumnDirective field='modify' headerText='Config' template={temp} width="90" textAlign='left'/>

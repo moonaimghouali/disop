@@ -70,13 +70,14 @@ const PuitsAdmin = () => {
       </div>
 
       <GridComponent id="grid" height={"100%"} dataSource={data} allowPaging={true}  allowSorting={true} allowFiltering={true}
-      pageSettings={{pageSize:8}} toolbar={toolbar} allowExcelExport={true} toolbarClick={toolbarClick} ref={g => grid = g}>
+      pageSettings={{pageSize:7}} toolbar={toolbar} allowExcelExport={true} toolbarClick={toolbarClick} ref={g => grid = g}
+      statelessTemplates={['directiveTemplates']} >
         <Inject services={[Page, Sort, Filter, Group, Toolbar, ExcelExport]}/>
 
         <ColumnsDirective>
         <ColumnDirective field='id' headerText='Id' width="70" textAlign='left'/>
-        <ColumnDirective field='nom_region' headerText='Region' textAlign='left'/>
-        <ColumnDirective field='nom_perimetre' headerText='Perimetre' textAlign='left'/>
+        <ColumnDirective field='Perimetre.Region.nom_region' headerText='Region' textAlign='left'/>
+        <ColumnDirective field='Perimetre.code_perimetre' headerText='Perimetre' textAlign='left'/>
         <ColumnDirective field='code_puits' headerText='Code' textAlign='left'/>
         <ColumnDirective field='type_puits' headerText='Type' textAlign='left'/>
         <ColumnDirective field='modify' headerText='Config' template={temp} width="90" textAlign='left'/>

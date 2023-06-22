@@ -66,7 +66,8 @@ const Regions = () => {
         </button>
       </div>
 
-      <GridComponent height={"100%"} dataSource={data} allowPaging={true}  allowSorting={true} pageSettings={{pageSize:8}} >
+      <GridComponent height={"100%"} dataSource={data} allowPaging={true}  allowSorting={true} 
+      pageSettings={{pageSize:8}} statelessTemplates={['directiveTemplates']} >
         <Inject services={[Page, Sort, Filter, Group]}/>
 
         <ColumnsDirective>

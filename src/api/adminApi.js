@@ -20,7 +20,7 @@ export const fetchUtilisateurs = async () =>  {
 
 export const addUtilisateur = async (utilisateur) =>  {
     try {
-        return axios.post(`${RouteUtilisateur}`, utilisateur).then((response) => response.data.data)
+        return axios.post(`${RouteUtilisateur}`, utilisateur).then((response) => response)
     } catch (error) {
         console.log(error.message);   
     }  
@@ -28,7 +28,7 @@ export const addUtilisateur = async (utilisateur) =>  {
 
 export const updateUtilisateur = async (userId, body) =>  {
     try {
-        return axios.put(`${RouteUtilisateur}/${userId}`).then((response) => response.data.data)
+        return axios.put(`${RouteUtilisateur}/${userId}`).then((response) => response)
     } catch (error) {
         console.log(error.message);   
     }  
@@ -46,7 +46,7 @@ export const fetchRegions = async () =>  {
 
 export const addRegion = async (region) =>  {
     try {
-        return axios.post(`${RouteRegion}`, region).then((response) => response.data.data)
+        return axios.post(`${RouteRegion}`, region).then((response) => response)
     } catch (error) {
         console.log(error.message);   
     }  
@@ -54,7 +54,7 @@ export const addRegion = async (region) =>  {
 
 export const updateRegion = async (regionId, body) =>  {
     try {
-        return axios.put(`${RouteRegion}/${regionId}`).then((response) => response.data.data)
+        return axios.put(`${RouteRegion}/${regionId}`).then((response) => response)
     } catch (error) {
         console.log(error.message);   
     }  
@@ -72,7 +72,7 @@ export const fetchUnites = async () =>  {
 
 export const addUnite = async (unite) =>  {
     try {
-        return axios.post(`${RouteUnite}`, unite).then((response) => response.data.data)
+        return axios.post(`${RouteUnite}`, unite).then((response) => response)
     } catch (error) {
         console.log(error.message);   
     }  
@@ -80,7 +80,7 @@ export const addUnite = async (unite) =>  {
 
 export const updateUnite = async (uniteId, body) =>  {
     try {
-        return axios.put(`${RouteUnite}/${uniteId}`).then((response) => response.data.data)
+        return axios.put(`${RouteUnite}/${uniteId}`).then((response) => response)
     } catch (error) {
         console.log(error.message);   
     }  
@@ -98,7 +98,7 @@ export const fetchPerimetres = async () =>  {
 
 export const addPerimetre = async (perimetre) =>  {
     try {
-        return axios.post(`${RoutePerimetre}`, perimetre).then((response) => response.data.data)
+        return axios.post(`${RoutePerimetre}`, perimetre).then((response) => response)
     } catch (error) {
         console.log(error.message);   
     }  
@@ -106,7 +106,7 @@ export const addPerimetre = async (perimetre) =>  {
 
 export const updatePerimetre = async (perimetreId, body) =>  {
     try {
-        return axios.put(`${RoutePerimetre}/${perimetreId}`).then((response) => response.data.data)
+        return axios.put(`${RoutePerimetre}/${perimetreId}`).then((response) => response)
     } catch (error) {
         console.log(error.message);   
     }  
@@ -124,7 +124,7 @@ export const fetchPuits = async () =>  {
 
 export const addPuits = async (puits) =>  {
     try {
-        return axios.post(`${RoutePuits}`, puits).then((response) => response.data.data)
+        return axios.post(`${RoutePuits}`, puits).then((response) => response)
     } catch (error) {
         console.log(error.message);   
     }  
@@ -132,7 +132,7 @@ export const addPuits = async (puits) =>  {
 
 export const updatePuits = async (puitsId, body) =>  {
     try {
-        return axios.put(`${RoutePuits}/${puitsId}`).then((response) => response.data.data)
+        return axios.put(`${RoutePuits}/${puitsId}`).then((response) => response)
     } catch (error) {
         console.log(error.message);   
     }  

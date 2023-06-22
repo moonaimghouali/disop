@@ -17,6 +17,7 @@ const Unites = () => {
   useEffect(()=>{
     const fn = async() => {
       let response = await api.fetchUnites()
+      console.log("resp", response);
       setData(response)
     }
     fn()
@@ -64,12 +65,12 @@ const Unites = () => {
         </div>
         
       <GridComponent  height={"100%"} dataSource={data} allowPaging={true}  allowSorting={true} allowFiltering={true}
-      pageSettings={{pageSize:8}} >
+      pageSettings={{pageSize:8}} statelessTemplates={['directiveTemplates']} >
         <Inject services={[Page, Sort, Filter, Group]}/>
 
         <ColumnsDirective>
         <ColumnDirective field='id' headerText='Id' width="70" textAlign='left'/>
-        <ColumnDirective field='nom_region' headerText='Region' textAlign='left'/>
+        <ColumnDirective field='Region.nom_region' headerText='Region' textAlign='left'/>
         <ColumnDirective field='code_unite' headerText='Code' textAlign='left'/>
         <ColumnDirective field='nom_unite' headerText='Nom' textAlign='left'/>
         <ColumnDirective field='modify' headerText='Config' template={temp} width="90" textAlign='left'/>

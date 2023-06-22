@@ -2,12 +2,15 @@ import React,{useState, useEffect} from 'react'
 import { PopupBG } from '../../../components'
 import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns'
 import {fetchRegions} from '../../../api/dpApi'
+import * as api from '../../../api/adminApi'
+import { toast } from 'react-toastify'
 
 const UniteForm = ({setForm, update, data}) => {
   const [code, setCode] = useState(data?.code_unite)
   const [nom, setNom] = useState(data?.nom_unite)
   const [region, setRegion] = useState(data?.RegionId)
   const [coordonnees, setCoordinates] = useState(data?.coordonnees)
+  const [regionChoisi, setRegionChoisi] = useState(-1)
 
   const[regions, setRegions] = useState([])
   const regionsFields = {text : "nom_region" , value :"id" }
@@ -25,9 +28,30 @@ const UniteForm = ({setForm, update, data}) => {
     setForm(false)
   }
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    alert("submitted")
+
+    if (regionChoisi === -1) {
+      toast.warn("Vous devez choisir une region.")
+      return
+    }
+
+    let body = { 
+      code_unite : e.target.code_unite.value,
+      nom_unite : e.target.nom_unite.value,
+      coordonnees : e.target.coordonnees.value,
+      RegionId : regionChoisi,
+    }
+    
+    console.log("1212",body);
+    let res = await api.addUnite(body)
+    console.log("res", res);
+    if (res.data.success) {
+      toast.success("L'unite est ajoutee.")
+      setForm(false)
+    }else{
+      toast.error("L'ajout d'une unite n'a pas reussi, veuillez réessayer ultérieurement.")
+    }
   }
 
   const handleUpdate = (e) => {
@@ -60,13 +84,13 @@ const UniteForm = ({setForm, update, data}) => {
             required id="nom_unite" name='nom_unite' />
 
             <div className='col-span-2 font-semibold'>Region </div>    
-            <div className='col-span-8 pl-2'><DropDownListComponent dataSource={regions} fields={regionsFields} id="Region" placeholder={"Regions"} ></DropDownListComponent></div>
+            <div className='col-span-8 pl-2'><DropDownListComponent dataSource={regions} fields={regionsFields} id="Region" placeholder={"Regions"} onChange={(e)=> setRegionChoisi(e.value)} ></DropDownListComponent></div>
                     
             
 
             <div className='col-span-2 font-semibold'>* Coordonnees geographiques</div> 
             <textarea className="col-span-8 border-1 border-gray-400  pl-2 ml-2 "
-            name="coordonnees2" id="coordonnees2" cols="30" rows="8" placeholder='lat1,long1' ></textarea>
+            name="coordonnees" id="coordonnees" cols="30" rows="8" placeholder='lat1,long1' ></textarea>
             
           </div>
 

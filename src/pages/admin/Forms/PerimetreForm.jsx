@@ -2,6 +2,8 @@ import React,{useState, useEffect} from 'react'
 import { PopupBG } from '../../../components'
 import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns'
 import {fetchRegions} from '../../../api/dpApi'
+import * as api from '../../../api/adminApi'
+import { toast } from 'react-toastify'
 
 const PerimetreForm = ({setForm, update, data}) => {
 
@@ -9,6 +11,7 @@ const PerimetreForm = ({setForm, update, data}) => {
   const [nom, setNom] = useState(data?.nom_perimetre)
   const [region, setRegion] = useState(data?.RegionId)
   const [coordonnees, setCoordinates] = useState(data?.coordonnees)
+  const [regionChoisi, setRegionChoisi] = useState(-1)
 
   const[regions, setRegions] = useState([])
   const regionsFields = {text : "nom_region" , value :"id" }
@@ -27,9 +30,30 @@ const PerimetreForm = ({setForm, update, data}) => {
     setForm(false)
   }
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    alert("submitted")
+
+    if (regionChoisi === -1) {
+      toast.warn("Vous devez choisir une region.")
+      return
+    }
+
+    let body = { 
+      code_perimetre : e.target.code_perimetre.value,
+      nom_perimetre : e.target.nom_perimetre.value,
+      coordonnees : e.target.coordonnees.value,
+      RegionId : regionChoisi,
+    }
+    
+    console.log("1212",body);
+    let res = await api.addPerimetre(body)
+    console.log("res", res);
+    if (res.data.success) {
+      toast.success("Le perimetre est ajoute.")
+      setForm(false)
+    }else{
+      toast.error("L'ajout d'un perimetre n'a pas reussi, veuillez réessayer ultérieurement.")
+    }
   }
 
   const handleUpdate = (e) => {
@@ -62,7 +86,7 @@ const PerimetreForm = ({setForm, update, data}) => {
             required id="nom_perimetre" name='nom_perimetre' />
 
             <div className='col-span-2 font-semibold'>Region </div> 
-            <div className='col-span-8 pl-2'> <DropDownListComponent dataSource={regions} fields={regionsFields}  id="Region" placeholder={"Regions"} ></DropDownListComponent></div>
+            <div className='col-span-8 pl-2'> <DropDownListComponent onChange={(e) => setRegionChoisi(e.value)} dataSource={regions} fields={regionsFields}  id="Region" placeholder={"Regions"} ></DropDownListComponent></div>
                       
             
 
