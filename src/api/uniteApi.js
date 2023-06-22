@@ -9,6 +9,7 @@ const RouteMouvements = `${serverUrl}/api/bacOperations`
 const RouteBacs = `${serverUrl}/api/bacs`
 const RouteTableBaremages= `${serverUrl}/api/tableBaremage`
 const RouteCommentaires = `${serverUrl}/api/commentaires/`
+const RouteAnalyses = `${serverUrl}/api/analyses`
 
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 //Mouvements
@@ -165,17 +166,17 @@ export const postCommentaire = async (body) =>{
 // ////////////////////////////////////////////////////////////////////////////////////////////////
 //Caracteristiques
 
-export const  fetchCaracteristiques =  (UniteId) =>  {
+export const  fetchAnalyses =  (UniteId, BacId, journee ) =>  {
     try {
-        return axios.get(`${RouteUnite}/${UniteId}/commentaires`).then((response) => response.data.data)
+        return axios.get(`${RouteAnalyses}?BacId=${BacId}&UniteId=${UniteId}&journee=${journee}`).then((response) => response.data.data)
     } catch (error) {
         console.log(error);
     }
 }
 
-export const postCaracteristiques = async (body) =>{
+export const postAnalyses = async (body) =>{
     try {
-        const response = (await axios.post(`${RouteCommentaires}`, body))
+        const response = (await axios.post(`${RouteAnalyses}/`, body))
         return response
     } catch (error) {
         console.log(error);

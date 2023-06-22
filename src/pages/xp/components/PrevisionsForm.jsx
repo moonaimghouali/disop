@@ -27,7 +27,7 @@ const PrevisionsForm = ({perimetres, date}) => {
 
     useEffect(()=>{
         console.log("rerender");
-    },[regionPrevision[0], regionPrevision[1]])
+    },[ regionPrevision])
     
     const handleInputchange = (e) => {
         let inputId = e.target.id
@@ -90,11 +90,13 @@ const PrevisionsForm = ({perimetres, date}) => {
         </tr>
         ))}
         {/* Region */}
+        
         <tr className='bg-orange-100 font-semibold'>
             <td className='p-2'>{nom}</td>
             {months.map( (m) =>(
-            <td className="py-2" key={m}> {regionPrevision[m-1]} </td>
+            <td className="py-2" key={m}> <input className='w-24 h-8 px-1 border border-gray-300'  disabled={true} value={regionPrevision[m-1]}/></td>
             ))} 
+            
         </tr>
     </table>
 

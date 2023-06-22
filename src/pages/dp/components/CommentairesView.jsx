@@ -16,7 +16,7 @@ const CommentairesView = ({setCommentShow , commentaires, entite}) => {
             {/* divider */}
             <div className='w-full h-px bg-gray-300 my-6'></div>
 
-            {commentaires.map(c =>(
+            {commentaires?.map(c =>(
                 <>
                 <div className='text-xl font-semibold'>{c.titre_commentaire}</div>
                 <div className='text-gray-500'>{new Date(c.date_commentaire).toISOString().split("T")[0]}</div>

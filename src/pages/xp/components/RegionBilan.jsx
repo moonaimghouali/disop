@@ -2,6 +2,7 @@ import React,{useState, useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {updateBilanRegion} from '../../../store/slices/BilansSlice'
 import * as api from '../../../api/xpApi'
+import { toast } from 'react-toastify'
 
 const RegionBilan = ({setShowRegion}) => {
 
@@ -11,20 +12,23 @@ const RegionBilan = ({setShowRegion}) => {
   const nom_region = useSelector(state=>state.system.nom)
   const dispatch = useDispatch()
 
-  const handleValidation = async ()=> {
 
-    let response = await api.postRegionProduction(bilanProductionRegion)
+  const handleValidation = async ()=> {
+    let body = {...bilanProductionRegion, validation_xp : false}
+    let response = await api.postRegionProduction(body)
     let response2 = await api.postRegionRealisation(bilanProductionRegion)
 
     if (response.data.success && response2.data.success) {
-      console.log(response, response2);
-      setError({error:false , errorMessage:""})
-      setSuccess({success: true, successMessage:"La journee est validee"})
-      dispatch(updateBilanRegion({hide : true , bilanProductionRegion : {}, bilansUnites : []}))
-     
-   }else{
+      toast.success("La journee de production est cloturee.")
+      // console.log(response, response2);
+      // setError({error:false , errorMessage:""})
+      // setSuccess({success: true, successMessage:"La journee est validee"})
+      // dispatch(updateBilanRegion({hide : true , bilanProductionRegion : {}, bilansUnites : []}))
+      
+    }else{
       setSuccess({success: false, successMessage:""})
-      setError({error:true , errorMessage:response.data.message})
+      toast.error(response.data.message)
+      // setError({error:true , errorMessage:response.data.message})
     }
   }
 
@@ -44,12 +48,16 @@ const RegionBilan = ({setShowRegion}) => {
   return (
     
     <div onClick={(e)=> e.stopPropagation()} className='h-full my-8 w-1/2 flex flex-col p-3 items-center bg-white rounded-sm shadow-sm z-50'>
-      <div  className='w-full h-5/6  flex flex-col overflow-y-scroll '>
-        <div className='mt-3 text-lg font-semibold'>Bilan Production Regionale Journaliere</div>
-        {error.error && (<div className=' text-red-600 text-base font-semibold'>{error.errorMessage}</div>) }
-        {success.success && (<div className=' text-green-600 text-base font-semibold'>{success.successMessage}</div>) }
-        <div className='mt-3'>Region : <b>{nom_region}</b></div>
-        <div className='mt-1'>Journee production : <b>{bilanProductionRegion.journee_production}</b></div>
+      <div  className='w-full flex-1 flex flex-col overflow-y-scroll '>
+        
+        <div className='flex flex-col pb-4 border-b border-gray-300'>
+          <div className='mt-3 text-lg font-semibold'>Bilan Production Regional Journalier</div>
+          {error.error && (<div className=' text-red-600 text-base font-semibold'>{error.errorMessage}</div>) }
+          {success.success && (<div className=' text-green-600 text-base font-semibold'>{success.successMessage}</div>) }
+          <div className='mt-3'>Region : <b>{nom_region}</b></div>
+          <div className='mt-1'>Journee production : <b>{bilanProductionRegion.journee_production}</b></div>
+        </div>
+        
         
         <table className='mt-3'>
           <tr><th></th> <th>Tonne </th> <th>m3</th> </tr>

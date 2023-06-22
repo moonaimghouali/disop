@@ -1,13 +1,56 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {PageHeader, ToggleSwitch} from '../../components'
+import { useDispatch, useSelector } from 'react-redux'
+import * as api from '../../api/uniteApi'
+import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns'
+import { toast } from 'react-toastify'
 
 const LabAnalyses = () => {
   const [ toggle, setToggle ] = useState(false)
+  const dispatch = useDispatch()
+  const UniteId = useSelector((state) => state.system.id)
+  const {loading, uniteBacs, error} = useSelector(state => state.bacs)
+  let bacsFields = { text: 'code_bacs', value: 'id' };
 
-  const handleSubmit = (e) =>{
+  const [bac, setBac] =useState(-1)
+
+  useEffect(()=>{
+    dispatch(api.fetchBacs(UniteId))
+  },[])
+
+
+  const handleSubmit = async (e) =>{
     e.preventDefault()
-    alert("kasjks")
-    console.log(e.target);
+    if (bac ===-1) {
+      toast.warn("vous devez choisir un bac avant d'envoyer le formulaire.")
+      return
+    }
+
+    let analyseBody = {
+      date_analyse : new Date().toISOString().split("T")[0],
+      densite : parseFloat(e.target.densite.value) , 
+      temperature : parseFloat(e.target.temperature.value) ,
+      salinite : parseFloat(e.target.salinite.value) ,
+      tvr : parseFloat(e.target.tvr.value) ,
+      bsw : parseFloat(e.target.bsw.value) ,
+      BacId : bac
+    }
+    let anomalieBody = null
+    if (toggle){
+      anomalieBody = {
+        titre : e.target.titre.value,
+        detail : e.target.detail.value,
+      }
+    }
+
+    let Body = { analyse : analyseBody, anomalie : anomalieBody}
+    console.log("body", Body);
+    let res = await api.postAnalyses(Body)
+    if (res.data.success) {
+      toast.success("Les caracteristiques sont enregistrees.")
+    }else{
+      toast.error("L'enregistrement n'a pas reussi, veuillez réessayer ultérieurement.")
+    }
   }
 
   return (
@@ -20,31 +63,42 @@ const LabAnalyses = () => {
         <div className='h-full col-span-1 flex flex-col px-2'>
           <div className='mt-4 font-semibold text-xl'>Saisi des caracteristiques</div>
 
+          <div className='w-1/4 my-4'>
+            <DropDownListComponent 
+            id="Bacs"
+            fields={bacsFields}
+            value={-1}
+            dataSource={uniteBacs} 
+            placeholder={"Choisir un bac"}
+            change={(e) => setBac(e.value)}/>
+            
+          </div>
+
           <div className='w-full h-fit grid grid-cols-11 gap-1 pr-2 mt-4 border-r-1 border-gray-200'>
 
             <div className='col-span-4'>Densite </div>            
-            <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='hh:mm' type="number"
-            id="pression_pipe" name='pression_pipe' />
+            <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='__.__' type="number"
+            id="densite" name='densite' />
             <div className='col-span-1 pt-2 text-gray-700'>kg/cm2</div>
 
             <div className='col-span-4'>Temperature </div>            
-            <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='hh:mm' type="number"
-            id="pression_pipe" name='pression_pipe' />
+            <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='__.__' type="number"
+            id="temperature" name='temperature' />
             <div className='col-span-1 pt-2 text-gray-700'>kg/cm2</div>
 
             <div className='col-span-4'>Salinite </div>            
-            <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='hh:mm' type="number"
-            id="pression_pipe" name='pression_pipe' />
+            <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='__.__' type="number"
+            id="salinite" name='salinite' />
             <div className='col-span-1 pt-2 text-gray-700'>kg/cm2</div>
 
             <div className='col-span-4'>TVR </div>            
-            <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='hh:mm' type="number"
-            id="pression_pipe" name='pression_pipe' />
+            <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='__.__' type="number"
+            id="tvr" name='tvr' />
             <div className='col-span-1 pt-2 text-gray-700'>kg/cm2</div>
 
             <div className='col-span-4'>BSW </div>            
-            <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='hh:mm' type="number"
-            id="pression_pipe" name='pression_pipe' />
+            <input className="col-span-5 border-1 border-gray-400 h-8 pl-2 ml-2 " placeholder='__.__' type="number"
+            id="bsw" name='bsw' />
             <div className='col-span-1 pt-2 text-gray-700'>kg/cm2</div>
           </div>
 

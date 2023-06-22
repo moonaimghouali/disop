@@ -4,11 +4,13 @@ import {updateBilanUniteRegion} from '../../../store/slices/BilansSlice'
 import * as api from '../../../api/xpApi'
 
 const UniteBilan = ({setShowUnite}) => {
+
   const [error, setError] = useState({error:false , errorMessage:""})
   const {hide, bilanProductionUnite, mouvements} =useSelector(state => state.bilans.bilanUniteRegion)
   const dispatch = useDispatch()
 
   const handleValidation = async ()=> {
+    
     let obj = {UniteId : bilanProductionUnite.id, UniteProductionId :bilanProductionUnite.production.id }
     console.log(obj);
       let response = await api.updateUnitesProductionValidation(obj)     

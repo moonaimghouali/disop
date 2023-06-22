@@ -72,8 +72,8 @@ const Baremage = () => {
       <div className='w-1/2 h-32 flex flex-col my-4 rounded-sm shadow-sm bg-white py-2 px-3' >
         <div className='text-xl font-semibold mt-1'>Bac "{id}"</div>
         <div className='mt-2 flex flex-row gap-8'>
-          <div>etablie le : <b >{bareme.date_mis_a_jour}</b> </div>
-          <div>a mettre a jour le : <b>{bareme.date_mis_a_jour}</b></div>
+          <div>etablie le : <b >{new Date(bareme.date_mis_a_jour).toISOString().split("T")[0]}</b> </div>
+          <div>a mettre a jour le : <b>{new Date(bareme.date_mis_a_jour).toISOString().split("T")[0]}</b></div>
         </div>
         <div className='mt-2 '> etablie par : <b >{bareme.etablie_par}</b></div>
       </div>

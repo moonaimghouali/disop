@@ -1,16 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { GridComponent, ColumnsDirective, ColumnDirective, Inject, Page, Toolbar, PdfExport, ExcelExport, Edit } from '@syncfusion/ej2-react-grids'
 import * as api from '../../../api/uniteApi'
 import { calculUniteProductionJournaliere } from '../../../utils/CalculProduction'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateBilanUnite }from '../../../store/slices/BilansSlice'
 import { toast } from 'react-toastify'
+import {BilanJournalierUnite} from '../../../bilans'
 
 const ProductionData = ({uniteProduction, setPopUp}) => {
   let grid;
   let isResp = useSelector((state) => state.user.userInfo.role) 
   let UniteId = useSelector((state) =>state.system.id)
   const dispatch = useDispatch()
+  const [ bilan, setBilan ] =useState(false)
+  const [ production, setProduction ] =useState([])
 
 
 const rowSelected = ()=>{
@@ -19,7 +22,9 @@ const rowSelected = ()=>{
     const selectedrowindex = grid.getSelectedRowIndexes();
     /** Get the selected records. */
     const selectedrecords = grid.getSelectedRecords()[0];
-    alert( JSON.stringify(selectedrecords));
+    setProduction(selectedrecords)
+    setBilan(true)
+    // alert( JSON.stringify(selectedrecords));
 } }
 
 // validation column template 
@@ -55,7 +60,7 @@ const rowSelected = ()=>{
     <div className='h-full w-full bg-white rounded-sm shadow-sm'> 
       <div className='w-full h-full bg-white'>
         {(isResp === "Resp_Unite") && (<div className='p-2 w-full flex flex-row-reverse'> <button onClick={handleClick} className='py-2 px-4 rounded text-base text-white font-semibold shadow-md bg-orange-600 hover:bg-orange-700 hover:shadow-lg ease-in-out duration-150'>Cloturer La Journee</button></div>)}
-         <GridComponent  dataSource={uniteProduction} rowSelected={rowSelected} ref={g => grid = g}
+         <GridComponent  dataSource={uniteProduction} rowSelected={rowSelected} ref={g => grid = g} statelessTemplates={['directiveTemplates']}
          allowPaging={true} allowPdfExport={true} allowExcelExport={true} pageSettings={{pageSize:7}}>
           
           <ColumnsDirective >
@@ -76,6 +81,7 @@ const rowSelected = ()=>{
 
          </GridComponent>
 
+          {bilan && <BilanJournalierUnite setBilan={setBilan} data={production} />}
         </div>
     </div>
   )

@@ -38,9 +38,9 @@ const ProdMenu = ({menuProd, setMenuProd}) => {
   return (
     <div className='w-full flex flex-row items-center px-2 h-16 bg-white rounded-sm mt-4 mb-2 shadow-sm'>
         {/* Choix de periodicite */}
-        <div className='w-fit mr-4'>
+        {/* <div className='w-fit mr-4'>
             <DropDownListComponent  value={0} change={handlePeriodicteChange} id="periodicite" fields={periodiciteFields} dataSource={periodiciteData} placeholder={"Periodicite"} ></DropDownListComponent>
-        </div>
+        </div> */}
         
         {/* Date Journaliere */}
         { menuProd.journalier && (

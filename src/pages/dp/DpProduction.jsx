@@ -35,7 +35,7 @@ const DpProduction = () => {
     
     // const [ commentaires, setCommentaires] = useState(props.commentaires)
     let commentaires = props.commentaires
-    if(commentaires === undefined || commentaires.length ===0){
+    if(commentaires === undefined || commentaires === null|| commentaires?.length ===0){
       return(
         <div className='w-fit px-4 py-1 rounded flex flex-row justify-center items-center bg-gray-200 text-gray-500'>
           <GoComment size={18} />
@@ -49,8 +49,6 @@ const DpProduction = () => {
         </button>
       )
     }
-
-    
   };
 
   return (

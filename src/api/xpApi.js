@@ -28,6 +28,15 @@ export const postRegionProduction = async (bilanProductionRegion) =>  {
     }
 }
 
+export const updateRegionProductionValidation = async (RegionId, ProductionId) =>  {
+    try {
+        const response = (await axios.put(`${RouteRegion}/${RegionId}/productionData/${ProductionId}`, {validation_xp : true}))
+        return response
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const postRegionRealisation = async (bilanProductionRegion) =>  {
     try {
         const hier = new Date(new Date(bilanProductionRegion.journee_production) - 24*60*60*1000).toISOString().split("T")[0]
