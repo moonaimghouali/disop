@@ -22,7 +22,8 @@ const PerimetreProductionData = ({setBilan, journee_production, perimetres, prod
     e.preventDefault()
 
     let res = await epApi.postPerimetresProduction(prodPerimetres, perimetres, journee_production)
-    console.log("postPerimetres prod",res);
+    // console.log("postPerimetres prod",res);
+    toast.success("Lap production par perimetres pour cette journee est enregistree.")
     // if(res) {
     //   toast.success("La production corrigees des puits est enregistres.")
     // }

@@ -6,6 +6,7 @@ import * as api from './../api/xpApi'
 import {PopupBG} from '../components'
 import {roles} from '../store/types/roles'
 import {printBilanJournalierRegion} from './bilans'
+import { toast } from 'react-toastify'
 
 
 const BilanJournalierRegion = ({data, setBilan}) => {
@@ -23,6 +24,7 @@ const BilanJournalierRegion = ({data, setBilan}) => {
     const handleValidation = async ()=> {
       console.log("prod",data);
       await api.updateRegionProductionValidation(data.RegionId, data.id)
+      toast.success("Le bilan de production de la region est validee.")
     }
 
     const handleAnnulment = ()=> {

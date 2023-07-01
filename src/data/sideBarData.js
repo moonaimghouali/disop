@@ -52,11 +52,11 @@ export const adminLinks = [
       path : "p/dp/production",
       icon: <GiOilPump size={18}/>,
     },
-    {
-      name: 'KPI',
-      path : "p/dp/performance",
-      icon: <CgPerformance size={18}/>,
-    },
+    // {
+    //   name: 'KPI',
+    //   path : "p/dp/performance",
+    //   icon: <CgPerformance size={18}/>,
+    // },
     {
       name: 'Reporting',
       path : "p/dp/reporting",
@@ -208,9 +208,9 @@ export const adminLinks = [
       path : "p/region/production",
       icon: <RiWaterFlashLine size={18}/>,
     },
-    {
-      name: 'KPI',
-      path : "p/region/performance",
-      icon: <CgPerformance size={18}/>,
-    },
+    // {
+    //   name: 'KPI',
+    //   path : "p/region/performance",
+    //   icon: <CgPerformance size={18}/>,
+    // },
   ]

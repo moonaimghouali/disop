@@ -8,18 +8,20 @@ const MonitoringView = ({puits, setToggle}) => {
     }, [puits])
 
   return (
-    <div className='w-full h-full grid grid-cols-2 mt-2 '>
-       {puits.statut_puits? 
+    <div className='w-full h-full flex flex-row mt-2 items-center justify-center '>
+       {/* {puits.statut_puits? 
        ( 
         <>
-        {/* <PuitsChart data ={[]}/> */}
-        {/* {(puits?.type_puits === "PPHGL" || puits?.type_puits === "PPHSGL") && (<GLChart data={[]}/>)} */}
+        <PuitsChart data ={[]}/>
+        {(puits?.type_puits === "PPHGL" || puits?.type_puits === "PPHSGL") && (<GLChart data={[]}/>)}
         </>
        ) : 
        (
         <div className='mt-8 ml-8 font-semibold text-2xl text-red-600'> Ce puits est fermee</div>
        )
-       }
+       } */}
+      <div className='Font-semibold text-2xl'> Real Time Data Comming soon...</div>
+       
     </div>
   )
 }

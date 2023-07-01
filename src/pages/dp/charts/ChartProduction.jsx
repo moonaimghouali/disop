@@ -18,8 +18,10 @@ const ChartProduction = ({data, type}) => {
           <SeriesDirective type="Column" drawType="Column" name="Production" dataSource={data} 
           xName="code" yName="production" ></SeriesDirective>
 
-          <SeriesDirective type="Column" drawType="Column" name="Prevision" dataSource={data} 
-          xName="code" yName="prevision" colorName='#000'></SeriesDirective>
+          {(type !=="unites") &&(
+            <SeriesDirective type="Column" drawType="Column" name="Prevision" dataSource={data} 
+            xName="code" yName="prevision" colorName='#000'></SeriesDirective>
+          )}
 
           <SeriesDirective type="Column" drawType="Column" name="Expedition" dataSource={data} 
           xName="code" yName="expedition" colorName='#000'></SeriesDirective>

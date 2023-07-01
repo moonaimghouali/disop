@@ -1,11 +1,23 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import {toast} from 'react-toastify'
 
 const serverUrl = "http://localhost:5000"
 const RoutePerimetre= `${serverUrl}/api/perimetres`
 const RoutePuits= `${serverUrl}/api/puits`
 const RouteRegion= `${serverUrl}/api/regions`
 const RouteUnite= `${serverUrl}/api/unites`
+
+
+/////////////////////////////////////////////////////////////////////////////////
+// Monitoring
+export const fetchPuitsMonitoring = (PuitsId, journee_production) =>{
+    try {
+        return axios.get(`${RoutePuits}/monitoring?puits=${PuitsId}&journee=${journee_production}`).then((response) => response.data)
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 // //////////////////////////////////////////////////////////////////////////////
 // Puits
@@ -135,7 +147,6 @@ export const postPerimetresProduction = async (prodPerimetres, perimetres, journ
 
             if(previousDay.split("-")[1]!== "01" || previousDay.split("-")[2] !=="01"){            
                 let prevRealisation = ( await axios.get(`${RoutePerimetre}/${p.id}/realisationData?journee_production=${previousDay}`)).data.data
-                console.log("prev",prevRealisation);
                 if (prevRealisation.length !== 0 ) {
                     realBody.realisation_perimetre_production_tm += prevRealisation[0].realisation_perimetre_production_tm
                     realBody.realisation_perimetre_production_vm += prevRealisation[0].realisation_perimetre_production_vm
@@ -144,9 +155,9 @@ export const postPerimetresProduction = async (prodPerimetres, perimetres, journ
                 }
             }
 
-            const resRealisation = (await axios.post(`${RoutePerimetre}/realisationData`, realBody))            
-            // console.log("res",response, resRealisation)
-            // return(response, resRealisation)
+            const resRealisation = (await axios.post(`${RoutePerimetre}/realisationData`, realBody))   
+            let res = { prod : response, real : resRealisation}
+            return res;
         } catch (error) {
             console.log(error);   
         }

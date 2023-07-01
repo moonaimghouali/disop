@@ -60,11 +60,11 @@ const RegionBilan = ({setShowRegion}) => {
         
         
         <table className='mt-3'>
-          <tr><th></th> <th>Tonne </th> <th>m3</th> </tr>
-          <tr><td className='font-semibold'>Stock Initial</td> <td>{bilanProductionRegion.stock_initial_tm}</td> <td>{bilanProductionRegion.stock_initial_vm}</td></tr>
-          <tr><td className='font-semibold'>Expedition</td>    <td>{bilanProductionRegion.expedition_region_tm}</td>    <td>{bilanProductionRegion.expedition_region_vm}</td></tr>
-          <tr><td className='font-semibold'>Production</td>    <td>{bilanProductionRegion.production_region_tm}</td>    <td>{bilanProductionRegion.production_region_vm}</td></tr>
-          <tr><td className='font-semibold'>Stock Final</td>   <td>{bilanProductionRegion.stock_final_tm}</td>   <td>{bilanProductionRegion.stock_final_vm}</td></tr>
+          <tr className='h-10 bg-gray-50'><th></th> <th>Tonne </th> <th>m3</th> </tr>
+          <tr className='h-8 border-b border-gray-100'><td className='font-semibold'>Stock Initial</td> <td>{bilanProductionRegion.stock_initial_tm}</td> <td>{bilanProductionRegion.stock_initial_vm}</td></tr>
+          <tr className='h-8 border-b border-gray-100'><td className='font-semibold'>Expedition</td>    <td>{bilanProductionRegion.expedition_region_tm}</td>    <td>{bilanProductionRegion.expedition_region_vm}</td></tr>
+          <tr className='h-8 border-b border-gray-100'><td className='font-semibold'>Production</td>    <td>{bilanProductionRegion.production_region_tm}</td>    <td>{bilanProductionRegion.production_region_vm}</td></tr>
+          <tr className='h-8 border-b border-gray-100'><td className='font-semibold'>Stock Final</td>   <td>{bilanProductionRegion.stock_final_tm}</td>   <td>{bilanProductionRegion.stock_final_vm}</td></tr>
         </table>
 
         {/* Production des Unites */}

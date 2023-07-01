@@ -30,19 +30,23 @@ const UniteBilan = ({setShowUnite}) => {
 
   return (
     <div onClick={(e)=> e.stopPropagation()} className='h-full my-8 w-1/2 flex flex-col p-3 items-center bg-white rounded-sm shadow-sm z-50'>
-      <div  className='w-full h-5/6  flex flex-col overflow-y-scroll '>
-        <div className='mt-3 text-lg font-semibold'>Bilan Production Journaliere</div>
-        {error.error && (<div className=' text-red-600 text-base font-semibold'>{error.errorMessage}</div>) }
-        <div className='mt-3'>Unite : <b>{bilanProductionUnite.nom_unite}</b></div>
-        <div className='mt-1'>Journee production : <b>{bilanProductionUnite.production.journee_production}</b></div>
+      <div  className='w-full h-full  flex flex-col overflow-y-scroll '>
+        
+        <div className='flex flex-col pb-4 border-b border-gray-300'>
+          <div className='mt-3 text-lg font-semibold'>Bilan Production Journaliere</div>
+          {error.error && (<div className=' text-red-600 text-base font-semibold'>{error.errorMessage}</div>) }
+          <div className='mt-3'>Unite : <b>{bilanProductionUnite.nom_unite}</b></div>
+          <div className='mt-1'>Journee production : <b>{bilanProductionUnite.production.journee_production}</b></div>
+        </div>
+        
         
         <table className='mt-3'>
-          <tr><th></th> <th>Tonne </th> <th>m3</th> </tr>
-          <tr><td className='font-semibold'>Stock Initial</td> <td>{bilanProductionUnite.production.stock_initial_tm}</td> <td>{bilanProductionUnite.production.stock_initial_vm}</td></tr>
-          <tr><td className='font-semibold'>Expedition</td>    <td>{bilanProductionUnite.production.expedition_unite_tm}</td>    <td>{bilanProductionUnite.production.expedition_unite_vm}</td></tr>
-          <tr><td className='font-semibold'>Eau purgee</td>    <td>{bilanProductionUnite.production.purge_unite_tm}</td>         <td>{bilanProductionUnite.production.purge_unite_vm}</td></tr>
-          <tr><td className='font-semibold'>Production</td>    <td>{bilanProductionUnite.production.production_unite_tm}</td>    <td>{bilanProductionUnite.production.production_unite_vm}</td></tr>
-          <tr><td className='font-semibold'>Stock Final</td>   <td>{bilanProductionUnite.production.stock_final_tm}</td>   <td>{bilanProductionUnite.production.stock_final_vm}</td></tr>
+          <tr className='h-10 bg-gray-50'><th></th> <th>Tonne </th> <th>m3</th> </tr>
+          <tr className='h-8 border-b border-gray-100'><td className='font-semibold'>Stock Initial</td> <td>{bilanProductionUnite.production.stock_initial_tm}</td> <td>{bilanProductionUnite.production.stock_initial_vm}</td></tr>
+          <tr className='h-8 border-b border-gray-100'><td className='font-semibold'>Expedition</td>    <td>{bilanProductionUnite.production.expedition_unite_tm}</td>    <td>{bilanProductionUnite.production.expedition_unite_vm}</td></tr>
+          <tr className='h-8 border-b border-gray-100'><td className='font-semibold'>Eau purgee</td>    <td>{bilanProductionUnite.production.purge_unite_tm}</td>         <td>{bilanProductionUnite.production.purge_unite_vm}</td></tr>
+          <tr className='h-8 border-b border-gray-100'><td className='font-semibold'>Production</td>    <td>{bilanProductionUnite.production.production_unite_tm}</td>    <td>{bilanProductionUnite.production.production_unite_vm}</td></tr>
+          <tr className='h-8 border-b border-gray-100'><td className='font-semibold'>Stock Final</td>   <td>{bilanProductionUnite.production.stock_final_tm}</td>   <td>{bilanProductionUnite.production.stock_final_vm}</td></tr>
         </table>
 
       </div>

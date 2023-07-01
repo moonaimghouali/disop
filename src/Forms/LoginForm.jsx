@@ -6,6 +6,7 @@ import * as api from '../api/userApi'
 import { useDispatch, useSelector } from 'react-redux';
 import {  Login } from '../store/slices/userSlice'
 import systemSlice, { intitializeSystemInfo } from '../store/slices/systemSlice'
+import {toast} from 'react-toastify'
 
 const LoginForm = () => {
 
@@ -18,15 +19,6 @@ const LoginForm = () => {
     const handleSubmit = async (e)=>{
         e.preventDefault()
         setError({error : false, errorMessage :""})
-
-        // valider les donnees saisis
-        // const validationResponse = await validateLoginForm(e.target.email.value)
-
-        // if(validationResponse.error) {
-        //   setError(validationResponse)
-        // }
-        // else{
-        //   setError({error : false, errorMessage :""})
           
         //requestBody
         const requestBody = {
@@ -37,10 +29,12 @@ const LoginForm = () => {
         let response
         try {
            response = await api.loginUser(requestBody)
+
+           console.log("res", response)
            
         } catch (error) {
-          console.log(error)
-          //setError({error:true, errorMessage: error.response.data})
+          console.log('aass',error)
+          toast.error(error.response.data)
         }
 
         if(!response) return
